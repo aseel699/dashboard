@@ -348,7 +348,7 @@ function processData(sheets) {
   const salesMap = {};
   if(sales.rows.length){
     const ci = n => colIdx(sales.cols, n);
-    const iN=ci(['الموظف']), iA=ci(['المبيعات','مبيعات']);
+    const iN=ci(['الموظف']), iA=ci(['المبيعات (ر.س)','المبيعات','مبيعات']);
     sales.rows.forEach(r => {
       const nm = String(r[iN]||'').trim();
       if(!nm || nm.includes('إجمالي')) return;
@@ -360,7 +360,7 @@ function processData(sheets) {
   const visitMap = {}, ncMap = {};
   if(visits.rows.length){
     const ci = n => colIdx(visits.cols, n);
-    const iN=ci(['الموظف']), iV=ci(['عدد الزيارات','الزيارات']), iC=ci(['عملاء جدد فعلي','عملاء جدد']);
+    const iN=ci(['الموظف']), iV=ci(['عدد الزيارات','الزيارات','زيارات']), iC=ci(['عملاء جدد فعلي','عملاء جدد','عملاء']);
     visits.rows.forEach(r => {
       const nm = String(r[iN]||'').trim();
       if(!nm) return;
