@@ -3,7 +3,6 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta http-equiv="refresh" content="300">
 <title>لوحة أداء فريق المبيعات</title>
 <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
 <style>
@@ -22,6 +21,18 @@
 body{font-family:'Tajawal',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;padding:20px}
 .container{max-width:1600px;margin:0 auto}
 
+/* LOADING */
+.loading-screen{position:fixed;inset:0;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:999;gap:16px}
+.loading-logo{font-size:40px}
+.loading-text{font-size:16px;font-weight:700;color:var(--gold)}
+.loading-sub{font-size:12px;color:var(--text-faint)}
+.loading-bar-wrap{width:200px;height:3px;background:rgba(255,255,255,.07);border-radius:3px;overflow:hidden}
+.loading-bar-fill{height:100%;background:linear-gradient(90deg,var(--gold),var(--green));border-radius:3px;animation:loadprog 2s ease-in-out infinite}
+@keyframes loadprog{0%{width:0%}100%{width:100%}}
+.error-box{background:var(--red-dim);border:1px solid rgba(200,16,46,.3);border-radius:12px;padding:16px 20px;text-align:center;margin:20px auto;max-width:500px}
+.error-box h3{color:#FF6B6B;margin-bottom:8px}
+.error-box p{font-size:12px;color:var(--text-dim)}
+
 /* HEADER */
 .header{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--gold-border);gap:16px;flex-wrap:wrap}
 .brand-pill{display:inline-flex;align-items:center;gap:5px;background:linear-gradient(135deg,var(--gold),#B8922E);color:#1A0A0F;font-size:9px;font-weight:900;padding:3px 11px;border-radius:20px;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:7px}
@@ -34,8 +45,10 @@ body{font-family:'Tajawal',sans-serif;background:var(--bg);color:var(--text);min
 .fp-blue{background:rgba(59,130,246,.1);border:1px solid rgba(59,130,246,.2);color:var(--blue)}
 .fp-gold{background:rgba(212,168,67,.1);border:1px solid var(--gold-border);color:var(--gold)}
 .fp-purple{background:rgba(168,85,247,.1);border:1px solid rgba(168,85,247,.2);color:var(--purple)}
-.live-dot{width:7px;height:7px;border-radius:50%;background:var(--green);animation:pulse 2s infinite;display:inline-block;margin-left:4px}
-@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.8)}}
+.live-dot{width:7px;height:7px;border-radius:50%;background:var(--green);animation:pulse 2s infinite;display:inline-block}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+.refresh-btn{background:var(--gold-dim);border:1px solid var(--gold-border);color:var(--gold);font-size:10px;font-weight:700;padding:5px 12px;border-radius:10px;cursor:pointer;font-family:'Tajawal',sans-serif}
+.refresh-btn:hover{background:rgba(212,168,67,.25)}
 
 /* KPI */
 .kpi-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:11px;margin-bottom:18px}
@@ -55,7 +68,7 @@ body{font-family:'Tajawal',sans-serif;background:var(--bg);color:var(--text);min
 .kpi.blue .kpi-val{color:var(--blue)}.kpi.teal .kpi-val{color:var(--teal)}.kpi.purple .kpi-val{color:var(--purple)}
 .kpi-sub{font-size:9px;color:var(--text-faint);margin-top:3px;line-height:1.3}
 
-/* COMPANY CHART */
+/* COMPANY */
 .company-box{background:var(--bg2);border:1px solid var(--border);border-radius:16px;overflow:hidden;margin-bottom:18px}
 .box-header{padding:11px 18px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
 .box-title{font-size:11px;font-weight:800;color:var(--gold);letter-spacing:1px;text-transform:uppercase}
@@ -72,10 +85,9 @@ body{font-family:'Tajawal',sans-serif;background:var(--bg);color:var(--text);min
 .mb-partial{border:1px solid rgba(59,130,246,.3);border-radius:6px}
 .mb-miss{border:1px solid rgba(249,115,22,.3);border-radius:6px}
 .mb-future{border:1px solid rgba(255,255,255,.06);border-radius:6px}
-.mb-pct-in{position:relative;z-index:1;font-size:10px;font-weight:900;text-align:center;line-height:1}
+.mb-pct-in{position:relative;z-index:1;font-size:10px;font-weight:900;text-align:center}
 .mb-label{font-size:8px;color:var(--text-faint);text-align:center;line-height:1.2}
 .mb-amt{font-size:7px;text-align:center}
-.mb-current .mb-label{color:var(--gold);font-weight:700}
 .comp-summary{display:flex;gap:18px;padding:0 18px 12px;flex-wrap:wrap}
 .cs-item .cs-lbl{font-size:8px;color:var(--text-faint);letter-spacing:1px;text-transform:uppercase;margin-bottom:2px}
 .cs-item .cs-val{font-size:14px;font-weight:900}
@@ -156,22 +168,30 @@ svg.sc{width:100%;height:220px;display:block}
 </style>
 </head>
 <body>
-<div class="container">
+
+<!-- Loading Screen -->
+<div class="loading-screen" id="loadingScreen">
+  <div class="loading-logo">📊</div>
+  <div class="loading-text">جاري تحميل البيانات...</div>
+  <div class="loading-sub">يتم قراءة البيانات من Google Sheets</div>
+  <div class="loading-bar-wrap"><div class="loading-bar-fill"></div></div>
+</div>
+
+<div class="container" id="mainContent" style="display:none">
 
   <div class="header">
     <div>
       <div class="brand-pill">📊 LINES IDEAS · V5</div>
       <h1>لوحة أداء فريق <span>المبيعات</span></h1>
       <div class="header-meta">
+        <div class="meta-item"><span class="live-dot"></span> &nbsp;<strong style="color:var(--green)">مباشر من Google Sheets</strong></div>
         <div class="meta-item">📅 <strong id="hDate">—</strong></div>
-        <div class="meta-item"><span class="live-dot"></span> <strong style="color:var(--green)">مباشر</strong></div>
         <div class="meta-item">👥 <strong id="hCount">—</strong> موظف</div>
         <div class="meta-item"><div class="fp fp-blue">⚖️ ميدان: مبيعات 50% + زيارات 25% + فتح 25%</div></div>
         <div class="meta-item"><div class="fp fp-gold">🏪 فروع: مبيعات 100%</div></div>
-        <div class="meta-item"><div class="fp fp-purple">🎯 تحقيق الشركة = مبيعات الفريق ÷ مستهدف الشركة</div></div>
       </div>
     </div>
-    <div style="font-size:30px;opacity:.1">🏆</div>
+    <button class="refresh-btn" onclick="loadAll()">🔄 تحديث البيانات</button>
   </div>
 
   <div class="kpi-grid">
@@ -228,22 +248,10 @@ svg.sc{width:100%;height:220px;display:block}
     </div>
 
     <div class="side">
-      <div class="card-box">
-        <div class="box-header"><div class="box-title">🏆 أعلى 3 إجمالاً</div></div>
-        <div class="cl" id="top3"></div>
-      </div>
-      <div class="card-box">
-        <div class="box-header"><div class="box-title" style="color:var(--green)">🆕 أفضل 3 جدد</div></div>
-        <div class="cl" id="topNew"></div>
-      </div>
-      <div class="card-box">
-        <div class="box-header"><div class="box-title" style="color:var(--gold)">⭐ أفضل 3 قدامى</div></div>
-        <div class="cl" id="topOld"></div>
-      </div>
-      <div class="card-box">
-        <div class="box-header"><div class="box-title">⚠️ يحتاجون دعماً</div></div>
-        <div class="cl" id="bot3"></div>
-      </div>
+      <div class="card-box"><div class="box-header"><div class="box-title">🏆 أعلى 3 إجمالاً</div></div><div class="cl" id="top3"></div></div>
+      <div class="card-box"><div class="box-header"><div class="box-title" style="color:var(--green)">🆕 أفضل 3 جدد</div></div><div class="cl" id="topNew"></div></div>
+      <div class="card-box"><div class="box-header"><div class="box-title" style="color:var(--gold)">⭐ أفضل 3 قدامى</div></div><div class="cl" id="topOld"></div></div>
+      <div class="card-box"><div class="box-header"><div class="box-title">⚠️ يحتاجون دعماً</div></div><div class="cl" id="bot3"></div></div>
     </div>
   </div>
 
@@ -263,172 +271,212 @@ svg.sc{width:100%;height:220px;display:block}
     ميدان = مبيعات 50% + زيارات 25% + فتح 25% | فروع = مبيعات 100% ·
     تحقيق الشركة السنوي: <strong id="fYTD">—</strong>
   </div>
-
 </div>
 
 <script>
-// ══════════════════════════════════════════════════════
-// ★  قسم البيانات — عدّل هنا فقط كل شهر  ★
-// ══════════════════════════════════════════════════════
-
-const DATA = {
-
-  // تاريخ آخر تحديث
-  lastUpdate: "2026-05-31",
-
-  // ── بيانات الموظفين ───────────────────────────────
-  // الحقول: name, region, type (جديد/قديم), base (مبيعات فقط / مبيعات+زيارات+فتح)
-  //         salesTarget, sales, visitTarget, visits, newCustTarget, newCust
-  team: [
-    { name:"محمد دوشي",           region:"جدة",              type:"قديم", base:"مبيعات فقط",         salesTarget:686987,  sales:961227, visitTarget:0,   visits:0,  newCustTarget:0,    newCust:0 },
-    { name:"محمود عبد الربي",     region:"جدة",              type:"قديم", base:"مبيعات فقط",         salesTarget:474386,  sales:631341, visitTarget:32,  visits:9,  newCustTarget:3.2,  newCust:9 },
-    { name:"سالم الوعل",          region:"الرياض",           type:"قديم", base:"مبيعات+زيارات+فتح",  salesTarget:617728,  sales:520046, visitTarget:32,  visits:15, newCustTarget:3.2,  newCust:0 },
-    { name:"خلدون",               region:"الرياض",           type:"قديم", base:"مبيعات فقط",         salesTarget:541359,  sales:392632, visitTarget:0,   visits:0,  newCustTarget:0,    newCust:0 },
-    { name:"عمر حيدر",            region:"الجنوب",           type:"قديم", base:"مبيعات+زيارات+فتح",  salesTarget:358400,  sales:301008, visitTarget:32,  visits:15, newCustTarget:3.2,  newCust:1 },
-    { name:"عبد الرحمن باسهل",    region:"الشرقية",          type:"قديم", base:"مبيعات+زيارات+فتح",  salesTarget:358400,  sales:261006, visitTarget:32,  visits:20, newCustTarget:3.2,  newCust:2 },
-    { name:"محمد أحمد الدعم",     region:"المدينة المنورة",  type:"قديم", base:"مبيعات+زيارات+فتح",  salesTarget:358400,  sales:339706, visitTarget:0,   visits:3,  newCustTarget:0,    newCust:2 },
-    { name:"عماد علي عمر",        region:"جدة",              type:"قديم", base:"مبيعات فقط",         salesTarget:384000,  sales:209644, visitTarget:0,   visits:0,  newCustTarget:0,    newCust:0 },
-    { name:"مازن محمد",           region:"الرياض",           type:"قديم", base:"مبيعات+زيارات+فتح",  salesTarget:384000,  sales:207551, visitTarget:32,  visits:0,  newCustTarget:3.2,  newCust:0 },
-    { name:"محمد الطيب",          region:"جدة",              type:"قديم", base:"مبيعات+زيارات+فتح",  salesTarget:384000,  sales:119263, visitTarget:0,   visits:0,  newCustTarget:0,    newCust:0 },
-    { name:"صالح باصليب",         region:"الرياض",           type:"قديم", base:"مبيعات+زيارات+فتح",  salesTarget:288072,  sales:222212, visitTarget:0,   visits:30, newCustTarget:0,    newCust:0 },
-    { name:"منير ناصر",           region:"القصيم",           type:"جديد", base:"مبيعات+زيارات+فتح",  salesTarget:140800,  sales:191031, visitTarget:32,  visits:22, newCustTarget:3.2,  newCust:5 },
-    { name:"سالم المرشدي",        region:"الشرقية",          type:"قديم", base:"مبيعات+زيارات+فتح",  salesTarget:140800,  sales:117364, visitTarget:20,  visits:31, newCustTarget:2,    newCust:3 },
-    { name:"احمد يسري",           region:"الرياض",           type:"جديد", base:"مبيعات+زيارات+فتح",  salesTarget:128000,  sales:177607, visitTarget:32,  visits:31, newCustTarget:3.2,  newCust:1 },
-    { name:"عبد الله باحارثه",    region:"الرياض",           type:"جديد", base:"مبيعات+زيارات+فتح",  salesTarget:140800,  sales:103097, visitTarget:32,  visits:21, newCustTarget:3.2,  newCust:1 },
-    { name:"صالح الشرماني",       region:"الرياض",           type:"جديد", base:"مبيعات+زيارات+فتح",  salesTarget:153605,  sales:186592, visitTarget:20,  visits:10, newCustTarget:2,    newCust:1 },
-    { name:"هشام فراج السعدي",    region:"جدة",              type:"جديد", base:"مبيعات+زيارات+فتح",  salesTarget:96000,   sales:52963,  visitTarget:32,  visits:28, newCustTarget:3.2,  newCust:0 },
-    { name:"احمد داماولاو",       region:"الرياض",           type:"جديد", base:"مبيعات+زيارات+فتح",  salesTarget:153600,  sales:60875,  visitTarget:0,   visits:32, newCustTarget:0,    newCust:5 },
-    { name:"المتجر",              region:"E-commerce",       type:"قديم", base:"مبيعات فقط",         salesTarget:121440,  sales:65136,  visitTarget:0,   visits:0,  newCustTarget:0,    newCust:0 },
-    { name:"احمد باعامر",         region:"الرياض",           type:"جديد", base:"مبيعات+زيارات+فتح",  salesTarget:75000,   sales:31544,  visitTarget:312, visits:0,  newCustTarget:31.2, newCust:0 },
-  ],
-
-  // ── مستهدف الشركة الشهري ──────────────────────────
-  // actual: 0 = شهر قادم | > 0 = شهر منتهٍ
-  company: [
-    { label:"يناير",   target:6600000, actual:4917872.11 },
-    { label:"فبراير",  target:6600000, actual:3640470.85 },
-    { label:"مارس",    target:6600000, actual:4861938.29 },
-    { label:"أبريل",   target:6600000, actual:4950286.1 },
-    { label:"مايو",    target:6600000, actual:5176219.27 },
-    { label:"يونيو",   target:6600000, actual:0 },
-    { label:"يوليو",   target:6600000, actual:0 },
-    { label:"أغسطس",   target:6600000, actual:0 },
-    { label:"سبتمبر",  target:6600000, actual:0 },
-    { label:"أكتوبر",  target:6600000, actual:0 },
-    { label:"نوفمبر",  target:6600000, actual:0 },
-    { label:"ديسمبر",  target:6600000, actual:0 },
-  ],
+// ─── إعداد Google Sheets ───────────────────────────
+const SHEET_ID = '1i-ja8mXQxVrEPcOyvJZ4M-0hJ1wIkjzI6bdUm3oOoqg';
+const SHEETS = {
+  employees: '02.الموظفون',
+  targets:   '03.الأهداف_الشهرية',
+  sales:     '04.المبيعات_اليومية',
+  visits:    '05.الزيارات',
+  company:   '07.مستهدف_الشركة',
 };
 
-// ══════════════════════════════════════════════════════
-// منطق العرض — لا تعدّل هنا
-// ══════════════════════════════════════════════════════
+// ─── قراءة Sheet ──────────────────────────────────
+function fetchSheet(sheetName) {
+  const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent(sheetName)}`;
+  return fetch(url)
+    .then(r => r.text())
+    .then(text => {
+      const json = JSON.parse(text.substring(47).slice(0,-2));
+      const cols = json.table.cols.map(c => c.label);
+      const rows = json.table.rows.map(r =>
+        r.c.map(cell => cell ? (cell.v !== null ? cell.v : '') : '')
+      );
+      return { cols, rows };
+    });
+}
 
+// ─── مساعدات ──────────────────────────────────────
+const nv  = v => { const x = parseFloat(String(v).replace(/,/g,'')); return isNaN(x)?0:x; };
 const fmt  = v => Math.round(v).toLocaleString('ar-SA');
 const fmtM = v => v>=1e6?(v/1e6).toFixed(2)+'M':v>=1e3?(v/1e3).toFixed(0)+'K':fmt(v);
 const pct  = v => (v*100).toFixed(1)+'%';
 
-function bar(v, mx, cls) {
-  const w = Math.min(100, (mx>0?v/mx:0)*100).toFixed(1);
-  return `<div class="bw ${cls}"><div class="bb"><div class="bf" style="width:${w}%"></div></div><div class="bl">${pct(v)}</div></div>`;
-}
-function rBadge(r,s){
-  if(r===1)return`<span class="rb r1">1</span>`;if(r===2)return`<span class="rb r2">2</span>`;
-  if(r===3)return`<span class="rb r3">3</span>`;if(s==='bad')return`<span class="rb rl">${r}</span>`;
-  return`<span class="rb rm">${r}</span>`;
-}
-function tBadge(e){
-  if(e.name==='المتجر'||e.name.includes('متجر'))return`<span class="tb tel">🛒إلكتروني</span>`;
-  if(e.ib) return`<span class="tb tb2">🏪فرع</span>`;
-  if(e.type==='جديد') return`<span class="tb tn">🆕جديد</span>`;
-  return`<span class="tb to">⭐قديم</span>`;
-}
-function sBadge(s){
-  if(s==='great')return`<span class="sb sg">★ممتاز</span>`;if(s==='good')return`<span class="sb sgd">✓جيد</span>`;
-  if(s==='ok')return`<span class="sb so">⚠مقبول</span>`;return`<span class="sb sd">✗دعم</span>`;
-}
-function card(e,cls,medal,sc){
-  const sub=e.ib?`مبيعات ${pct(e.sp)}`:`مبيعات ${pct(e.sp)} · زيارات ${pct(e.vp)} · فتح ${pct(e.np)}`;
-  return`<div class="ci ${cls}"><div class="ci-medal">${medal}</div>
-    <div class="ci-info"><div class="ci-name">${e.name}</div><div class="ci-sub">${sub}</div></div>
-    <div class="ci-score" style="${sc?'color:'+sc:''}">${pct(e.score)}</div></div>`;
-}
+function norm(s){ return String(s||'').trim().replace(/\s+/g,' ').replace(/[أإآ]/g,'ا').replace(/ة/g,'ه').replace(/ى/g,'ي'); }
+function fuzzy(a,b){ const na=norm(a),nb=norm(b); if(na===nb)return true; if(na.includes(nb)||nb.includes(na))return true;
+  const wa=na.split(' ').filter(x=>x.length>2), wb2=nb.split(' ').filter(x=>x.length>2);
+  return wb2.filter(w=>wa.includes(w)).length>=Math.min(2,Math.min(wa.length,wb2.length)); }
+function lookup(map,name){ if(map[name]!==undefined)return map[name];
+  for(const k of Object.keys(map))if(fuzzy(k,name))return map[k]; return null; }
 
-function init() {
+function colIdx(cols, names){
+  for(const n of names){ const i=cols.findIndex(h=>String(h).trim().includes(n)); if(i>=0)return i; }
+  return -1; }
+
+// ─── معالجة البيانات ──────────────────────────────
+function processData(sheets) {
+  const {emp, targ, sales, visits, company} = sheets;
+
+  // Employees
+  const empMap = {};
+  if(emp.rows.length){
+    const ci = n => colIdx(emp.cols, n);
+    const iN=ci(['اسم الموظف','اسم']), iT=ci(['نوع الموظف','نوع']), iB=ci(['أساس التقييم','أساس']), iR=ci(['المنطقة','منطقة']);
+    emp.rows.forEach(r => {
+      const nm = String(r[iN]||'').trim();
+      if(!nm) return;
+      empMap[nm] = { type:String(r[iT]||'قديم').trim(), base:String(r[iB]||'مبيعات+زيارات+فتح').trim(), region:String(r[iR]||'—').trim() };
+    });
+  }
+
+  // Targets
+  const targMap = {};
+  if(targ.rows.length){
+    const ci = n => colIdx(targ.cols, n);
+    const iN=ci(['الموظف']), iS=ci(['هدف المبيعات','المبيعات']), iV=ci(['هدف الزيارات','الزيارات']), iC=ci(['هدف عملاء','عملاء جدد']);
+    targ.rows.forEach(r => {
+      const nm = String(r[iN]||'').trim();
+      if(!nm || nm.includes('إجمالي')) return;
+      targMap[nm] = { st:nv(r[iS]), vt:nv(r[iV]), ct:nv(r[iC]) };
+    });
+  }
+
+  // Sales
+  const salesMap = {};
+  if(sales.rows.length){
+    const ci = n => colIdx(sales.cols, n);
+    const iN=ci(['الموظف']), iA=ci(['المبيعات','مبيعات']);
+    sales.rows.forEach(r => {
+      const nm = String(r[iN]||'').trim();
+      if(!nm || nm.includes('إجمالي')) return;
+      salesMap[nm] = (salesMap[nm]||0) + nv(r[iA]);
+    });
+  }
+
+  // Visits
+  const visitMap = {}, ncMap = {};
+  if(visits.rows.length){
+    const ci = n => colIdx(visits.cols, n);
+    const iN=ci(['الموظف']), iV=ci(['عدد الزيارات','الزيارات']), iC=ci(['عملاء جدد فعلي','عملاء جدد']);
+    visits.rows.forEach(r => {
+      const nm = String(r[iN]||'').trim();
+      if(!nm) return;
+      visitMap[nm] = (visitMap[nm]||0) + nv(r[iV]);
+      ncMap[nm]    = (ncMap[nm]||0)    + nv(r[iC]);
+    });
+  }
+
+  // Company
+  const mNames = ['يناير','فبراير','مارس','أبريل','مايو','يونيو','يوليو','أغسطس','سبتمبر','أكتوبر','نوفمبر','ديسمبر'];
+  const compM = [];
+  if(company.rows.length){
+    const ci = n => colIdx(company.cols, n);
+    const iM=ci(['الشهر']), iT=ci(['هدف الشركة','هدف']), iA=ci(['المبيعات الفعلية','الفعلية']);
+    company.rows.forEach(r => {
+      const lbl = String(r[iM]||'').trim();
+      if(!lbl || lbl.includes('إجمالي') || lbl.includes('مؤشرات') || lbl.includes('أفضل') || lbl.includes('أشهر') || lbl.includes('متوسط') || lbl.includes('أعلى')) return;
+      const tgt = nv(r[iT]), act = nv(r[iA]);
+      const mi = mNames.findIndex(m => lbl.includes(m));
+      const yr = (lbl.match(/\d{4}/)||['2026'])[0];
+      const code = mi>=0 ? `${yr}-${String(mi+1).padStart(2,'0')}` : '';
+      compM.push({ label:lbl, code, target:tgt, actual:act, pct:tgt>0?act/tgt:0 });
+    });
+  }
+
   // Build team
-  const team = DATA.team.map(e => {
-    const ib = e.base === 'مبيعات فقط';
-    const sp = e.salesTarget > 0 ? e.sales / e.salesTarget : 0;
-    const vp = e.visitTarget > 0 ? e.visits / e.visitTarget : 0;
-    const np = e.newCustTarget > 0 ? e.newCust / e.newCustTarget : 0;
+  const team = Object.keys(targMap).map(tName => {
+    const t   = targMap[tName];
+    const emp2 = lookup(empMap, tName) || { type:'قديم', base:'مبيعات+زيارات+فتح', region:'—' };
+    const sl  = lookup(salesMap,  tName) || 0;
+    const va  = lookup(visitMap,  tName) || 0;
+    const nc  = lookup(ncMap,     tName) || 0;
+    const ib  = emp2.base === 'مبيعات فقط';
+    const sp  = t.st>0 ? sl/t.st : 0;
+    const vp  = t.vt>0 ? va/t.vt : 0;
+    const np  = t.ct>0 ? nc/t.ct : 0;
     const score = ib ? sp : (sp*0.5 + vp*0.25 + np*0.25);
     const status = score>=0.85?'great':score>=0.65?'good':score>=0.45?'ok':'bad';
-    return {...e, ib, sp, vp, np, score, status};
+    return { name:tName, region:emp2.region, type:emp2.type, ib, st:t.st, sales:sl, sp, vt:t.vt, va, vp, ct:t.ct, nc, np, score, status };
   });
   team.sort((a,b)=>b.score-a.score);
   team.forEach((e,i)=>e.rank=i+1);
 
-  const totSales  = team.reduce((s,e)=>s+e.sales,0);
-  const totTarg   = team.reduce((s,e)=>s+e.salesTarget,0);
-  const totVis    = team.reduce((s,e)=>s+e.visits,0);
-  const totVT     = team.reduce((s,e)=>s+e.visitTarget,0);
-
-  // Company
-  const compM    = DATA.company;
+  const totSales = team.reduce((s,e)=>s+e.sales,0);
+  const totTarg  = team.reduce((s,e)=>s+e.st,0);
+  const totVis   = team.reduce((s,e)=>s+e.va,0);
+  const totVT    = team.reduce((s,e)=>s+e.vt,0);
   const cYTDt    = compM.reduce((s,m)=>s+m.target,0);
   const cYTDa    = compM.reduce((s,m)=>s+(m.actual>0?m.actual:0),0);
-  const compYTD  = cYTDt>0?cYTDa/cYTDt:0;
-  const hitM     = compM.filter(m=>m.actual>0&&m.actual>=m.target).length;
-  const doneM    = compM.filter(m=>m.actual>0).length;
+  const compYTD  = cYTDt>0 ? cYTDa/cYTDt : 0;
 
-  // Header
-  document.getElementById('hDate').textContent    = DATA.lastUpdate;
-  document.getElementById('hCount').textContent   = team.length;
-  document.getElementById('fDate').textContent    = DATA.lastUpdate;
-  document.getElementById('fYTD').textContent     = pct(compYTD);
-  document.getElementById('empCount').textContent = team.length + ' موظف';
+  return { team, totSales, totTarg, totVis, totVT, compM, cYTDt, cYTDa, compYTD };
+}
 
-  // KPIs
-  document.getElementById('kSales').textContent    = fmtM(totSales);
-  document.getElementById('kSalesSub').textContent = 'هدف الفريق '+fmtM(totTarg);
-  document.getElementById('kSalesPct').textContent = totTarg>0?pct(totSales/totTarg):'—';
-  document.getElementById('kVisits').textContent   = fmt(totVis);
-  document.getElementById('kVisitsSub').textContent= 'من هدف '+fmt(totVT);
-  document.getElementById('kVisitPct').textContent = totVT>0?pct(totVis/totVT):'—';
-  document.getElementById('kCompPct').textContent  = pct(compYTD);
-  document.getElementById('kCompSub').textContent  = `هدف سنوي ${fmtM(cYTDt)} · فعلي ${fmtM(cYTDa)}`;
+// ─── رسم الداشبورد ─────────────────────────────────
+function bar(v,mx,cls){ const w=Math.min(100,(mx>0?v/mx:0)*100).toFixed(1);
+  return `<div class="bw ${cls}"><div class="bb"><div class="bf" style="width:${w}%"></div></div><div class="bl">${pct(v)}</div></div>`; }
+function rBadge(r,s){ if(r===1)return`<span class="rb r1">1</span>`;if(r===2)return`<span class="rb r2">2</span>`;
+  if(r===3)return`<span class="rb r3">3</span>`;if(s==='bad')return`<span class="rb rl">${r}</span>`;return`<span class="rb rm">${r}</span>`; }
+function tBadge(e){ if(e.name==='المتجر'||e.name.includes('متجر'))return`<span class="tb tel">🛒إلكتروني</span>`;
+  if(e.ib)return`<span class="tb tb2">🏪فرع</span>`;if(e.type==='جديد')return`<span class="tb tn">🆕جديد</span>`;return`<span class="tb to">⭐قديم</span>`; }
+function sBadge(s){ if(s==='great')return`<span class="sb sg">★ممتاز</span>`;if(s==='good')return`<span class="sb sgd">✓جيد</span>`;
+  if(s==='ok')return`<span class="sb so">⚠مقبول</span>`;return`<span class="sb sd">✗دعم</span>`; }
+function card(e,cls,medal,sc){ const sub=e.ib?`مبيعات ${pct(e.sp)}`:`مبيعات ${pct(e.sp)} · زيارات ${pct(e.vp)} · فتح ${pct(e.np)}`;
+  return`<div class="ci ${cls}"><div class="ci-medal">${medal}</div>
+    <div class="ci-info"><div class="ci-name">${e.name}</div><div class="ci-sub">${sub}</div></div>
+    <div class="ci-score" style="${sc?'color:'+sc:''}">${pct(e.score)}</div></div>`; }
+
+function render(d) {
+  const now = new Date().toLocaleDateString('ar-SA');
+  document.getElementById('hDate').textContent  = now;
+  document.getElementById('hCount').textContent = d.team.length;
+  document.getElementById('fDate').textContent  = now;
+  document.getElementById('fYTD').textContent   = pct(d.compYTD);
+  document.getElementById('empCount').textContent = d.team.length + ' موظف';
+
+  document.getElementById('kSales').textContent    = fmtM(d.totSales);
+  document.getElementById('kSalesSub').textContent = 'هدف الفريق '+fmtM(d.totTarg);
+  document.getElementById('kSalesPct').textContent = d.totTarg>0?pct(d.totSales/d.totTarg):'—';
+  document.getElementById('kVisits').textContent   = fmt(d.totVis);
+  document.getElementById('kVisitsSub').textContent= 'من هدف '+fmt(d.totVT);
+  document.getElementById('kVisitPct').textContent = d.totVT>0?pct(d.totVis/d.totVT):'—';
+  document.getElementById('kCompPct').textContent  = pct(d.compYTD);
+  document.getElementById('kCompSub').textContent  = `هدف سنوي ${fmtM(d.cYTDt)} · فعلي ${fmtM(d.cYTDa)}`;
 
   // Company bars
-  let barsH = '';
-  compM.forEach((m,i) => {
-    const isFut = m.actual === 0;
-    const p2    = m.target>0?m.actual/m.target:0;
-    const bcls  = isFut?'mb-future':p2>=1?'mb-hit':p2>=0.7?'mb-partial':'mb-miss';
-    const pc    = isFut?'var(--text-faint)':p2>=1?'var(--green)':p2>=0.7?'var(--blue)':'var(--orange)';
-    barsH += `<div class="mb-wrap">
-      <div class="mb-outer ${bcls}"><div class="mb-inner"></div>
-        <div class="mb-pct-in" style="color:${pc}">${isFut?'—':pct(p2)}</div></div>
-      <div class="mb-label">${m.label}</div>
+  let bH='';
+  d.compM.forEach(m=>{
+    const isFut=m.actual===0,p2=m.pct;
+    const bcls=isFut?'mb-future':p2>=1?'mb-hit':p2>=0.7?'mb-partial':'mb-miss';
+    const pc=isFut?'var(--text-faint)':p2>=1?'var(--green)':p2>=0.7?'var(--blue)':'var(--orange)';
+    bH+=`<div class="mb-wrap"><div class="mb-outer ${bcls}"><div class="mb-inner"></div>
+      <div class="mb-pct-in" style="color:${pc}">${isFut?'—':pct(p2)}</div></div>
+      <div class="mb-label">${m.label.replace(/ 2026/,'')}</div>
       <div class="mb-amt" style="color:${isFut?'var(--text-faint)':pc}">${isFut?'—':fmtM(m.actual)}</div></div>`;
   });
-  document.getElementById('compBars').innerHTML = barsH;
-  document.getElementById('compSummary').innerHTML = `
-    <div class="cs-item"><div class="cs-lbl">الهدف السنوي</div><div class="cs-val" style="color:var(--gold)">${fmtM(cYTDt)} ر.س</div></div>
-    <div class="cs-item"><div class="cs-lbl">المبيعات YTD</div><div class="cs-val" style="color:var(--green)">${fmtM(cYTDa)} ر.س</div></div>
-    <div class="cs-item"><div class="cs-lbl">نسبة التحقيق السنوي</div><div class="cs-val" style="color:${compYTD>=1?'var(--green)':compYTD>=0.7?'var(--blue)':'var(--orange)'}">${pct(compYTD)}</div></div>
+  document.getElementById('compBars').innerHTML=bH;
+  const hitM=d.compM.filter(m=>m.actual>0&&m.pct>=1).length;
+  const doneM=d.compM.filter(m=>m.actual>0).length;
+  document.getElementById('compSummary').innerHTML=`
+    <div class="cs-item"><div class="cs-lbl">الهدف السنوي</div><div class="cs-val" style="color:var(--gold)">${fmtM(d.cYTDt)} ر.س</div></div>
+    <div class="cs-item"><div class="cs-lbl">المبيعات YTD</div><div class="cs-val" style="color:var(--green)">${fmtM(d.cYTDa)} ر.س</div></div>
+    <div class="cs-item"><div class="cs-lbl">نسبة التحقيق السنوي</div><div class="cs-val" style="color:${d.compYTD>=1?'var(--green)':d.compYTD>=0.7?'var(--blue)':'var(--orange)'}">${pct(d.compYTD)}</div></div>
     <div class="cs-item"><div class="cs-lbl">أشهر حققت الهدف</div><div class="cs-val" style="color:var(--teal)">${hitM} / ${doneM}</div></div>`;
 
   // Table
-  const tb = document.getElementById('teamTbl'); tb.innerHTML = '';
-  team.forEach(e => {
-    const tr = document.createElement('tr');
-    const vtC = e.ib?`<td class="dc">—</td>`:`<td style="text-align:center"><span class="vtn">${e.visitTarget>0?e.visitTarget:'—'}</span></td>`;
-    const vaC = e.ib?`<td class="dc">—</td>`:`<td style="color:var(--blue);font-weight:600;text-align:center">${e.visits}</td>`;
-    const vpC = e.ib?`<td class="dc">—</td>`:`<td>${bar(e.vp,1.2,'bv')}</td>`;
-    const ncC = e.ib?`<td class="dc">—</td>`:`<td style="text-align:center;color:var(--purple);font-weight:600">${e.newCust}<span style="color:var(--text-faint);font-weight:400">/${e.newCustTarget>0?Math.round(e.newCustTarget):0}</span></td>`;
-    const npC = e.ib?`<td class="dc">—</td>`:`<td>${bar(e.np,1.2,'bo')}</td>`;
-    tr.innerHTML = `<td>${rBadge(e.rank,e.status)}</td><td class="nm">${e.name}</td><td class="rg">${e.region}</td>
-      <td>${tBadge(e)}</td><td style="color:var(--text-faint);font-size:10px">${fmt(e.salesTarget)}</td>
+  const tb=document.getElementById('teamTbl');tb.innerHTML='';
+  d.team.forEach(e=>{
+    const tr=document.createElement('tr');
+    const vtC=e.ib?`<td class="dc">—</td>`:`<td style="text-align:center"><span class="vtn">${e.vt>0?e.vt:'—'}</span></td>`;
+    const vaC=e.ib?`<td class="dc">—</td>`:`<td style="color:var(--blue);font-weight:600;text-align:center">${e.va}</td>`;
+    const vpC=e.ib?`<td class="dc">—</td>`:`<td>${bar(e.vp,1.2,'bv')}</td>`;
+    const ncC=e.ib?`<td class="dc">—</td>`:`<td style="text-align:center;color:var(--purple);font-weight:600">${e.nc}<span style="color:var(--text-faint);font-weight:400">/${e.ct>0?Math.round(e.ct):0}</span></td>`;
+    const npC=e.ib?`<td class="dc">—</td>`:`<td>${bar(e.np,1.2,'bo')}</td>`;
+    tr.innerHTML=`<td>${rBadge(e.rank,e.status)}</td><td class="nm">${e.name}</td><td class="rg">${e.region}</td>
+      <td>${tBadge(e)}</td><td style="color:var(--text-faint);font-size:10px">${fmt(e.st)}</td>
       <td style="font-weight:600;color:var(--gold)">${fmt(e.sales)}</td><td>${bar(e.sp,1.2,'bs')}</td>
       ${vtC}${vaC}${vpC}${ncC}${npC}
       <td>${bar(e.score,1,'bsc')}<span style="font-size:10px;font-weight:900;color:var(--green);margin-right:2px">${pct(e.score)}</span></td>
@@ -436,65 +484,84 @@ function init() {
     tb.appendChild(tr);
   });
 
-  document.getElementById('totBar').innerHTML = `
-    <div class="ti2"><div class="til">إجمالي الهدف</div><div class="tiv" style="color:var(--gold)">${fmt(totTarg)} ر.س</div></div>
-    <div class="ti2"><div class="til">إجمالي المبيعات</div><div class="tiv" style="color:var(--green)">${fmt(totSales)} ر.س</div></div>
-    <div class="ti2"><div class="til">نسبة تحقيق الفريق</div><div class="tiv" style="color:var(--blue)">${totTarg>0?pct(totSales/totTarg):'—'}</div></div>
-    <div class="ti2"><div class="til">إجمالي الزيارات</div><div class="tiv" style="color:var(--blue)">${fmt(totVis)} / ${fmt(totVT)}</div></div>`;
+  document.getElementById('totBar').innerHTML=`
+    <div class="ti2"><div class="til">إجمالي الهدف</div><div class="tiv" style="color:var(--gold)">${fmt(d.totTarg)} ر.س</div></div>
+    <div class="ti2"><div class="til">إجمالي المبيعات</div><div class="tiv" style="color:var(--green)">${fmt(d.totSales)} ر.س</div></div>
+    <div class="ti2"><div class="til">نسبة تحقيق الفريق</div><div class="tiv" style="color:var(--blue)">${d.totTarg>0?pct(d.totSales/d.totTarg):'—'}</div></div>
+    <div class="ti2"><div class="til">إجمالي الزيارات</div><div class="tiv" style="color:var(--blue)">${fmt(d.totVis)} / ${fmt(d.totVT)}</div></div>`;
 
-  // Side panels
-  const M  = [['cg','🥇'],['cs2','🥈'],['cb','🥉']];
-  const NM = [['cn1','🥇'],['cn2','🥈'],['cn3','🥉']];
-  const s  = [...team].sort((a,b)=>b.score-a.score);
-  document.getElementById('top3').innerHTML = s.slice(0,3).map((e,i)=>card(e,...M[i])).join('');
-  const byN = s.filter(e=>e.type==='جديد'&&!e.ib);
-  document.getElementById('topNew').innerHTML = byN.length
-    ? byN.slice(0,3).map((e,i)=>card(e,...NM[i],'var(--green)')).join('')
-    : `<div style="padding:10px;color:var(--text-faint);font-size:11px;text-align:center">لا يوجد</div>`;
-  const byO = s.filter(e=>e.type==='قديم'&&!e.ib);
-  document.getElementById('topOld').innerHTML = byO.length
-    ? byO.slice(0,3).map((e,i)=>card(e,...M[i])).join('')
-    : `<div style="padding:10px;color:var(--text-faint);font-size:11px;text-align:center">لا يوجد</div>`;
-  const w = [...team].sort((a,b)=>a.score-b.score).slice(0,3);
-  document.getElementById('bot3').innerHTML = w.map(e=>
-    `<div class="ci cbad"><div class="ci-medal">⚠️</div>
+  // Side
+  const M=[['cg','🥇'],['cs2','🥈'],['cb','🥉']],NM=[['cn1','🥇'],['cn2','🥈'],['cn3','🥉']];
+  const s=[...d.team].sort((a,b)=>b.score-a.score);
+  document.getElementById('top3').innerHTML=s.slice(0,3).map((e,i)=>card(e,...M[i])).join('');
+  const byN=s.filter(e=>e.type==='جديد'&&!e.ib);
+  document.getElementById('topNew').innerHTML=byN.length?byN.slice(0,3).map((e,i)=>card(e,...NM[i],'var(--green)')).join(''):`<div style="padding:10px;color:var(--text-faint);font-size:11px;text-align:center">لا يوجد</div>`;
+  const byO=s.filter(e=>e.type==='قديم'&&!e.ib);
+  document.getElementById('topOld').innerHTML=byO.length?byO.slice(0,3).map((e,i)=>card(e,...M[i])).join(''):`<div style="padding:10px;color:var(--text-faint);font-size:11px;text-align:center">لا يوجد</div>`;
+  const w=[...d.team].sort((a,b)=>a.score-b.score).slice(0,3);
+  document.getElementById('bot3').innerHTML=w.map(e=>`<div class="ci cbad"><div class="ci-medal">⚠️</div>
     <div class="ci-info"><div class="ci-name">${e.name}</div>
     <div class="ci-sub">${e.ib?`مبيعات ${pct(e.sp)}`:`مبيعات ${pct(e.sp)} · زيارات ${pct(e.vp)} · فتح ${pct(e.np)}`}</div></div>
     <div class="ci-score">${pct(e.score)}</div></div>`).join('');
 
   // Scatter
-  const svg = document.getElementById('scatter'); svg.innerHTML = '';
-  const W=820,H=220,p={t:16,r:18,b:34,l:44};
-  const cW=W-p.l-p.r, cH=H-p.t-p.b;
-  const mxS = Math.max(1.2,...team.map(e=>e.sp))*1.05;
-  const mxV = Math.max(1.1,...team.filter(e=>!e.ib&&e.vp>0).map(e=>e.vp))*1.05||1.2;
+  const svg=document.getElementById('scatter');svg.innerHTML='';
+  const W=820,H=220,p={t:16,r:18,b:34,l:44},cW=W-p.l-p.r,cH=H-p.t-p.b;
+  const mxS=Math.max(1.2,...d.team.map(e=>e.sp))*1.05;
+  const mxV=Math.max(1.1,...d.team.filter(e=>!e.ib&&e.vp>0).map(e=>e.vp))*1.05||1.2;
   const mk=(tag,at,tx)=>{const el=document.createElementNS('http://www.w3.org/2000/svg',tag);
     Object.entries(at).forEach(([k,v])=>el.setAttribute(k,v));if(tx!==undefined)el.textContent=tx;return el};
   for(let i=0;i<=4;i++){
-    const x=p.l+(i/4)*cW, y=p.t+(i/4)*cH;
+    const x=p.l+(i/4)*cW,y=p.t+(i/4)*cH;
     svg.appendChild(mk('line',{x1:x,y1:p.t,x2:x,y2:p.t+cH,stroke:'rgba(255,255,255,.05)','stroke-width':'1'}));
     svg.appendChild(mk('text',{x,y:p.t+cH+13,'text-anchor':'middle','font-size':'8',fill:'rgba(245,237,216,.25)','font-family':'Tajawal'},Math.round(i/4*mxS*100)+'%'));
     svg.appendChild(mk('line',{x1:p.l,y1:y,x2:p.l+cW,y2:y,stroke:'rgba(255,255,255,.05)','stroke-width':'1'}));
     svg.appendChild(mk('text',{x:p.l-4,y:y+4,'text-anchor':'end','font-size':'8',fill:'rgba(245,237,216,.25)','font-family':'Tajawal'},Math.round((4-i)/4*mxV*100)+'%'));
   }
-  const rx=p.l+(1/mxS)*cW;
-  svg.appendChild(mk('line',{x1:rx,y1:p.t,x2:rx,y2:p.t+cH,stroke:'rgba(212,168,67,.18)','stroke-width':'1.5','stroke-dasharray':'4 3'}));
+  svg.appendChild(mk('line',{x1:p.l+(1/mxS)*cW,y1:p.t,x2:p.l+(1/mxS)*cW,y2:p.t+cH,stroke:'rgba(212,168,67,.18)','stroke-width':'1.5','stroke-dasharray':'4 3'}));
   svg.appendChild(mk('text',{x:p.l+cW/2,y:H-1,'text-anchor':'middle','font-size':'9',fill:'rgba(212,168,67,.45)','font-family':'Tajawal'},'نسبة المبيعات →'));
-  svg.appendChild(mk('text',{x:8,y:p.t+cH/2,'text-anchor':'middle','font-size':'9',fill:'rgba(59,130,246,.45)','font-family':'Tajawal',transform:`rotate(-90,8,${p.t+cH/2})`},'نسبة الزيارات'));
   const cm={great:'#22C55E',good:'#14B8A6',ok:'#F97316',bad:'#FF6B6B'};
-  team.forEach(e=>{
-    const cx=p.l+Math.min(1,e.sp/mxS)*cW;
-    const yv=e.ib?mxV*0.5:e.vp;
-    const cy=p.t+(1-Math.min(1,yv/mxV))*cH;
-    const col=cm[e.status];
+  d.team.forEach(e=>{
+    const cx=p.l+Math.min(1,e.sp/mxS)*cW,yv=e.ib?mxV*0.5:e.vp,cy=p.t+(1-Math.min(1,yv/mxV))*cH,col=cm[e.status];
     svg.appendChild(mk('circle',{cx,cy,r:'7',fill:col,opacity:'.11'}));
     svg.appendChild(mk('circle',{cx,cy,r:'4',fill:col,stroke:'rgba(0,0,0,.35)','stroke-width':'1.5'}));
     const lbl=mk('text',{x:cx+5.5,y:cy+3.5,'font-size':'8',fill:col,'font-family':'Tajawal',opacity:'.85'});
-    lbl.textContent=e.name.split(' ')[0]; svg.appendChild(lbl);
+    lbl.textContent=e.name.split(' ')[0];svg.appendChild(lbl);
   });
+
+  document.getElementById('loadingScreen').style.display='none';
+  document.getElementById('mainContent').style.display='block';
 }
 
-init();
+// ─── تحميل البيانات ───────────────────────────────
+async function loadAll() {
+  document.getElementById('loadingScreen').style.display='flex';
+  document.getElementById('mainContent').style.display='none';
+  try {
+    const [emp, targ, sales, visits, company] = await Promise.all([
+      fetchSheet(SHEETS.employees),
+      fetchSheet(SHEETS.targets),
+      fetchSheet(SHEETS.sales),
+      fetchSheet(SHEETS.visits),
+      fetchSheet(SHEETS.company),
+    ]);
+    const data = processData({ emp, targ, sales, visits, company });
+    render(data);
+  } catch(err) {
+    document.getElementById('loadingScreen').innerHTML = `
+      <div class="error-box">
+        <h3>⚠️ تعذّر تحميل البيانات</h3>
+        <p>${err.message}</p>
+        <p style="margin-top:8px">تأكد إن صلاحية الـ Google Sheet هي "أي شخص لديه الرابط"</p>
+        <button class="refresh-btn" style="margin-top:12px" onclick="loadAll()">🔄 إعادة المحاولة</button>
+      </div>`;
+    console.error(err);
+  }
+}
+
+// تحميل عند فتح الصفحة + تحديث تلقائي كل 5 دقائق
+loadAll();
+setInterval(loadAll, 5 * 60 * 1000);
 </script>
 </body>
 </html>
