@@ -412,7 +412,7 @@ function colIdx(cols, names){
   return -1; }
 
 function processData(sheets) {
-  const {monthlySales, visitsRaw, company, month} = sheets;
+  const {monthlySales, visitsRaw, company, companySummary, month} = sheets;
 
   const visitMap = {}, ncMap = {};
   if(visitsRaw.rows.length){
@@ -446,6 +446,20 @@ function processData(sheets) {
       compM.push({ label:lbl, code, target:tgt, actual:act, pct:tgt>0?act/tgt:0 });
     });
   }
+
+  // شهور فيها بيانات حقيقية من نظام فريق المبيعات الجديد تتجاوز الشيت القديم (أو تُضاف له)
+  const compByCode = {};
+  compM.forEach(m => { if(m.code) compByCode[m.code] = m; });
+  (companySummary||[]).forEach(cs => {
+    const code = cs.month;
+    const yi = code.slice(0,4), moi = parseInt(code.slice(5,7),10)-1;
+    const label = mNames[moi] ? `${mNames[moi]} ${yi}` : code;
+    const target = cs.totalTarget, actual = cs.totalSales;
+    const entry = { label, code, target, actual, pct: target>0?actual/target:0 };
+    if(compByCode[code]) Object.assign(compByCode[code], entry);
+    else { compM.push(entry); compByCode[code] = entry; }
+  });
+  compM.sort((a,b) => (a.code||'').localeCompare(b.code||''));
 
   const team = monthlySales.map(m => {
     const va  = lookup(visitMap, m.name) || 0;
@@ -490,10 +504,11 @@ class Component extends DCLogic {
     const month = new Date().toISOString().slice(0, 7);
     Promise.all([
       fetch(API_BASE + '/monthly_sales.php?month=' + month).then(r => r.json()),
+      fetch(API_BASE + '/monthly_sales.php?summary=1').then(r => r.json()),
       fetchVisitsSheet(),
       fetchSheet(SHEETS.company),
-    ]).then(([monthlySales, visitsRaw, company]) => {
-      const data = processData({ monthlySales, visitsRaw, company, month });
+    ]).then(([monthlySales, companySummary, visitsRaw, company]) => {
+      const data = processData({ monthlySales, visitsRaw, company, companySummary, month });
       this.setState({ sheetData: data, loading: false }, () => this.renderScatter());
     }).catch(err => {
       this.setState({ loading: false, loadError: (err && err.message) || String(err) });
