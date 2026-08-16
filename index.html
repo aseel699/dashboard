@@ -1,11 +1,15 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html>
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>لوحة أداء فريق المبيعات</title>
-<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
-<style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+  <style>
 *{margin:0;padding:0;box-sizing:border-box}
 :root{
   --gold:#B8860B;--gold-dim:rgba(184,134,11,.08);--gold-border:rgba(184,134,11,.2);
@@ -21,7 +25,6 @@
 body{font-family:'Tajawal',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;padding:20px}
 .container{max-width:1600px;margin:0 auto}
 
-/* LOADING */
 .loading-screen{position:fixed;inset:0;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:999;gap:16px;box-shadow:inset 0 0 0 1px var(--border)}
 .loading-logo{font-size:40px}
 .loading-text{font-size:16px;font-weight:700;color:var(--gold);font-family:'Tajawal',sans-serif}
@@ -33,7 +36,6 @@ body{font-family:'Tajawal',sans-serif;background:var(--bg);color:var(--text);min
 .error-box h3{color:#FF6B6B;margin-bottom:8px}
 .error-box p{font-size:12px;color:var(--text-dim)}
 
-/* HEADER */
 .header{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:20px;padding-bottom:16px;border-bottom:2px solid var(--gold-border);gap:16px;flex-wrap:wrap}
 .brand-pill{display:inline-flex;align-items:center;gap:5px;background:linear-gradient(135deg,var(--gold),#B8922E);color:#1A0A0F;font-size:9px;font-weight:900;padding:3px 11px;border-radius:20px;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:7px}
 .header h1{font-size:23px;font-weight:900;color:var(--text);line-height:1.2}
@@ -50,7 +52,6 @@ body{font-family:'Tajawal',sans-serif;background:var(--bg);color:var(--text);min
 .refresh-btn{background:var(--gold);border:1px solid var(--gold);color:#fff;font-size:10px;font-weight:700;padding:5px 12px;border-radius:10px;cursor:pointer;font-family:'Tajawal',sans-serif}
 .refresh-btn:hover{background:#A0760A;border-color:#A0760A}
 
-/* KPI */
 .kpi-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:11px;margin-bottom:18px}
 @media(max-width:1100px){.kpi-grid{grid-template-columns:repeat(3,1fr)}}
 @media(max-width:650px){.kpi-grid{grid-template-columns:repeat(2,1fr)}}
@@ -68,7 +69,6 @@ body{font-family:'Tajawal',sans-serif;background:var(--bg);color:var(--text);min
 .kpi.blue .kpi-val{color:var(--blue)}.kpi.teal .kpi-val{color:var(--teal)}.kpi.purple .kpi-val{color:var(--purple)}
 .kpi-sub{font-size:9px;color:var(--text-faint);margin-top:3px;line-height:1.3}
 
-/* COMPANY */
 .company-box{background:var(--bg2);border:1px solid var(--border);border-radius:16px;overflow:hidden;margin-bottom:18px;box-shadow:0 1px 4px rgba(0,0,0,.06)}
 .box-header{padding:11px 18px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
 .box-title{font-size:11px;font-weight:800;color:var(--gold);letter-spacing:1px;text-transform:uppercase}
@@ -92,7 +92,6 @@ body{font-family:'Tajawal',sans-serif;background:var(--bg);color:var(--text);min
 .cs-item .cs-lbl{font-size:8px;color:var(--text-faint);letter-spacing:1px;text-transform:uppercase;margin-bottom:2px}
 .cs-item .cs-val{font-size:14px;font-weight:900}
 
-/* MAIN */
 .main-grid{display:grid;grid-template-columns:1fr 300px;gap:16px;margin-bottom:18px}
 @media(max-width:1100px){.main-grid{grid-template-columns:1fr}}
 .section{background:var(--bg2);border:1px solid var(--border);border-radius:16px;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,.06)}
@@ -100,7 +99,6 @@ body{font-family:'Tajawal',sans-serif;background:var(--bg);color:var(--text);min
 .sl{display:flex;align-items:center;gap:3px}
 .sl-dot{width:5px;height:5px;border-radius:50%;flex-shrink:0}
 
-/* TABLE */
 .tw{overflow-x:auto}
 table{width:100%;border-collapse:collapse;font-size:11px}
 thead tr{background:rgba(184,134,11,.07)}
@@ -138,7 +136,6 @@ td.rg{color:var(--text-faint);font-size:10px}
 .ti2 .til{font-size:8px;color:var(--text-faint);letter-spacing:1px;text-transform:uppercase;margin-bottom:2px}
 .ti2 .tiv{font-size:13px;font-weight:900}
 
-/* SIDE */
 .side{display:flex;flex-direction:column;gap:11px}
 .card-box{background:var(--bg2);border:1px solid var(--border);border-radius:15px;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,.06)}
 .cl{padding:7px 11px}
@@ -156,135 +153,228 @@ td.rg{color:var(--text-faint);font-size:10px}
 .ci-name{font-size:11px;font-weight:800;color:var(--text);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;margin-bottom:1px}
 .ci-sub{font-size:9px;color:var(--text-dim);line-height:1.3}
 .ci-score{font-size:12px;font-weight:900;flex-shrink:0}
+.ci-empty{padding:10px;color:var(--text-faint);font-size:11px;text-align:center}
 
-/* SCATTER */
 .scatter-box{background:var(--bg2);border:1px solid var(--border);border-radius:16px;overflow:hidden;margin-bottom:16px;box-shadow:0 1px 4px rgba(0,0,0,.06)}
 .sw{padding:0 16px 12px}
 svg.sc{width:100%;height:220px;display:block}
 
-/* FOOTER */
 .footer{text-align:center;padding:11px;font-size:9px;color:var(--text-faint);border-top:1px solid var(--border);background:#fff}
 .footer strong{color:var(--gold)}
-</style>
-</head>
-<body>
+  </style>
+</helmet>
 
-<!-- Loading Screen -->
-<div class="loading-screen" id="loadingScreen">
-  <div class="loading-logo">📊</div>
-  <div class="loading-text">جاري تحميل البيانات...</div>
-  <div class="loading-sub">يتم قراءة البيانات من Google Sheets</div>
-  <div class="loading-bar-wrap"><div class="loading-bar-fill"></div></div>
-</div>
+<div style="direction: rtl;">
 
-<div class="container" id="mainContent" style="display:none">
+  <sc-if value="{{ showLoading }}" hint-placeholder-val="{{ true }}">
+    <div class="loading-screen">
+      <div class="loading-logo">📊</div>
+      <sc-if value="{{ hasError }}" hint-placeholder-val="{{ false }}">
+        <div class="error-box">
+          <h3>⚠️ تعذّر تحميل البيانات</h3>
+          <p>{{ loadError }}</p>
+          <p style="margin-top:8px">تأكد إن صلاحية الـ Google Sheet هي "أي شخص لديه الرابط"</p>
+          <button class="refresh-btn" style="margin-top:12px;background:var(--blue);border-color:var(--blue)" onClick="{{ retry }}">🔄 إعادة المحاولة</button>
+        </div>
+      </sc-if>
+      <sc-if value="{{ isLoadingNoError }}" hint-placeholder-val="{{ true }}">
+        <div class="loading-text">جاري تحميل البيانات...</div>
+        <div class="loading-sub">يتم قراءة البيانات من Google Sheets</div>
+        <div class="loading-bar-wrap"><div class="loading-bar-fill"></div></div>
+      </sc-if>
+    </div>
+  </sc-if>
 
-  <div class="header">
-    <div>
-      <div class="brand-pill">📊 LINES IDEAS · V5</div>
-      <h1>لوحة أداء فريق <span>المبيعات</span></h1>
-      <div class="header-meta">
-        <div class="meta-item"><span class="live-dot"></span> &nbsp;<strong style="color:var(--green)">مباشر من Google Sheets</strong></div>
-        <div class="meta-item">📅 <strong id="hDate">—</strong></div>
-        <div class="meta-item">👥 <strong id="hCount">—</strong> موظف</div>
-        <div class="meta-item"><div class="fp fp-blue">⚖️ ميدان: مبيعات 50% + زيارات 25% + فتح 25%</div></div>
-        <div class="meta-item"><div class="fp fp-gold">🏪 فروع: مبيعات 100%</div></div>
+  <sc-if value="{{ showContent }}" hint-placeholder-val="{{ false }}">
+    <div class="container">
+
+      <div class="header">
+        <div>
+          <div class="brand-pill">📊 LINES IDEAS · V5</div>
+          <h1>لوحة أداء فريق <span>المبيعات</span></h1>
+          <div class="header-meta">
+            <div class="meta-item"><span class="live-dot"></span> &nbsp;<strong style="color:var(--green)">مباشر من Google Sheets</strong></div>
+            <div class="meta-item">📅 <strong>{{ hDate }}</strong></div>
+            <div class="meta-item">👥 <strong>{{ hCount }}</strong> موظف</div>
+            <div class="meta-item"><div class="fp fp-blue">⚖️ ميدان: مبيعات 50% + زيارات 25% + فتح 25%</div></div>
+            <div class="meta-item"><div class="fp fp-gold">🏪 فروع: مبيعات 100%</div></div>
+          </div>
+        </div>
+        <button class="refresh-btn" onClick="{{ retry }}">🔄 تحديث البيانات</button>
+      </div>
+
+      <div class="kpi-grid">
+        <div class="kpi gold"><div class="kpi-icon">💰</div><div class="kpi-label">مبيعات الشهر</div><div class="kpi-val">{{ kSales }}</div><div class="kpi-sub">{{ kSalesSub }}</div></div>
+        <div class="kpi green"><div class="kpi-icon">📈</div><div class="kpi-label">نسبة تحقيق الفريق</div><div class="kpi-val">{{ kSalesPct }}</div><div class="kpi-sub">من إجمالي هدف الفريق</div></div>
+        <div class="kpi blue"><div class="kpi-icon">🚗</div><div class="kpi-label">إجمالي الزيارات</div><div class="kpi-val">{{ kVisits }}</div><div class="kpi-sub">{{ kVisitsSub }}</div></div>
+        <div class="kpi teal"><div class="kpi-icon">📊</div><div class="kpi-label">نسبة تحقيق الزيارات</div><div class="kpi-val">{{ kVisitPct }}</div><div class="kpi-sub">من هدف الزيارات</div></div>
+        <div class="kpi purple"><div class="kpi-icon">🎯</div><div class="kpi-label">نسبة تحقيق الشركة السنوي</div><div class="kpi-val">{{ kCompPct }}</div><div class="kpi-sub">{{ kCompSub }}</div></div>
+      </div>
+
+      <div class="company-box">
+        <div class="box-header">
+          <div class="box-title">🏢 تحقيق الشركة الشهري 2026</div>
+          <div style="display:flex;gap:12px;font-size:9px;color:var(--text-faint)">
+            <span style="color:var(--green)">■ فوق الهدف</span>
+            <span style="color:var(--blue)">■ جزئي</span>
+            <span style="color:var(--orange)">■ دون الهدف</span>
+            <span style="color:rgba(255,255,255,.12)">■ قادم</span>
+          </div>
+        </div>
+        <div class="comp-bars">
+          <sc-for list="{{ compBars }}" as="m" hint-placeholder-count="12">
+            <div class="mb-wrap">
+              <div class="{{ m.outerCls }}">
+                <div class="mb-inner"></div>
+                <div class="mb-pct-in" style="color:{{ m.color }}">{{ m.pctText }}</div>
+              </div>
+              <div class="mb-label">{{ m.label }}</div>
+              <div class="mb-amt" style="color:{{ m.amtColor }}">{{ m.amtText }}</div>
+            </div>
+          </sc-for>
+        </div>
+        <div class="comp-summary">
+          <div class="cs-item"><div class="cs-lbl">الهدف السنوي</div><div class="cs-val" style="color:var(--gold)">{{ compSummary.target }} ر.س</div></div>
+          <div class="cs-item"><div class="cs-lbl">المبيعات YTD</div><div class="cs-val" style="color:var(--green)">{{ compSummary.actual }} ر.س</div></div>
+          <div class="cs-item"><div class="cs-lbl">نسبة التحقيق السنوي</div><div class="cs-val" style="color:{{ compSummary.pctColor }}">{{ compSummary.pctText }}</div></div>
+          <div class="cs-item"><div class="cs-lbl">أشهر حققت الهدف</div><div class="cs-val" style="color:var(--teal)">{{ compSummary.hitText }}</div></div>
+        </div>
+      </div>
+
+      <div class="main-grid">
+        <div class="section">
+          <div class="box-header">
+            <div class="box-title">🏆 ترتيب الفريق — التقييم النهائي</div>
+            <div style="font-size:9px;color:var(--text-faint)">{{ empCountText }}</div>
+          </div>
+          <div class="score-legend">
+            <div class="sl"><div class="sl-dot" style="background:var(--green)"></div>★ممتاز≥85%</div>
+            <div class="sl"><div class="sl-dot" style="background:var(--teal)"></div>✓جيد≥65%</div>
+            <div class="sl"><div class="sl-dot" style="background:var(--orange)"></div>⚠مقبول≥45%</div>
+            <div class="sl"><div class="sl-dot" style="background:#FF6B6B"></div>✗دعم</div>
+            <div class="sl" style="margin-right:6px"><span class="tb tn">🆕جديد</span></div>
+            <div class="sl"><span class="tb to">⭐قديم</span></div>
+            <div class="sl"><span class="tb tb2">🏪فرع</span></div>
+            <div class="sl"><span class="tb tel">🛒إلكتروني</span></div>
+          </div>
+          <div class="tw">
+            <table>
+              <thead><tr>
+                <th>#</th><th>الموظف</th><th>المنطقة</th><th>النوع</th>
+                <th>هدف المبيعات</th><th>المبيعات</th><th>نسبة المبيعات</th>
+                <th>هدف الزيارات</th><th>الزيارات</th><th>نسبة الزيارات</th>
+                <th>عملاء جدد</th><th>نسبة الفتح</th>
+                <th>التقييم</th><th>الحالة</th>
+              </tr></thead>
+              <tbody>
+                <sc-for list="{{ teamRows }}" as="e" hint-placeholder-count="10">
+                  <tr>
+                    <td><span class="{{ e.rankCls }}">{{ e.rankText }}</span></td>
+                    <td class="nm">{{ e.name }}</td>
+                    <td class="rg">{{ e.region }}</td>
+                    <td><span class="{{ e.typeBadgeCls }}">{{ e.typeBadgeText }}</span></td>
+                    <td style="color:var(--text-faint);font-size:10px">{{ e.targetText }}</td>
+                    <td style="font-weight:600;color:var(--gold)">{{ e.salesText }}</td>
+                    <td><div class="bw bs"><div class="bb"><div class="bf" style="width:{{ e.salesBarPct }}%"></div></div><div class="bl">{{ e.salesPctText }}</div></div></td>
+                    <td style="{{ e.visitTargetStyle }}">{{ e.visitTargetText }}</td>
+                    <td style="{{ e.visitActualStyle }}">{{ e.visitActualText }}</td>
+                    <td style="{{ e.visitBarWrapStyle }}"><div class="bw bv"><div class="bb"><div class="bf" style="width:{{ e.visitBarPct }}%"></div></div><div class="bl">{{ e.visitPctText }}</div></div></td>
+                    <td style="{{ e.newCustStyle }}">{{ e.newCustText }}</td>
+                    <td style="{{ e.openBarWrapStyle }}"><div class="bw bo"><div class="bb"><div class="bf" style="width:{{ e.openBarPct }}%"></div></div><div class="bl">{{ e.openPctText }}</div></div></td>
+                    <td>
+                      <div class="bw bsc"><div class="bb"><div class="bf" style="width:{{ e.scoreBarPct }}%"></div></div></div>
+                      <span style="font-size:10px;font-weight:900;color:var(--green);margin-right:2px">{{ e.scorePctText }}</span>
+                    </td>
+                    <td><span class="{{ e.statusBadgeCls }}">{{ e.statusBadgeText }}</span></td>
+                  </tr>
+                </sc-for>
+              </tbody>
+            </table>
+          </div>
+          <div class="tot-bar">
+            <div class="ti2"><div class="til">إجمالي الهدف</div><div class="tiv" style="color:var(--gold)">{{ totBar.target }} ر.س</div></div>
+            <div class="ti2"><div class="til">إجمالي المبيعات</div><div class="tiv" style="color:var(--green)">{{ totBar.sales }} ر.س</div></div>
+            <div class="ti2"><div class="til">نسبة تحقيق الفريق</div><div class="tiv" style="color:var(--blue)">{{ totBar.pct }}</div></div>
+            <div class="ti2"><div class="til">إجمالي الزيارات</div><div class="tiv" style="color:var(--blue)">{{ totBar.visits }}</div></div>
+          </div>
+        </div>
+
+        <div class="side">
+          <div class="card-box">
+            <div class="box-header"><div class="box-title">🏆 أعلى 3 إجمالاً</div></div>
+            <div class="cl">
+              <sc-for list="{{ top3 }}" as="c" hint-placeholder-count="3">
+                <div class="ci {{ c.cls }}"><div class="ci-medal">{{ c.medal }}</div>
+                  <div class="ci-info"><div class="ci-name">{{ c.name }}</div><div class="ci-sub">{{ c.sub }}</div></div>
+                  <div class="ci-score">{{ c.scoreText }}</div></div>
+              </sc-for>
+            </div>
+          </div>
+          <div class="card-box">
+            <div class="box-header"><div class="box-title" style="color:var(--green)">🆕 أفضل 3 جدد</div></div>
+            <div class="cl">
+              <sc-if value="{{ topNewEmpty }}" hint-placeholder-val="{{ false }}"><div class="ci-empty">لا يوجد</div></sc-if>
+              <sc-for list="{{ topNew }}" as="c" hint-placeholder-count="3">
+                <div class="ci {{ c.cls }}"><div class="ci-medal">{{ c.medal }}</div>
+                  <div class="ci-info"><div class="ci-name">{{ c.name }}</div><div class="ci-sub">{{ c.sub }}</div></div>
+                  <div class="ci-score" style="color:var(--green)">{{ c.scoreText }}</div></div>
+              </sc-for>
+            </div>
+          </div>
+          <div class="card-box">
+            <div class="box-header"><div class="box-title" style="color:var(--gold)">⭐ أفضل 3 قدامى</div></div>
+            <div class="cl">
+              <sc-if value="{{ topOldEmpty }}" hint-placeholder-val="{{ false }}"><div class="ci-empty">لا يوجد</div></sc-if>
+              <sc-for list="{{ topOld }}" as="c" hint-placeholder-count="3">
+                <div class="ci {{ c.cls }}"><div class="ci-medal">{{ c.medal }}</div>
+                  <div class="ci-info"><div class="ci-name">{{ c.name }}</div><div class="ci-sub">{{ c.sub }}</div></div>
+                  <div class="ci-score">{{ c.scoreText }}</div></div>
+              </sc-for>
+            </div>
+          </div>
+          <div class="card-box">
+            <div class="box-header"><div class="box-title">⚠️ يحتاجون دعماً</div></div>
+            <div class="cl">
+              <sc-for list="{{ bot3 }}" as="c" hint-placeholder-count="3">
+                <div class="ci cbad"><div class="ci-medal">⚠️</div>
+                  <div class="ci-info"><div class="ci-name">{{ c.name }}</div><div class="ci-sub">{{ c.sub }}</div></div>
+                  <div class="ci-score">{{ c.scoreText }}</div></div>
+              </sc-for>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="scatter-box">
+        <div class="box-header">
+          <div class="box-title">📊 نسبة المبيعات مقابل نسبة الزيارات</div>
+          <div style="display:flex;gap:10px;font-size:9px;color:var(--text-faint)">
+            <span style="color:var(--green)">●★ممتاز</span><span style="color:var(--teal)">●✓جيد</span>
+            <span style="color:var(--orange)">●⚠مقبول</span><span style="color:#FF6B6B">●✗دعم</span>
+          </div>
+        </div>
+        <div class="sw"><svg class="sc" id="scatter" viewBox="0 0 820 220" preserveAspectRatio="xMidYMid meet"></svg></div>
+      </div>
+
+      <div class="footer">
+        آخر تحديث: <strong>{{ hDate }}</strong> · <strong>LINES IDEAS V5</strong> ·
+        ميدان = مبيعات 50% + زيارات 25% + فتح 25% | فروع = مبيعات 100% ·
+        تحقيق الشركة السنوي: <strong>{{ kCompPct }}</strong>
       </div>
     </div>
-    <button class="refresh-btn" onclick="loadAll()">🔄 تحديث البيانات</button>
-  </div>
+  </sc-if>
 
-  <div class="kpi-grid">
-    <div class="kpi gold"><div class="kpi-icon">💰</div><div class="kpi-label">مبيعات الشهر</div><div class="kpi-val" id="kSales">—</div><div class="kpi-sub" id="kSalesSub">—</div></div>
-    <div class="kpi green"><div class="kpi-icon">📈</div><div class="kpi-label">نسبة تحقيق الفريق</div><div class="kpi-val" id="kSalesPct">—</div><div class="kpi-sub">من إجمالي هدف الفريق</div></div>
-    <div class="kpi blue"><div class="kpi-icon">🚗</div><div class="kpi-label">إجمالي الزيارات</div><div class="kpi-val" id="kVisits">—</div><div class="kpi-sub" id="kVisitsSub">—</div></div>
-    <div class="kpi teal"><div class="kpi-icon">📊</div><div class="kpi-label">نسبة تحقيق الزيارات</div><div class="kpi-val" id="kVisitPct">—</div><div class="kpi-sub">من هدف الزيارات</div></div>
-    <div class="kpi purple"><div class="kpi-icon">🎯</div><div class="kpi-label">نسبة تحقيق الشركة السنوي</div><div class="kpi-val" id="kCompPct">—</div><div class="kpi-sub" id="kCompSub">—</div></div>
-  </div>
-
-  <div class="company-box">
-    <div class="box-header">
-      <div class="box-title">🏢 تحقيق الشركة الشهري 2026</div>
-      <div style="display:flex;gap:12px;font-size:9px;color:var(--text-faint)">
-        <span style="color:var(--green)">■ فوق الهدف</span>
-        <span style="color:var(--blue)">■ جزئي</span>
-        <span style="color:var(--orange)">■ دون الهدف</span>
-        <span style="color:rgba(255,255,255,.12)">■ قادم</span>
-      </div>
-    </div>
-    <div class="comp-bars" id="compBars"></div>
-    <div class="comp-summary" id="compSummary"></div>
-  </div>
-
-  <div class="main-grid">
-    <div class="section">
-      <div class="box-header">
-        <div class="box-title">🏆 ترتيب الفريق — التقييم النهائي</div>
-        <div style="font-size:9px;color:var(--text-faint)" id="empCount">—</div>
-      </div>
-      <div class="score-legend">
-        <div class="sl"><div class="sl-dot" style="background:var(--green)"></div>★ممتاز≥85%</div>
-        <div class="sl"><div class="sl-dot" style="background:var(--teal)"></div>✓جيد≥65%</div>
-        <div class="sl"><div class="sl-dot" style="background:var(--orange)"></div>⚠مقبول≥45%</div>
-        <div class="sl"><div class="sl-dot" style="background:#FF6B6B"></div>✗دعم</div>
-        <div class="sl" style="margin-right:6px"><span class="tb tn">🆕جديد</span></div>
-        <div class="sl"><span class="tb to">⭐قديم</span></div>
-        <div class="sl"><span class="tb tb2">🏪فرع</span></div>
-        <div class="sl"><span class="tb tel">🛒إلكتروني</span></div>
-      </div>
-      <div class="tw">
-        <table>
-          <thead><tr>
-            <th>#</th><th>الموظف</th><th>المنطقة</th><th>النوع</th>
-            <th>هدف المبيعات</th><th>المبيعات</th><th>نسبة المبيعات</th>
-            <th>هدف الزيارات</th><th>الزيارات</th><th>نسبة الزيارات</th>
-            <th>عملاء جدد</th><th>نسبة الفتح</th>
-            <th>التقييم</th><th>الحالة</th>
-          </tr></thead>
-          <tbody id="teamTbl"></tbody>
-        </table>
-      </div>
-      <div class="tot-bar" id="totBar"></div>
-    </div>
-
-    <div class="side">
-      <div class="card-box"><div class="box-header"><div class="box-title">🏆 أعلى 3 إجمالاً</div></div><div class="cl" id="top3"></div></div>
-      <div class="card-box"><div class="box-header"><div class="box-title" style="color:var(--green)">🆕 أفضل 3 جدد</div></div><div class="cl" id="topNew"></div></div>
-      <div class="card-box"><div class="box-header"><div class="box-title" style="color:var(--gold)">⭐ أفضل 3 قدامى</div></div><div class="cl" id="topOld"></div></div>
-      <div class="card-box"><div class="box-header"><div class="box-title">⚠️ يحتاجون دعماً</div></div><div class="cl" id="bot3"></div></div>
-    </div>
-  </div>
-
-  <div class="scatter-box">
-    <div class="box-header">
-      <div class="box-title">📊 نسبة المبيعات مقابل نسبة الزيارات</div>
-      <div style="display:flex;gap:10px;font-size:9px;color:var(--text-faint)">
-        <span style="color:var(--green)">●★ممتاز</span><span style="color:var(--teal)">●✓جيد</span>
-        <span style="color:var(--orange)">●⚠مقبول</span><span style="color:#FF6B6B">●✗دعم</span>
-      </div>
-    </div>
-    <div class="sw"><svg class="sc" id="scatter" viewBox="0 0 820 220" preserveAspectRatio="xMidYMid meet"></svg></div>
-  </div>
-
-  <div class="footer">
-    آخر تحديث: <strong id="fDate">—</strong> · <strong>LINES IDEAS V5</strong> ·
-    ميدان = مبيعات 50% + زيارات 25% + فتح 25% | فروع = مبيعات 100% ·
-    تحقيق الشركة السنوي: <strong id="fYTD">—</strong>
-  </div>
 </div>
 
 <script>
 // ─── إعداد Google Sheets ───────────────────────────
 const SHEET_ID = '1i-ja8mXQxVrEPcOyvJZ4M-0hJ1wIkjzI6bdUm3oOoqg';
 const SHEETS = {
-  employees: '02.الموظفون',
-  targets:   '03.الأهداف_الشهرية',
-  sales:     '04.المبيعات_اليومية',
   visits:    '05.الزيارات',
   company:   '07.مستهدف_الشركة',
 };
+const API_BASE = 'https://company-linesideas.com/api';
 
-// ─── قراءة Sheet ──────────────────────────────────
 function fetchSheet(sheetName) {
   const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent(sheetName)}`;
   return fetch(url)
@@ -299,7 +389,6 @@ function fetchSheet(sheetName) {
     });
 }
 
-// ─── مساعدات ──────────────────────────────────────
 const nv  = v => { const x = parseFloat(String(v).replace(/,/g,'')); return isNaN(x)?0:x; };
 const fmt  = v => Math.round(v).toLocaleString('ar-SA');
 const fmtM = v => v>=1e6?(v/1e6).toFixed(2)+'M':v>=1e3?(v/1e3).toFixed(0)+'K':fmt(v);
@@ -316,47 +405,9 @@ function colIdx(cols, names){
   for(const n of names){ const i=cols.findIndex(h=>String(h).trim().includes(n)); if(i>=0)return i; }
   return -1; }
 
-// ─── معالجة البيانات ──────────────────────────────
 function processData(sheets) {
-  const {emp, targ, sales, visits, company} = sheets;
+  const {monthlySales, visits, company} = sheets;
 
-  // Employees
-  const empMap = {};
-  if(emp.rows.length){
-    const ci = n => colIdx(emp.cols, n);
-    const iN=ci(['اسم الموظف','اسم']), iT=ci(['نوع الموظف','نوع']), iB=ci(['أساس التقييم','أساس']), iR=ci(['المنطقة','منطقة']);
-    emp.rows.forEach(r => {
-      const nm = String(r[iN]||'').trim();
-      if(!nm) return;
-      empMap[nm] = { type:String(r[iT]||'قديم').trim(), base:String(r[iB]||'مبيعات+زيارات+فتح').trim(), region:String(r[iR]||'—').trim() };
-    });
-  }
-
-  // Targets
-  const targMap = {};
-  if(targ.rows.length){
-    const ci = n => colIdx(targ.cols, n);
-    const iN=ci(['الموظف']), iS=ci(['هدف المبيعات','المبيعات']), iV=ci(['هدف الزيارات','الزيارات']), iC=ci(['هدف عملاء','عملاء جدد']);
-    targ.rows.forEach(r => {
-      const nm = String(r[iN]||'').trim();
-      if(!nm || nm.includes('إجمالي')) return;
-      targMap[nm] = { st:nv(r[iS]), vt:nv(r[iV]), ct:nv(r[iC]) };
-    });
-  }
-
-  // Sales
-  const salesMap = {};
-  if(sales.rows.length){
-    const ci = n => colIdx(sales.cols, n);
-    const iN=ci(['الموظف']), iA=ci(['المبيعات (ر.س)','المبيعات','مبيعات']);
-    sales.rows.forEach(r => {
-      const nm = String(r[iN]||'').trim();
-      if(!nm || nm.includes('إجمالي')) return;
-      salesMap[nm] = (salesMap[nm]||0) + nv(r[iA]);
-    });
-  }
-
-  // Visits
   const visitMap = {}, ncMap = {};
   if(visits.rows.length){
     const ci = n => colIdx(visits.cols, n);
@@ -369,7 +420,6 @@ function processData(sheets) {
     });
   }
 
-  // Company
   const mNames = ['يناير','فبراير','مارس','أبريل','مايو','يونيو','يوليو','أغسطس','سبتمبر','أكتوبر','نوفمبر','ديسمبر'];
   const compM = [];
   if(company.rows.length){
@@ -386,20 +436,16 @@ function processData(sheets) {
     });
   }
 
-  // Build team
-  const team = Object.keys(targMap).map(tName => {
-    const t   = targMap[tName];
-    const emp2 = lookup(empMap, tName) || { type:'قديم', base:'مبيعات+زيارات+فتح', region:'—' };
-    const sl  = lookup(salesMap,  tName) || 0;
-    const va  = lookup(visitMap,  tName) || 0;
-    const nc  = lookup(ncMap,     tName) || 0;
-    const ib  = emp2.base === 'مبيعات فقط';
-    const sp  = t.st>0 ? sl/t.st : 0;
-    const vp  = t.vt>0 ? va/t.vt : 0;
-    const np  = t.ct>0 ? nc/t.ct : 0;
+  const team = monthlySales.map(m => {
+    const va  = lookup(visitMap, m.name) || 0;
+    const nc  = lookup(ncMap,    m.name) || 0;
+    const ib  = !!m.isBranch;
+    const sp  = m.salesTarget>0 ? m.salesAmount/m.salesTarget : 0;
+    const vp  = m.visitTarget>0 ? va/m.visitTarget : 0;
+    const np  = m.newCustomerTarget>0 ? nc/m.newCustomerTarget : 0;
     const score = ib ? sp : (sp*0.5 + vp*0.25 + np*0.25);
     const status = score>=0.85?'great':score>=0.65?'good':score>=0.45?'ok':'bad';
-    return { name:tName, region:emp2.region, type:emp2.type, ib, st:t.st, sales:sl, sp, vt:t.vt, va, vp, ct:t.ct, nc, np, score, status };
+    return { name:m.name, region:m.region || '—', type:m.employeeType || 'قديم', ib, st:m.salesTarget, sales:m.salesAmount, sp, vt:m.visitTarget, va, vp, ct:m.newCustomerTarget, nc, np, score, status };
   });
   team.sort((a,b)=>b.score-a.score);
   team.forEach((e,i)=>e.rank=i+1);
@@ -415,153 +461,167 @@ function processData(sheets) {
   return { team, totSales, totTarg, totVis, totVT, compM, cYTDt, cYTDa, compYTD };
 }
 
-// ─── رسم الداشبورد ─────────────────────────────────
-function bar(v,mx,cls){ const w=Math.min(100,(mx>0?v/mx:0)*100).toFixed(1);
-  return `<div class="bw ${cls}"><div class="bb"><div class="bf" style="width:${w}%"></div></div><div class="bl">${pct(v)}</div></div>`; }
-function rBadge(r,s){ if(r===1)return`<span class="rb r1">1</span>`;if(r===2)return`<span class="rb r2">2</span>`;
-  if(r===3)return`<span class="rb r3">3</span>`;if(s==='bad')return`<span class="rb rl">${r}</span>`;return`<span class="rb rm">${r}</span>`; }
-function tBadge(e){ if(e.name==='المتجر'||e.name.includes('متجر'))return`<span class="tb tel">🛒إلكتروني</span>`;
-  if(e.ib)return`<span class="tb tb2">🏪فرع</span>`;if(e.type==='جديد')return`<span class="tb tn">🆕جديد</span>`;return`<span class="tb to">⭐قديم</span>`; }
-function sBadge(s){ if(s==='great')return`<span class="sb sg">★ممتاز</span>`;if(s==='good')return`<span class="sb sgd">✓جيد</span>`;
-  if(s==='ok')return`<span class="sb so">⚠مقبول</span>`;return`<span class="sb sd">✗دعم</span>`; }
-function card(e,cls,medal,sc){ const sub=e.ib?`مبيعات ${pct(e.sp)}`:`مبيعات ${pct(e.sp)} · زيارات ${pct(e.vp)} · فتح ${pct(e.np)}`;
-  return`<div class="ci ${cls}"><div class="ci-medal">${medal}</div>
-    <div class="ci-info"><div class="ci-name">${e.name}</div><div class="ci-sub">${sub}</div></div>
-    <div class="ci-score" style="${sc?'color:'+sc:''}">${pct(e.score)}</div></div>`; }
+function bar(v,mx){ return Math.min(100,(mx>0?v/mx:0)*100).toFixed(1); }
 
-function render(d) {
-  const now = new Date().toLocaleDateString('ar-SA');
-  document.getElementById('hDate').textContent  = now;
-  document.getElementById('hCount').textContent = d.team.length;
-  document.getElementById('fDate').textContent  = now;
-  document.getElementById('fYTD').textContent   = pct(d.compYTD);
-  document.getElementById('empCount').textContent = d.team.length + ' موظف';
+class Component extends DCLogic {
+  state = { sheetData: null, loading: true, loadError: '' };
 
-  document.getElementById('kSales').textContent    = fmtM(d.totSales);
-  document.getElementById('kSalesSub').textContent = 'هدف الفريق '+fmtM(d.totTarg);
-  document.getElementById('kSalesPct').textContent = d.totTarg>0?pct(d.totSales/d.totTarg):'—';
-  document.getElementById('kVisits').textContent   = fmt(d.totVis);
-  document.getElementById('kVisitsSub').textContent= 'من هدف '+fmt(d.totVT);
-  document.getElementById('kVisitPct').textContent = d.totVT>0?pct(d.totVis/d.totVT):'—';
-  document.getElementById('kCompPct').textContent  = pct(d.compYTD);
-  document.getElementById('kCompSub').textContent  = `هدف سنوي ${fmtM(d.cYTDt)} · فعلي ${fmtM(d.cYTDa)}`;
-
-  // Company bars
-  let bH='';
-  d.compM.forEach(m=>{
-    const isFut=m.actual===0,p2=m.pct;
-    const bcls=isFut?'mb-future':p2>=1?'mb-hit':p2>=0.7?'mb-partial':'mb-miss';
-    const pc=isFut?'var(--text-faint)':p2>=1?'var(--green)':p2>=0.7?'var(--blue)':'var(--orange)';
-    bH+=`<div class="mb-wrap"><div class="mb-outer ${bcls}"><div class="mb-inner"></div>
-      <div class="mb-pct-in" style="color:${pc}">${isFut?'—':pct(p2)}</div></div>
-      <div class="mb-label">${m.label.replace(/ 2026/,'')}</div>
-      <div class="mb-amt" style="color:${isFut?'var(--text-faint)':pc}">${isFut?'—':fmtM(m.actual)}</div></div>`;
-  });
-  document.getElementById('compBars').innerHTML=bH;
-  const hitM=d.compM.filter(m=>m.actual>0&&m.pct>=1).length;
-  const doneM=d.compM.filter(m=>m.actual>0).length;
-  document.getElementById('compSummary').innerHTML=`
-    <div class="cs-item"><div class="cs-lbl">الهدف السنوي</div><div class="cs-val" style="color:var(--gold)">${fmtM(d.cYTDt)} ر.س</div></div>
-    <div class="cs-item"><div class="cs-lbl">المبيعات YTD</div><div class="cs-val" style="color:var(--green)">${fmtM(d.cYTDa)} ر.س</div></div>
-    <div class="cs-item"><div class="cs-lbl">نسبة التحقيق السنوي</div><div class="cs-val" style="color:${d.compYTD>=1?'var(--green)':d.compYTD>=0.7?'var(--blue)':'var(--orange)'}">${pct(d.compYTD)}</div></div>
-    <div class="cs-item"><div class="cs-lbl">أشهر حققت الهدف</div><div class="cs-val" style="color:var(--teal)">${hitM} / ${doneM}</div></div>`;
-
-  // Table
-  const tb=document.getElementById('teamTbl');tb.innerHTML='';
-  d.team.forEach(e=>{
-    const tr=document.createElement('tr');
-    const vtC=e.ib?`<td class="dc">—</td>`:`<td style="text-align:center"><span class="vtn">${e.vt>0?e.vt:'—'}</span></td>`;
-    const vaC=e.ib?`<td class="dc">—</td>`:`<td style="color:var(--blue);font-weight:600;text-align:center">${e.va}</td>`;
-    const vpC=e.ib?`<td class="dc">—</td>`:`<td>${bar(e.vp,1.2,'bv')}</td>`;
-    const ncC=e.ib?`<td class="dc">—</td>`:`<td style="text-align:center;color:var(--purple);font-weight:600">${e.nc}<span style="color:var(--text-faint);font-weight:400">/${e.ct>0?Math.round(e.ct):0}</span></td>`;
-    const npC=e.ib?`<td class="dc">—</td>`:`<td>${bar(e.np,1.2,'bo')}</td>`;
-    tr.innerHTML=`<td>${rBadge(e.rank,e.status)}</td><td class="nm">${e.name}</td><td class="rg">${e.region}</td>
-      <td>${tBadge(e)}</td><td style="color:var(--text-faint);font-size:10px">${fmt(e.st)}</td>
-      <td style="font-weight:600;color:var(--gold)">${fmt(e.sales)}</td><td>${bar(e.sp,1.2,'bs')}</td>
-      ${vtC}${vaC}${vpC}${ncC}${npC}
-      <td>${bar(e.score,1,'bsc')}<span style="font-size:10px;font-weight:900;color:var(--green);margin-right:2px">${pct(e.score)}</span></td>
-      <td>${sBadge(e.status)}</td>`;
-    tb.appendChild(tr);
-  });
-
-  document.getElementById('totBar').innerHTML=`
-    <div class="ti2"><div class="til">إجمالي الهدف</div><div class="tiv" style="color:var(--gold)">${fmt(d.totTarg)} ر.س</div></div>
-    <div class="ti2"><div class="til">إجمالي المبيعات</div><div class="tiv" style="color:var(--green)">${fmt(d.totSales)} ر.س</div></div>
-    <div class="ti2"><div class="til">نسبة تحقيق الفريق</div><div class="tiv" style="color:var(--blue)">${d.totTarg>0?pct(d.totSales/d.totTarg):'—'}</div></div>
-    <div class="ti2"><div class="til">إجمالي الزيارات</div><div class="tiv" style="color:var(--blue)">${fmt(d.totVis)} / ${fmt(d.totVT)}</div></div>`;
-
-  // Side
-  const M=[['cg','🥇'],['cs2','🥈'],['cb','🥉']],NM=[['cn1','🥇'],['cn2','🥈'],['cn3','🥉']];
-  const s=[...d.team].sort((a,b)=>b.score-a.score);
-  document.getElementById('top3').innerHTML=s.slice(0,3).map((e,i)=>card(e,...M[i])).join('');
-  const byN=s.filter(e=>e.type==='جديد'&&!e.ib);
-  document.getElementById('topNew').innerHTML=byN.length?byN.slice(0,3).map((e,i)=>card(e,...NM[i],'var(--green)')).join(''):`<div style="padding:10px;color:var(--text-faint);font-size:11px;text-align:center">لا يوجد</div>`;
-  const byO=s.filter(e=>e.type==='قديم'&&!e.ib);
-  document.getElementById('topOld').innerHTML=byO.length?byO.slice(0,3).map((e,i)=>card(e,...M[i])).join(''):`<div style="padding:10px;color:var(--text-faint);font-size:11px;text-align:center">لا يوجد</div>`;
-  const w=[...d.team].sort((a,b)=>a.score-b.score).slice(0,3);
-  document.getElementById('bot3').innerHTML=w.map(e=>`<div class="ci cbad"><div class="ci-medal">⚠️</div>
-    <div class="ci-info"><div class="ci-name">${e.name}</div>
-    <div class="ci-sub">${e.ib?`مبيعات ${pct(e.sp)}`:`مبيعات ${pct(e.sp)} · زيارات ${pct(e.vp)} · فتح ${pct(e.np)}`}</div></div>
-    <div class="ci-score">${pct(e.score)}</div></div>`).join('');
-
-  // Scatter
-  const svg=document.getElementById('scatter');svg.innerHTML='';
-  const W=820,H=220,p={t:16,r:18,b:34,l:44},cW=W-p.l-p.r,cH=H-p.t-p.b;
-  const mxS=Math.max(1.2,...d.team.map(e=>e.sp))*1.05;
-  const mxV=Math.max(1.1,...d.team.filter(e=>!e.ib&&e.vp>0).map(e=>e.vp))*1.05||1.2;
-  const mk=(tag,at,tx)=>{const el=document.createElementNS('http://www.w3.org/2000/svg',tag);
-    Object.entries(at).forEach(([k,v])=>el.setAttribute(k,v));if(tx!==undefined)el.textContent=tx;return el};
-  for(let i=0;i<=4;i++){
-    const x=p.l+(i/4)*cW,y=p.t+(i/4)*cH;
-    svg.appendChild(mk('line',{x1:x,y1:p.t,x2:x,y2:p.t+cH,stroke:'rgba(0,0,0,.06)','stroke-width':'1'}));
-    svg.appendChild(mk('text',{x,y:p.t+cH+13,'text-anchor':'middle','font-size':'8',fill:'rgba(30,41,59,.35)','font-family':'Tajawal'},Math.round(i/4*mxS*100)+'%'));
-    svg.appendChild(mk('line',{x1:p.l,y1:y,x2:p.l+cW,y2:y,stroke:'rgba(0,0,0,.06)','stroke-width':'1'}));
-    svg.appendChild(mk('text',{x:p.l-4,y:y+4,'text-anchor':'end','font-size':'8',fill:'rgba(30,41,59,.35)','font-family':'Tajawal'},Math.round((4-i)/4*mxV*100)+'%'));
+  componentDidMount() {
+    this.loadAll();
+    this._interval = setInterval(() => this.loadAll(), 5 * 60 * 1000);
   }
-  svg.appendChild(mk('line',{x1:p.l+(1/mxS)*cW,y1:p.t,x2:p.l+(1/mxS)*cW,y2:p.t+cH,stroke:'rgba(184,134,11,.3)','stroke-width':'1.5','stroke-dasharray':'4 3'}));
-  svg.appendChild(mk('text',{x:p.l+cW/2,y:H-1,'text-anchor':'middle','font-size':'9',fill:'rgba(184,134,11,.7)','font-family':'Tajawal'},'نسبة المبيعات →'));
-  const cm={great:'#22C55E',good:'#14B8A6',ok:'#F97316',bad:'#FF6B6B'};
-  d.team.forEach(e=>{
-    const cx=p.l+Math.min(1,e.sp/mxS)*cW,yv=e.ib?mxV*0.5:e.vp,cy=p.t+(1-Math.min(1,yv/mxV))*cH,col=cm[e.status];
-    svg.appendChild(mk('circle',{cx,cy,r:'7',fill:col,opacity:'.11'}));
-    svg.appendChild(mk('circle',{cx,cy,r:'4',fill:col,stroke:'rgba(0,0,0,.35)','stroke-width':'1.5'}));
-    const lbl=mk('text',{x:cx+5.5,y:cy+3.5,'font-size':'8',fill:col,'font-family':'Tajawal',opacity:'.85'});
-    lbl.textContent=e.name.split(' ')[0];svg.appendChild(lbl);
-  });
+  componentWillUnmount() {
+    if (this._interval) clearInterval(this._interval);
+  }
 
-  document.getElementById('loadingScreen').style.display='none';
-  document.getElementById('mainContent').style.display='block';
-}
-
-// ─── تحميل البيانات ───────────────────────────────
-async function loadAll() {
-  document.getElementById('loadingScreen').style.display='flex';
-  document.getElementById('mainContent').style.display='none';
-  try {
-    const [emp, targ, sales, visits, company] = await Promise.all([
-      fetchSheet(SHEETS.employees),
-      fetchSheet(SHEETS.targets),
-      fetchSheet(SHEETS.sales),
+  loadAll = () => {
+    this.setState({ loading: true, loadError: '' });
+    const month = new Date().toISOString().slice(0, 7);
+    Promise.all([
+      fetch(API_BASE + '/monthly_sales.php?month=' + month).then(r => r.json()),
       fetchSheet(SHEETS.visits),
       fetchSheet(SHEETS.company),
-    ]);
-    const data = processData({ emp, targ, sales, visits, company });
-    render(data);
-  } catch(err) {
-    document.getElementById('loadingScreen').innerHTML = `
-      <div class="error-box">
-        <h3>⚠️ تعذّر تحميل البيانات</h3>
-        <p>${err.message}</p>
-        <p style="margin-top:8px">تأكد إن صلاحية الـ Google Sheet هي "أي شخص لديه الرابط"</p>
-        <button class="refresh-btn" style="margin-top:12px;background:var(--blue);border-color:var(--blue)" onclick="loadAll()">🔄 إعادة المحاولة</button>
-      </div>`;
-    console.error(err);
+    ]).then(([monthlySales, visits, company]) => {
+      const data = processData({ monthlySales, visits, company });
+      this.setState({ sheetData: data, loading: false }, () => this.renderScatter());
+    }).catch(err => {
+      this.setState({ loading: false, loadError: (err && err.message) || String(err) });
+    });
+  };
+
+  renderScatter = () => {
+    const d = this.state.sheetData;
+    const svg = document.getElementById('scatter');
+    if (!svg || !d) return;
+    svg.innerHTML = '';
+    const W=820,H=220,p={t:16,r:18,b:34,l:44},cW=W-p.l-p.r,cH=H-p.t-p.b;
+    const mxS=Math.max(1.2,...d.team.map(e=>e.sp))*1.05;
+    const mxV=Math.max(1.1,...d.team.filter(e=>!e.ib&&e.vp>0).map(e=>e.vp))*1.05||1.2;
+    const mk=(tag,at,tx)=>{const el=document.createElementNS('http://www.w3.org/2000/svg',tag);
+      Object.entries(at).forEach(([k,v])=>el.setAttribute(k,v));if(tx!==undefined)el.textContent=tx;return el};
+    for(let i=0;i<=4;i++){
+      const x=p.l+(i/4)*cW,y=p.t+(i/4)*cH;
+      svg.appendChild(mk('line',{x1:x,y1:p.t,x2:x,y2:p.t+cH,stroke:'rgba(0,0,0,.06)','stroke-width':'1'}));
+      svg.appendChild(mk('text',{x,y:p.t+cH+13,'text-anchor':'middle','font-size':'8',fill:'rgba(30,41,59,.35)','font-family':'Tajawal'},Math.round(i/4*mxS*100)+'%'));
+      svg.appendChild(mk('line',{x1:p.l,y1:y,x2:p.l+cW,y2:y,stroke:'rgba(0,0,0,.06)','stroke-width':'1'}));
+      svg.appendChild(mk('text',{x:p.l-4,y:y+4,'text-anchor':'end','font-size':'8',fill:'rgba(30,41,59,.35)','font-family':'Tajawal'},Math.round((4-i)/4*mxV*100)+'%'));
+    }
+    svg.appendChild(mk('line',{x1:p.l+(1/mxS)*cW,y1:p.t,x2:p.l+(1/mxS)*cW,y2:p.t+cH,stroke:'rgba(184,134,11,.3)','stroke-width':'1.5','stroke-dasharray':'4 3'}));
+    svg.appendChild(mk('text',{x:p.l+cW/2,y:H-1,'text-anchor':'middle','font-size':'9',fill:'rgba(184,134,11,.7)','font-family':'Tajawal'},'نسبة المبيعات →'));
+    const cm={great:'#22C55E',good:'#14B8A6',ok:'#F97316',bad:'#FF6B6B'};
+    d.team.forEach(e=>{
+      const cx=p.l+Math.min(1,e.sp/mxS)*cW,yv=e.ib?mxV*0.5:e.vp,cy=p.t+(1-Math.min(1,yv/mxV))*cH,col=cm[e.status];
+      svg.appendChild(mk('circle',{cx,cy,r:'7',fill:col,opacity:'.11'}));
+      svg.appendChild(mk('circle',{cx,cy,r:'4',fill:col,stroke:'rgba(0,0,0,.35)','stroke-width':'1.5'}));
+      const lbl=mk('text',{x:cx+5.5,y:cy+3.5,'font-size':'8',fill:col,'font-family':'Tajawal',opacity:'.85'});
+      lbl.textContent=e.name.split(' ')[0];svg.appendChild(lbl);
+    });
+  };
+
+  renderVals() {
+    const s = this.state;
+    const d = s.sheetData;
+    const now = new Date().toLocaleDateString('ar-SA');
+
+    if (!d) {
+      return {
+        showLoading: s.loading || !!s.loadError,
+        showContent: false,
+        hasError: !!s.loadError,
+        isLoadingNoError: s.loading && !s.loadError,
+        loadError: s.loadError,
+        retry: this.loadAll,
+        hDate: now, hCount: 0,
+        kSales: '—', kSalesSub: '—', kSalesPct: '—', kVisits: '—', kVisitsSub: '—', kVisitPct: '—', kCompPct: '—', kCompSub: '—',
+        compBars: [], compSummary: { target: '—', actual: '—', pctText: '—', pctColor: 'var(--text-dim)', hitText: '—' },
+        empCountText: '—', teamRows: [], totBar: { target: '—', sales: '—', pct: '—', visits: '—' },
+        top3: [], topNew: [], topOld: [], bot3: [], topNewEmpty: true, topOldEmpty: true
+      };
+    }
+
+    const compBars = d.compM.map(m => {
+      const isFut = m.actual === 0;
+      const p2 = m.pct;
+      const outerCls = 'mb-outer ' + (isFut ? 'mb-future' : p2 >= 1 ? 'mb-hit' : p2 >= 0.7 ? 'mb-partial' : 'mb-miss');
+      const color = isFut ? 'var(--text-faint)' : p2 >= 1 ? 'var(--green)' : p2 >= 0.7 ? 'var(--blue)' : 'var(--orange)';
+      return {
+        outerCls, color,
+        pctText: isFut ? '—' : pct(p2),
+        amtText: isFut ? '—' : fmtM(m.actual),
+        amtColor: isFut ? 'var(--text-faint)' : color,
+        label: m.label.replace(' 2026', '')
+      };
+    });
+    const hitM = d.compM.filter(m => m.actual > 0 && m.pct >= 1).length;
+    const doneM = d.compM.filter(m => m.actual > 0).length;
+    const compSummary = {
+      target: fmtM(d.cYTDt), actual: fmtM(d.cYTDa),
+      pctText: pct(d.compYTD), pctColor: d.compYTD >= 1 ? 'var(--green)' : d.compYTD >= 0.7 ? 'var(--blue)' : 'var(--orange)',
+      hitText: hitM + ' / ' + doneM
+    };
+
+    const rankBadge = (e) => e.rank === 1 ? { cls: 'rb r1', text: '1' } : e.rank === 2 ? { cls: 'rb r2', text: '2' } :
+      e.rank === 3 ? { cls: 'rb r3', text: '3' } : e.status === 'bad' ? { cls: 'rb rl', text: String(e.rank) } : { cls: 'rb rm', text: String(e.rank) };
+    const typeBadge = (e) => (e.name === 'المتجر' || e.name.includes('متجر')) ? { cls: 'tb tel', text: '🛒إلكتروني' } :
+      e.ib ? { cls: 'tb tb2', text: '🏪فرع' } : e.type === 'جديد' ? { cls: 'tb tn', text: '🆕جديد' } : { cls: 'tb to', text: '⭐قديم' };
+    const statusBadge = (st) => st === 'great' ? { cls: 'sb sg', text: '★ممتاز' } : st === 'good' ? { cls: 'sb sgd', text: '✓جيد' } :
+      st === 'ok' ? { cls: 'sb so', text: '⚠مقبول' } : { cls: 'sb sd', text: '✗دعم' };
+
+    const teamRows = d.team.map(e => {
+      const rb = rankBadge(e), tb = typeBadge(e), sb = statusBadge(e.status);
+      const dashStyle = 'color:var(--text-faint);font-size:10px;text-align:center';
+      return {
+        rankCls: rb.cls, rankText: rb.text,
+        name: e.name, region: e.region,
+        typeBadgeCls: tb.cls, typeBadgeText: tb.text,
+        targetText: fmt(e.st), salesText: fmt(e.sales),
+        salesBarPct: bar(e.sp, 1.2), salesPctText: pct(e.sp),
+        visitTargetText: e.ib ? '—' : (e.vt > 0 ? e.vt : '—'), visitTargetStyle: e.ib ? dashStyle : '',
+        visitActualText: e.ib ? '—' : String(e.va), visitActualStyle: e.ib ? dashStyle : 'color:var(--blue);font-weight:600;text-align:center',
+        visitBarPct: bar(e.vp, 1.2), visitPctText: pct(e.vp), visitBarWrapStyle: e.ib ? 'display:none' : '',
+        newCustText: e.ib ? '—' : (e.nc + '/' + (e.ct > 0 ? Math.round(e.ct) : 0)), newCustStyle: e.ib ? dashStyle : 'text-align:center;color:var(--purple);font-weight:600',
+        openBarPct: bar(e.np, 1.2), openPctText: pct(e.np), openBarWrapStyle: e.ib ? 'display:none' : '',
+        scoreBarPct: bar(e.score, 1), scorePctText: pct(e.score),
+        statusBadgeCls: sb.cls, statusBadgeText: sb.text
+      };
+    });
+
+    const totBar = {
+      target: fmt(d.totTarg), sales: fmt(d.totSales),
+      pct: d.totTarg > 0 ? pct(d.totSales / d.totTarg) : '—',
+      visits: fmt(d.totVis) + ' / ' + fmt(d.totVT)
+    };
+
+    const sortedByScore = [...d.team].sort((a, b) => b.score - a.score);
+    const medalsTop = [['cg', '🥇'], ['cs2', '🥈'], ['cb', '🥉']];
+    const medalsNew = [['cn1', '🥇'], ['cn2', '🥈'], ['cn3', '🥉']];
+    const subText = (e) => e.ib ? ('مبيعات ' + pct(e.sp)) : ('مبيعات ' + pct(e.sp) + ' · زيارات ' + pct(e.vp) + ' · فتح ' + pct(e.np));
+
+    const top3 = sortedByScore.slice(0, 3).map((e, i) => ({ cls: medalsTop[i][0], medal: medalsTop[i][1], name: e.name, sub: subText(e), scoreText: pct(e.score) }));
+    const byNew = sortedByScore.filter(e => e.type === 'جديد' && !e.ib);
+    const topNew = byNew.slice(0, 3).map((e, i) => ({ cls: medalsNew[i][0], medal: medalsNew[i][1], name: e.name, sub: subText(e), scoreText: pct(e.score) }));
+    const byOld = sortedByScore.filter(e => e.type === 'قديم' && !e.ib);
+    const topOld = byOld.slice(0, 3).map((e, i) => ({ cls: medalsTop[i][0], medal: medalsTop[i][1], name: e.name, sub: subText(e), scoreText: pct(e.score) }));
+    const bot3 = [...d.team].sort((a, b) => a.score - b.score).slice(0, 3).map(e => ({ name: e.name, sub: subText(e), scoreText: pct(e.score) }));
+
+    return {
+      showLoading: s.loading, showContent: !s.loading, hasError: false, isLoadingNoError: true, loadError: '',
+      retry: this.loadAll,
+      hDate: now, hCount: d.team.length,
+      kSales: fmtM(d.totSales), kSalesSub: 'هدف الفريق ' + fmtM(d.totTarg),
+      kSalesPct: d.totTarg > 0 ? pct(d.totSales / d.totTarg) : '—',
+      kVisits: fmt(d.totVis), kVisitsSub: 'من هدف ' + fmt(d.totVT),
+      kVisitPct: d.totVT > 0 ? pct(d.totVis / d.totVT) : '—',
+      kCompPct: pct(d.compYTD), kCompSub: `هدف سنوي ${fmtM(d.cYTDt)} · فعلي ${fmtM(d.cYTDa)}`,
+      compBars, compSummary,
+      empCountText: d.team.length + ' موظف',
+      teamRows, totBar,
+      top3, topNew, topOld, bot3,
+      topNewEmpty: byNew.length === 0, topOldEmpty: byOld.length === 0
+    };
   }
 }
-
-// تحميل عند فتح الصفحة + تحديث تلقائي كل 5 دقائق
-loadAll();
-setInterval(loadAll, 5 * 60 * 1000);
 </script>
+</x-dc>
 </body>
 </html>
