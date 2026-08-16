@@ -450,7 +450,7 @@ function processData(sheets) {
   // شهور فيها بيانات حقيقية من نظام فريق المبيعات الجديد تتجاوز الشيت القديم (أو تُضاف له)
   const compByCode = {};
   compM.forEach(m => { if(m.code) compByCode[m.code] = m; });
-  (companySummary||[]).forEach(cs => {
+  (companySummary||[]).filter(cs => cs.totalSales > 0).forEach(cs => {
     const code = cs.month;
     const yi = code.slice(0,4), moi = parseInt(code.slice(5,7),10)-1;
     const label = mNames[moi] ? `${mNames[moi]} ${yi}` : code;
