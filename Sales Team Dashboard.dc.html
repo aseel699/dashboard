@@ -565,11 +565,12 @@ class Component extends DCLogic {
       };
     }
 
+    const isHit = p => Math.round(p * 1000) >= 1000;
     const compBars = d.compM.map(m => {
       const isFut = m.actual === 0;
       const p2 = m.pct;
-      const outerCls = 'mb-outer ' + (isFut ? 'mb-future' : p2 >= 1 ? 'mb-hit' : p2 >= 0.7 ? 'mb-partial' : 'mb-miss');
-      const color = isFut ? 'var(--text-faint)' : p2 >= 1 ? 'var(--green)' : p2 >= 0.7 ? 'var(--blue)' : 'var(--orange)';
+      const outerCls = 'mb-outer ' + (isFut ? 'mb-future' : isHit(p2) ? 'mb-hit' : p2 >= 0.7 ? 'mb-partial' : 'mb-miss');
+      const color = isFut ? 'var(--text-faint)' : isHit(p2) ? 'var(--green)' : p2 >= 0.7 ? 'var(--blue)' : 'var(--orange)';
       return {
         outerCls, color,
         pctText: isFut ? '—' : pct(p2),
@@ -578,7 +579,7 @@ class Component extends DCLogic {
         label: m.label.replace(' 2026', '')
       };
     });
-    const hitM = d.compM.filter(m => m.actual > 0 && m.pct >= 1).length;
+    const hitM = d.compM.filter(m => m.actual > 0 && isHit(m.pct)).length;
     const doneM = d.compM.filter(m => m.actual > 0).length;
     const compSummary = {
       target: fmtM(d.cYTDt), actual: fmtM(d.cYTDa),
