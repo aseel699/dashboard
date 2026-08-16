@@ -369,24 +369,30 @@ svg.sc{width:100%;height:220px;display:block}
 <script>
 // ─── إعداد Google Sheets ───────────────────────────
 const SHEET_ID = '1i-ja8mXQxVrEPcOyvJZ4M-0hJ1wIkjzI6bdUm3oOoqg';
+const VISITS_SHEET_ID = '1g7XbqhojGzYLsxL1yVojKwJkyc6B3VFZ3OM0YraIpX0';
+const VISITS_SHEET_GID = '1470230930';
 const SHEETS = {
-  visits:    '05.الزيارات',
-  company:   '07.مستهدف_الشركة',
+  company: '07.مستهدف_الشركة',
 };
 const API_BASE = 'https://company-linesideas.com/api';
 
+function parseGvizText(text) {
+  const json = JSON.parse(text.substring(47).slice(0,-2));
+  const cols = json.table.cols.map(c => c.label);
+  const rows = json.table.rows.map(r =>
+    r.c.map(cell => cell ? (cell.v !== null ? cell.v : '') : '')
+  );
+  return { cols, rows };
+}
+
 function fetchSheet(sheetName) {
   const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent(sheetName)}`;
-  return fetch(url)
-    .then(r => r.text())
-    .then(text => {
-      const json = JSON.parse(text.substring(47).slice(0,-2));
-      const cols = json.table.cols.map(c => c.label);
-      const rows = json.table.rows.map(r =>
-        r.c.map(cell => cell ? (cell.v !== null ? cell.v : '') : '')
-      );
-      return { cols, rows };
-    });
+  return fetch(url).then(r => r.text()).then(parseGvizText);
+}
+
+function fetchVisitsSheet() {
+  const url = `https://docs.google.com/spreadsheets/d/${VISITS_SHEET_ID}/gviz/tq?tqx=out:json&gid=${VISITS_SHEET_GID}`;
+  return fetch(url).then(r => r.text()).then(parseGvizText);
 }
 
 const nv  = v => { const x = parseFloat(String(v).replace(/,/g,'')); return isNaN(x)?0:x; };
@@ -406,17 +412,22 @@ function colIdx(cols, names){
   return -1; }
 
 function processData(sheets) {
-  const {monthlySales, visits, company} = sheets;
+  const {monthlySales, visitsRaw, company, month} = sheets;
 
   const visitMap = {}, ncMap = {};
-  if(visits.rows.length){
-    const ci = n => colIdx(visits.cols, n);
-    const iN=ci(['الموظف']), iV=ci(['عدد الزيارات','الزيارات','زيارات']), iC=ci(['عملاء جدد فعلي','عملاء جدد','عملاء']);
-    visits.rows.forEach(r => {
+  if(visitsRaw.rows.length){
+    const ci = n => colIdx(visitsRaw.cols, n);
+    const iTs=ci(['طابع زمني']), iN=ci(['اسم البائع','Delegate name']), iR=ci(['وضع العميل','Visit Result']);
+    visitsRaw.rows.forEach(r => {
+      const ts = String(r[iTs]||'');
+      const dm = /^Date\((\d+),(\d+),(\d+)/.exec(ts);
+      if(!dm) return;
+      const code = `${dm[1]}-${String(+dm[2]+1).padStart(2,'0')}`;
+      if(code !== month) return;
       const nm = String(r[iN]||'').trim();
       if(!nm) return;
-      visitMap[nm] = (visitMap[nm]||0) + nv(r[iV]);
-      ncMap[nm]    = (ncMap[nm]||0)    + nv(r[iC]);
+      visitMap[nm] = (visitMap[nm]||0) + 1;
+      if(String(r[iR]||'').includes('Start dealing')) ncMap[nm] = (ncMap[nm]||0) + 1;
     });
   }
 
@@ -479,10 +490,10 @@ class Component extends DCLogic {
     const month = new Date().toISOString().slice(0, 7);
     Promise.all([
       fetch(API_BASE + '/monthly_sales.php?month=' + month).then(r => r.json()),
-      fetchSheet(SHEETS.visits),
+      fetchVisitsSheet(),
       fetchSheet(SHEETS.company),
-    ]).then(([monthlySales, visits, company]) => {
-      const data = processData({ monthlySales, visits, company });
+    ]).then(([monthlySales, visitsRaw, company]) => {
+      const data = processData({ monthlySales, visitsRaw, company, month });
       this.setState({ sheetData: data, loading: false }, () => this.renderScatter());
     }).catch(err => {
       this.setState({ loading: false, loadError: (err && err.message) || String(err) });
