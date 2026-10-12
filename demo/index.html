@@ -73,18 +73,18 @@ body{font-family:'Tajawal',sans-serif;background:var(--bg);color:var(--text);min
 .money-box-title{font-size:15.5px;font-weight:900;color:var(--maroon-dark)}
 .money-box-sub{font-size:11px;color:var(--text-faint);margin-top:2px}
 .mtw{overflow-x:auto}
-.mt{width:100%;border-collapse:collapse;font-size:13px;min-width:1150px}
-.mt thead tr.grp th{background:var(--maroon-dark);color:#fff;padding:9px 10px;font-size:11.5px;font-weight:800;text-align:center;border-left:1px solid rgba(255,255,255,.12)}
-.mt thead tr.sub th{background:var(--maroon-dim);color:var(--maroon-dark);padding:9px 10px;font-size:11px;font-weight:800;text-align:center;white-space:nowrap;border-bottom:1px solid var(--maroon-border)}
+.mt{width:100%;border-collapse:collapse;font-size:15px;min-width:1150px}
+.mt thead tr.grp th{background:var(--maroon-dark);color:#fff;padding:11px 12px;font-size:13.5px;font-weight:800;text-align:center;border-left:1px solid rgba(255,255,255,.12)}
+.mt thead tr.sub th{background:var(--maroon-dim);color:var(--maroon-dark);padding:11px 12px;font-size:13px;font-weight:800;text-align:center;white-space:nowrap;border-bottom:1px solid var(--maroon-border)}
 .mt tbody tr{border-bottom:1px solid var(--border2)}
 .mt tbody tr:hover{background:rgba(122,31,43,.03)}
-.mt tbody td{padding:7px 8px;color:var(--text-dim);text-align:center;white-space:nowrap}
-.mt td.nm{color:var(--text);font-weight:700;font-size:14px;text-align:right}
-.mt td.rg{color:var(--text-faint);font-size:11.5px}
+.mt tbody td{padding:10px 10px;color:var(--text-dim);text-align:center;white-space:nowrap}
+.mt td.nm{color:var(--text);font-weight:700;font-size:16px;text-align:right}
+.mt td.rg{color:var(--text-faint);font-size:13px}
 .mt td.rk{font-weight:800;color:var(--text-dim)}
 .mt td.ach{color:var(--maroon);font-weight:800}
 .mt tfoot tr{background:var(--maroon-dim);font-weight:900}
-.mt tfoot td{padding:9px 8px;text-align:center;color:var(--maroon-dark)}
+.mt tfoot td{padding:12px 10px;text-align:center;color:var(--maroon-dark)}
 .mt tfoot td.nm{text-align:right}
 @media(max-width:700px){
   .mt th:first-child, .mt td.rk{display:none}
@@ -205,14 +205,14 @@ body{font-family:'Tajawal',sans-serif;background:var(--bg);color:var(--text);min
             <thead>
               <tr class="grp">
                 <th colspan="3"></th>
-                <th colspan="4">مؤشرات المبيعات الشهرية</th>
+                <th colspan="3">مؤشرات المبيعات الشهرية</th>
                 <th colspan="3">مؤشرات المبيعات الآجلة الشهرية</th>
                 <th colspan="3">مؤشرات المتعلقات السابقة</th>
                 <th colspan="2">إجمالي المتعلقات</th>
               </tr>
               <tr class="sub">
                 <th>#</th><th>اسم الموظف</th><th>الموقع</th>
-                <th>المستهدف</th><th>المحقق</th><th>نسبة المحقق</th><th>المتبقي</th>
+                <th>المستهدف</th><th>المحقق</th><th>نسبة المحقق</th>
                 <th>المبيعات الآجلة</th><th>التحصيل</th><th>المتبقي</th>
                 <th>المتعلقات</th><th>التحصيل</th><th>المتبقي</th>
                 <th>الإجمالي</th><th>النسبة</th>
@@ -227,7 +227,6 @@ body{font-family:'Tajawal',sans-serif;background:var(--bg);color:var(--text);min
                   <td>{{ e.target }}</td>
                   <td class="ach">{{ e.achieved }}</td>
                   <td><div class="mbar"><div class="bb"><div class="bf" style="width:{{ e.achievedBarPct }}%"></div></div><div class="bl">{{ e.achievedPct }}</div></div></td>
-                  <td>{{ e.remaining }}</td>
                   <td>{{ e.instTarget }}</td><td>{{ e.instCollected }}</td><td>{{ e.instRemaining }}</td>
                   <td>{{ e.pastOutstanding }}</td><td>{{ e.pastCollected }}</td><td>{{ e.pastRemaining }}</td>
                   <td class="ach">{{ e.totalOutstanding }}</td><td>{{ e.totalPct }}</td>
@@ -241,7 +240,6 @@ body{font-family:'Tajawal',sans-serif;background:var(--bg);color:var(--text);min
                 <td>{{ moneyTotals.target }}</td>
                 <td>{{ moneyTotals.achieved }}</td>
                 <td>{{ moneyTotals.pct }}</td>
-                <td>{{ moneyTotals.remaining }}</td>
                 <td>{{ moneyTotals.instTarget }}</td><td>{{ moneyTotals.instCollected }}</td><td>{{ moneyTotals.instRemaining }}</td>
                 <td>{{ moneyTotals.pastOutstanding }}</td><td>{{ moneyTotals.pastCollected }}</td><td>{{ moneyTotals.pastRemaining }}</td>
                 <td>{{ moneyTotals.totalOutstanding }}</td><td>{{ moneyTotals.totalPct }}</td>
@@ -305,9 +303,8 @@ function buildRows() {
     const instRemaining = Math.max(0, e.instTarget - e.instCollected);
     const pastRemaining = Math.max(0, e.pastOutstanding - e.pastCollected);
     const totalOutstanding = instRemaining + pastRemaining;
-    const salesRemaining = Math.max(0, e.target - e.achieved);
     const sp = e.target > 0 ? e.achieved / e.target : null;
-    return { ...e, instRemaining, pastRemaining, totalOutstanding, salesRemaining, sp };
+    return { ...e, instRemaining, pastRemaining, totalOutstanding, sp };
   });
   const grandOutstanding = rows.reduce((s, e) => s + e.totalOutstanding, 0);
   rows.forEach(e => { e.totalPct = grandOutstanding > 0 ? e.totalOutstanding / grandOutstanding : 0; });
@@ -333,7 +330,6 @@ class Component extends DCLogic {
       achieved: fmt(e.achieved),
       achievedPct: e.sp !== null ? pct(e.sp) : '—',
       achievedBarPct: e.sp !== null ? bar(e.sp, 1.2) : 0,
-      remaining: e.target > 0 ? fmt(e.salesRemaining) : '—',
       instTarget: fmt(e.instTarget), instCollected: fmt(e.instCollected), instRemaining: fmt(e.instRemaining),
       pastOutstanding: fmt(e.pastOutstanding), pastCollected: fmt(e.pastCollected), pastRemaining: fmt(e.pastRemaining),
       totalOutstanding: fmt(e.totalOutstanding), totalPct: pct(e.totalPct)
@@ -351,7 +347,6 @@ class Component extends DCLogic {
     const moneyTotals = {
       target: fmt(sumTarget), achieved: fmt(sumAchieved),
       pct: sumTarget > 0 ? pct(sumAchieved / sumTarget) : '—',
-      remaining: fmt(Math.max(0, sumTarget - sumAchieved)),
       instTarget: fmt(sumInstTarget), instCollected: fmt(sumInstCollected), instRemaining: fmt(sumInstRemaining),
       pastOutstanding: fmt(sumPastOutstanding), pastCollected: fmt(sumPastCollected), pastRemaining: fmt(sumPastRemaining),
       totalOutstanding: fmt(sumTotalOutstanding), totalPct: '100%'
