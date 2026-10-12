@@ -1,33 +1,372 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="robots" content="noindex, nofollow">
-<title>الصفحة قيد الصيانة</title>
-<style>
-  *{margin:0;padding:0;box-sizing:border-box}
-  html,body{height:100%}
-  body{
-    display:flex;align-items:center;justify-content:center;
-    min-height:100vh;
-    font-family:'Tajawal','Segoe UI',Arial,sans-serif;
-    background:#1a1a1a;
-    color:#f2f2f2;
-    text-align:center;
-    padding:24px;
-  }
-  .wrap{max-width:440px}
-  .icon{font-size:48px;margin-bottom:20px;opacity:.9}
-  h1{font-size:26px;font-weight:800;margin-bottom:12px;color:#ffffff}
-  p{font-size:15.5px;line-height:1.7;color:#b8b8b8}
-</style>
+<script src="./support.js"></script>
 </head>
 <body>
-  <div class="wrap">
-    <div class="icon">🛠️</div>
-    <h1>الصفحة قيد الصيانة</h1>
-    <p>نعمل حاليًا على تحديث هذه الصفحة. يرجى المحاولة مرة أخرى لاحقًا.</p>
-  </div>
+<x-dc>
+<helmet>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+  <style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --maroon:#7A1F2B;--maroon-dark:#4A1420;--maroon-dim:rgba(122,31,43,.07);--maroon-border:rgba(122,31,43,.22);
+  --gold:#B8860B;--gold-dim:rgba(184,134,11,.08);--gold-border:rgba(184,134,11,.2);
+  --red:#DC2626;--red-dim:rgba(220,38,38,.08);
+  --green:#16A34A;--green-dim:rgba(22,163,74,.08);
+  --orange:#EA580C;--orange-dim:rgba(234,88,12,.08);
+  --blue:#2563EB;--blue-dim:rgba(37,99,235,.08);
+  --purple:#7C3AED;--teal:#0D9488;
+  --bg:#F8FAFC;--bg2:#FFFFFF;
+  --border:rgba(0,0,0,.08);--border2:rgba(0,0,0,.05);
+  --text:#1E293B;--text-dim:#475569;--text-faint:#94A3B8;
+}
+body{font-family:'Tajawal',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;padding:20px}
+.container{max-width:1700px;margin:0 auto}
+
+/* ── Header (maroon bar, matches brand) ───────────────── */
+.top-header{background:linear-gradient(135deg,var(--maroon),var(--maroon-dark));border-radius:18px;padding:16px 22px;display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;gap:16px;flex-wrap:wrap;box-shadow:0 4px 16px rgba(74,20,32,.28)}
+.th-left{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.th-date{display:flex;align-items:center;gap:6px;color:#fff;font-size:13px;font-weight:700}
+.th-live{width:7px;height:7px;border-radius:50%;background:#4ADE80;animation:pulse 2s infinite;display:inline-block;box-shadow:0 0 0 3px rgba(74,222,128,.2)}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+.th-emp{color:rgba(255,255,255,.75);font-size:11px;margin-right:8px}
+.th-right{display:flex;align-items:center;gap:12px}
+.th-title{color:#fff;font-size:21px;font-weight:900;line-height:1.25;text-align:left}
+.brand-badge{display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.brand-badge img{height:44px;width:auto;object-fit:contain}
+
+/* ── Indicator grid (top3 / bottom3 per metric) ───────── */
+.ind-wrap{display:grid;grid-template-columns:1fr 1fr;gap:0;background:var(--bg2);border:1px solid var(--border);border-radius:16px;overflow:hidden;margin-bottom:18px;box-shadow:0 1px 4px rgba(0,0,0,.06)}
+@media(max-width:900px){.ind-wrap{grid-template-columns:1fr}}
+.ind-col{padding:14px 16px}
+.ind-col.right{border-left:2px solid var(--maroon-border)}
+@media(max-width:900px){.ind-col.right{border-left:none;border-top:2px solid var(--maroon-border)}}
+.ind-title{font-size:12.5px;font-weight:900;color:var(--maroon-dark);margin-bottom:12px;text-align:center;letter-spacing:.3px}
+.ind-metrics{display:grid;gap:10px}
+.ind-metrics.n3{grid-template-columns:repeat(3,1fr)}
+.ind-metrics.n2{grid-template-columns:repeat(2,1fr)}
+@media(max-width:620px){.ind-metrics.n3,.ind-metrics.n2{grid-template-columns:1fr}}
+.ind-metric-lbl{font-size:9.5px;font-weight:800;color:var(--text-dim);text-align:center;margin-bottom:6px;min-height:24px;display:flex;align-items:center;justify-content:center}
+.ind-card{border-radius:10px;padding:7px 9px;margin-bottom:6px}
+.ind-card:last-child{margin-bottom:0}
+.ind-card.top{background:var(--green-dim);border:1px solid rgba(34,197,94,.18)}
+.ind-card.bot{background:var(--red-dim);border:1px solid rgba(220,38,38,.16)}
+.ind-row{display:flex;justify-content:space-between;align-items:center;gap:6px;padding:2.5px 0;font-size:10px}
+.ind-row .n{color:var(--text-dim);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ind-row .v{font-weight:900;flex-shrink:0}
+.ind-row.top .v{color:var(--green)}
+.ind-row.bot .v{color:#DC2626}
+
+/* ── Money table (sales + collections) ────────────────── */
+.money-box{background:var(--bg2);border:1px solid var(--border);border-radius:16px;overflow:hidden;margin-bottom:18px;box-shadow:0 1px 4px rgba(0,0,0,.06)}
+.money-box-header{padding:12px 18px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.money-box-title{font-size:13px;font-weight:900;color:var(--maroon-dark)}
+.money-box-sub{font-size:9.5px;color:var(--text-faint);margin-top:2px}
+.mtw{overflow-x:auto}
+.mt{width:100%;border-collapse:collapse;font-size:10.5px;min-width:1150px}
+.mt thead tr.grp th{background:var(--maroon-dark);color:#fff;padding:7px 8px;font-size:9.5px;font-weight:800;text-align:center;border-left:1px solid rgba(255,255,255,.12)}
+.mt thead tr.sub th{background:var(--maroon-dim);color:var(--maroon-dark);padding:7px 8px;font-size:9px;font-weight:800;text-align:center;white-space:nowrap;border-bottom:1px solid var(--maroon-border)}
+.mt tbody tr{border-bottom:1px solid var(--border2)}
+.mt tbody tr:hover{background:rgba(122,31,43,.03)}
+.mt tbody td{padding:7px 8px;color:var(--text-dim);text-align:center;white-space:nowrap}
+.mt td.nm{color:var(--text);font-weight:700;font-size:11.5px;text-align:right}
+.mt td.rg{color:var(--text-faint);font-size:9.5px}
+.mt td.rk{font-weight:800;color:var(--text-dim)}
+.mt td.ach{color:var(--maroon);font-weight:800}
+.mt tfoot tr{background:var(--maroon-dim);font-weight:900}
+.mt tfoot td{padding:9px 8px;text-align:center;color:var(--maroon-dark)}
+.mt tfoot td.nm{text-align:right}
+.mbar{display:flex;align-items:center;gap:5px;min-width:70px;margin:0 auto}
+.mbar .bb{flex:1;height:5px;background:rgba(0,0,0,.06);border-radius:3px;overflow:hidden}
+.mbar .bf{height:100%;border-radius:3px;background:linear-gradient(90deg,var(--maroon),#A5384A)}
+.mbar .bl{font-size:9.5px;font-weight:800;min-width:30px}
+
+.footer{text-align:center;padding:11px;font-size:9px;color:var(--text-faint);border-top:1px solid var(--border);background:#fff}
+.footer strong{color:var(--maroon)}
+  </style>
+</helmet>
+
+<div style="direction: rtl;">
+    <div class="container">
+
+      <div class="top-header">
+        <div class="th-left">
+          <div class="th-date"><span class="th-live"></span> {{ hDate }}</div>
+          <div class="th-emp">👥 {{ hCount }} موظف</div>
+        </div>
+        <div class="th-right">
+          <div class="th-title">لوحة متابعة قسم المبيعات</div>
+          <div class="brand-badge"><img src="./lines-cup-mark-white.png" alt="خطوط الأفكار"></div>
+        </div>
+      </div>
+
+      <div class="ind-wrap">
+        <div class="ind-col">
+          <div class="ind-title">مؤشرات التحصيل والمتعلقات</div>
+          <div class="ind-metrics n3">
+            <div>
+              <div class="ind-metric-lbl">نسبة متعلقات</div>
+              <div class="ind-card top">
+                <sc-for list="{{ indTopOutstanding }}" as="c" hint-placeholder-count="3">
+                  <div class="ind-row top"><span class="n">{{ c.name }}</span><span class="v">{{ c.valText }}</span></div>
+                </sc-for>
+              </div>
+              <div class="ind-card bot">
+                <sc-for list="{{ indBotOutstanding }}" as="c" hint-placeholder-count="3">
+                  <div class="ind-row bot"><span class="n">{{ c.name }}</span><span class="v">{{ c.valText }}</span></div>
+                </sc-for>
+              </div>
+            </div>
+            <div>
+              <div class="ind-metric-lbl">نسبة تحصيل مبيعات سابقة</div>
+              <div class="ind-card top">
+                <sc-for list="{{ indTopPastCollect }}" as="c" hint-placeholder-count="3">
+                  <div class="ind-row top"><span class="n">{{ c.name }}</span><span class="v">{{ c.valText }}</span></div>
+                </sc-for>
+              </div>
+              <div class="ind-card bot">
+                <sc-for list="{{ indBotPastCollect }}" as="c" hint-placeholder-count="3">
+                  <div class="ind-row bot"><span class="n">{{ c.name }}</span><span class="v">{{ c.valText }}</span></div>
+                </sc-for>
+              </div>
+            </div>
+            <div>
+              <div class="ind-metric-lbl">نسبة تحصيل شهري</div>
+              <div class="ind-card top">
+                <sc-for list="{{ indTopMonthlyCollect }}" as="c" hint-placeholder-count="3">
+                  <div class="ind-row top"><span class="n">{{ c.name }}</span><span class="v">{{ c.valText }}</span></div>
+                </sc-for>
+              </div>
+              <div class="ind-card bot">
+                <sc-for list="{{ indBotMonthlyCollect }}" as="c" hint-placeholder-count="3">
+                  <div class="ind-row bot"><span class="n">{{ c.name }}</span><span class="v">{{ c.valText }}</span></div>
+                </sc-for>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="ind-col right">
+          <div class="ind-title">مؤشرات المبيعات</div>
+          <div class="ind-metrics n2">
+            <div>
+              <div class="ind-metric-lbl">نسبة مبيعات نقدية</div>
+              <div class="ind-card top">
+                <sc-for list="{{ indTopCash }}" as="c" hint-placeholder-count="3">
+                  <div class="ind-row top"><span class="n">{{ c.name }}</span><span class="v">{{ c.valText }}</span></div>
+                </sc-for>
+              </div>
+              <div class="ind-card bot">
+                <sc-for list="{{ indBotCash }}" as="c" hint-placeholder-count="3">
+                  <div class="ind-row bot"><span class="n">{{ c.name }}</span><span class="v">{{ c.valText }}</span></div>
+                </sc-for>
+              </div>
+            </div>
+            <div>
+              <div class="ind-metric-lbl">نسبة تحقيق مبيعات</div>
+              <div class="ind-card top">
+                <sc-for list="{{ indTopAchv }}" as="c" hint-placeholder-count="3">
+                  <div class="ind-row top"><span class="n">{{ c.name }}</span><span class="v">{{ c.valText }}</span></div>
+                </sc-for>
+              </div>
+              <div class="ind-card bot">
+                <sc-for list="{{ indBotAchv }}" as="c" hint-placeholder-count="3">
+                  <div class="ind-row bot"><span class="n">{{ c.name }}</span><span class="v">{{ c.valText }}</span></div>
+                </sc-for>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="money-box">
+        <div class="money-box-header">
+          <div>
+            <div class="money-box-title">💰 المبيعات والتحصيل والمتعلقات</div>
+            <div class="money-box-sub">مرتب تلقائيًا حسب مبلغ البيع المحقق من الأعلى إلى الأقل</div>
+          </div>
+        </div>
+        <div class="mtw">
+          <table class="mt">
+            <thead>
+              <tr class="grp">
+                <th colspan="3"></th>
+                <th colspan="4">مؤشرات المبيعات الشهرية</th>
+                <th colspan="3">مؤشرات المبيعات الآجلة الشهرية</th>
+                <th colspan="3">مؤشرات المتعلقات السابقة</th>
+                <th colspan="2">إجمالي المتعلقات</th>
+              </tr>
+              <tr class="sub">
+                <th>#</th><th>اسم الموظف</th><th>الموقع</th>
+                <th>المستهدف</th><th>المحقق</th><th>نسبة المحقق</th><th>المتبقي</th>
+                <th>المبيعات الآجلة</th><th>التحصيل</th><th>المتبقي</th>
+                <th>المتعلقات</th><th>التحصيل</th><th>المتبقي</th>
+                <th>الإجمالي</th><th>النسبة</th>
+              </tr>
+            </thead>
+            <tbody>
+              <sc-for list="{{ moneyRows }}" as="e" hint-placeholder-count="10">
+                <tr>
+                  <td class="rk">{{ e.rank }}</td>
+                  <td class="nm">{{ e.name }}</td>
+                  <td class="rg">{{ e.region }}</td>
+                  <td>{{ e.target }}</td>
+                  <td class="ach">{{ e.achieved }}</td>
+                  <td><div class="mbar"><div class="bb"><div class="bf" style="width:{{ e.achievedBarPct }}%"></div></div><div class="bl">{{ e.achievedPct }}</div></div></td>
+                  <td>{{ e.remaining }}</td>
+                  <td>{{ e.instTarget }}</td><td>{{ e.instCollected }}</td><td>{{ e.instRemaining }}</td>
+                  <td>{{ e.pastOutstanding }}</td><td>{{ e.pastCollected }}</td><td>{{ e.pastRemaining }}</td>
+                  <td class="ach">{{ e.totalOutstanding }}</td><td>{{ e.totalPct }}</td>
+                </tr>
+              </sc-for>
+            </tbody>
+            <tfoot>
+              <tr>
+                <td colspan="2" class="nm">إجمالي الفريق</td>
+                <td></td>
+                <td>{{ moneyTotals.target }}</td>
+                <td>{{ moneyTotals.achieved }}</td>
+                <td>{{ moneyTotals.pct }}</td>
+                <td>{{ moneyTotals.remaining }}</td>
+                <td>{{ moneyTotals.instTarget }}</td><td>{{ moneyTotals.instCollected }}</td><td>{{ moneyTotals.instRemaining }}</td>
+                <td>{{ moneyTotals.pastOutstanding }}</td><td>{{ moneyTotals.pastCollected }}</td><td>{{ moneyTotals.pastRemaining }}</td>
+                <td>{{ moneyTotals.totalOutstanding }}</td><td>{{ moneyTotals.totalPct }}</td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+      </div>
+
+      <div class="footer">
+        آخر تحديث: <strong>{{ hDate }}</strong> · Developed by <strong>ASEEL BIN MOHSEN</strong>
+      </div>
+    </div>
+</div>
+
+<script type="text/x-dc" data-dc-script>
+const fmt = v => Math.round(v).toLocaleString('en-US');
+const pct = v => (v * 100).toFixed(1) + '%';
+const bar = (v, mx) => Math.min(100, (mx > 0 ? v / mx : 0) * 100).toFixed(1);
+
+// بيانات يدوية مؤقتة (من تقرير المحاسب) بانتظار ربط حساب خاص فيه يقدر يحدّثها مباشرة.
+// مستهدفات المبيعات هنا معروف إنها تحتاج تصحيح لاحقًا — خليناها كما هي بالتقرير الأصلي مؤقتًا.
+const MONEY_DATA = [
+  { name: 'محمد دوشي', region: 'جدة', target: 848630, achieved: 368436, instTarget: 65500, instCollected: 23100, pastOutstanding: 44500, pastCollected: 17800 },
+  { name: 'صالح باصليب', region: 'الرياض', target: 357926, achieved: 130188, instTarget: 39900, instCollected: 22700, pastOutstanding: 48600, pastCollected: 20600 },
+  { name: 'عمر حيدر', region: 'الجنوب', target: 320000, achieved: 124725, instTarget: 43100, instCollected: 18100, pastOutstanding: 29700, pastCollected: 21200 },
+  { name: 'منير ناصر', region: 'القصيم', target: 140800, achieved: 120796, instTarget: 12600, instCollected: 10900, pastOutstanding: 12900, pastCollected: 14300 },
+  { name: 'محمد أحمد الدعم', region: 'المدينة المنورة', target: 358400, achieved: 114967, instTarget: 9400, instCollected: 12400, pastOutstanding: 13100, pastCollected: 8800 },
+  { name: 'صالح الشمراني', region: 'الرياض', target: 153612, achieved: 108522, instTarget: 41500, instCollected: 16200, pastOutstanding: 39100, pastCollected: 12500 },
+  { name: 'سالم الوعل', region: 'الرياض', target: 394250, achieved: 100521, instTarget: 37700, instCollected: 14000, pastOutstanding: 32600, pastCollected: 18700 },
+  { name: 'مازن', region: 'الرياض', target: 384000, achieved: 90917, instTarget: 31700, instCollected: 11900, pastOutstanding: 20800, pastCollected: 13800 },
+  { name: 'محمود عبد الرزقي', region: 'جدة', target: 290082, achieved: 88996, instTarget: 32000, instCollected: 15900, pastOutstanding: 18700, pastCollected: 12100 },
+  { name: 'عبدالرحمن باسهل', region: 'الشرقية', target: 358400, achieved: 86883, instTarget: 42000, instCollected: 24800, pastOutstanding: 33500, pastCollected: 16300 },
+  { name: 'محمد الطيب', region: 'جدة', target: 384000, achieved: 67543, instTarget: 33000, instCollected: 17400, pastOutstanding: 9900, pastCollected: 12100 },
+  { name: 'خلدون', region: 'الرياض', target: 290063, achieved: 67225, instTarget: 35300, instCollected: 17700, pastOutstanding: 21500, pastCollected: 13900 },
+  { name: 'أحمد يسري', region: 'الرياض', target: 128400, achieved: 61568, instTarget: 27000, instCollected: 26400, pastOutstanding: 21900, pastCollected: 16400 },
+  { name: 'سالم المرشدي', region: 'الشرقية', target: 140800, achieved: 60430, instTarget: 44000, instCollected: 19800, pastOutstanding: 17500, pastCollected: 23900 },
+  { name: 'عبدالله أحمد', region: 'القصيم', target: 140800, achieved: 43598, instTarget: 31100, instCollected: 13800, pastOutstanding: 15800, pastCollected: 8600 },
+  { name: 'Head Office Sales', region: '—', target: 0, achieved: 19798, instTarget: 0, instCollected: 0, pastOutstanding: 7800, pastCollected: 0 },
+  { name: 'المتجر', region: 'تجارة إلكترونية', target: 121440, achieved: 10047, instTarget: 33000, instCollected: 38100, pastOutstanding: 48200, pastCollected: 27800 },
+  { name: 'مبيعات التصدير', region: '—', target: 0, achieved: 0, instTarget: 0, instCollected: 0, pastOutstanding: 6400, pastCollected: 0 },
+];
+
+// مؤشرات "تحصيل مبيعات سابقة" / "تحصيل شهري" / "مبيعات نقدية" — أساسها مختلف عن أعمدة جدول الآجلة/المتعلقات أعلاه،
+// فخليناها كما وردت بالتقرير الأصلي.
+const IND_PAST_COLLECT = {
+  top: [{ name: 'المتجر', val: 0.107 }, { name: 'سالم المرشدي', val: 0.092 }, { name: 'عمر حيدر', val: 0.082 }],
+  bot: [{ name: 'Head Office Sales', val: 0 }, { name: 'مبيعات التصدير', val: 0 }, { name: 'عبدالله أحمد', val: 0.033 }]
+};
+const IND_MONTHLY_COLLECT = {
+  top: [{ name: 'المتجر', val: 0.126 }, { name: 'أحمد يسري', val: 0.087 }, { name: 'عبدالرحمن باسهل', val: 0.082 }],
+  bot: [{ name: 'Head Office Sales', val: 0 }, { name: 'مبيعات التصدير', val: 0 }, { name: 'منير ناصر', val: 0.036 }]
+};
+const IND_CASH = {
+  top: [{ name: 'محمد أحمد الدعم', val: 0.816 }, { name: 'المتجر', val: 0.769 }, { name: 'أحمد يسري', val: 0.751 }],
+  bot: [{ name: 'سالم الوعل', val: 0.397 }, { name: 'مازن', val: 0.438 }, { name: 'محمد دوشي', val: 0.452 }]
+};
+
+function buildRows() {
+  const rows = MONEY_DATA.map(e => {
+    const instRemaining = Math.max(0, e.instTarget - e.instCollected);
+    const pastRemaining = Math.max(0, e.pastOutstanding - e.pastCollected);
+    const totalOutstanding = instRemaining + pastRemaining;
+    const salesRemaining = Math.max(0, e.target - e.achieved);
+    const sp = e.target > 0 ? e.achieved / e.target : null;
+    return { ...e, instRemaining, pastRemaining, totalOutstanding, salesRemaining, sp };
+  });
+  const grandOutstanding = rows.reduce((s, e) => s + e.totalOutstanding, 0);
+  rows.forEach(e => { e.totalPct = grandOutstanding > 0 ? e.totalOutstanding / grandOutstanding : 0; });
+  rows.sort((a, b) => b.achieved - a.achieved);
+  rows.forEach((e, i) => { e.rank = i + 1; });
+  return rows;
+}
+
+function indicatorList(rows, key, dir) {
+  const withVal = rows.filter(e => e[key] !== null);
+  const sorted = [...withVal].sort((a, b) => dir === 'top' ? a[key] - b[key] : b[key] - a[key]);
+  return sorted.slice(0, 3).map(e => ({ name: e.name, valText: pct(e[key]) }));
+}
+
+class Component extends DCLogic {
+  renderVals() {
+    const now = new Date().toLocaleDateString('ar-SA-u-nu-latn-ca-gregory', { year: 'numeric', month: 'long', day: 'numeric' });
+    const rows = buildRows();
+
+    const moneyRows = rows.map(e => ({
+      rank: e.rank, name: e.name, region: e.region,
+      target: e.target > 0 ? fmt(e.target) : '—',
+      achieved: fmt(e.achieved),
+      achievedPct: e.sp !== null ? pct(e.sp) : '—',
+      achievedBarPct: e.sp !== null ? bar(e.sp, 1.2) : 0,
+      remaining: e.target > 0 ? fmt(e.salesRemaining) : '—',
+      instTarget: fmt(e.instTarget), instCollected: fmt(e.instCollected), instRemaining: fmt(e.instRemaining),
+      pastOutstanding: fmt(e.pastOutstanding), pastCollected: fmt(e.pastCollected), pastRemaining: fmt(e.pastRemaining),
+      totalOutstanding: fmt(e.totalOutstanding), totalPct: pct(e.totalPct)
+    }));
+
+    const sumTarget = rows.reduce((s, e) => s + e.target, 0);
+    const sumAchieved = rows.reduce((s, e) => s + e.achieved, 0);
+    const sumInstTarget = rows.reduce((s, e) => s + e.instTarget, 0);
+    const sumInstCollected = rows.reduce((s, e) => s + e.instCollected, 0);
+    const sumInstRemaining = rows.reduce((s, e) => s + e.instRemaining, 0);
+    const sumPastOutstanding = rows.reduce((s, e) => s + e.pastOutstanding, 0);
+    const sumPastCollected = rows.reduce((s, e) => s + e.pastCollected, 0);
+    const sumPastRemaining = rows.reduce((s, e) => s + e.pastRemaining, 0);
+    const sumTotalOutstanding = rows.reduce((s, e) => s + e.totalOutstanding, 0);
+    const moneyTotals = {
+      target: fmt(sumTarget), achieved: fmt(sumAchieved),
+      pct: sumTarget > 0 ? pct(sumAchieved / sumTarget) : '—',
+      remaining: fmt(Math.max(0, sumTarget - sumAchieved)),
+      instTarget: fmt(sumInstTarget), instCollected: fmt(sumInstCollected), instRemaining: fmt(sumInstRemaining),
+      pastOutstanding: fmt(sumPastOutstanding), pastCollected: fmt(sumPastCollected), pastRemaining: fmt(sumPastRemaining),
+      totalOutstanding: fmt(sumTotalOutstanding), totalPct: '100%'
+    };
+
+    const toList = o => ({
+      top: o.top.map(c => ({ name: c.name, valText: pct(c.val) })),
+      bot: o.bot.map(c => ({ name: c.name, valText: pct(c.val) }))
+    });
+    const pastCollect = toList(IND_PAST_COLLECT);
+    const monthlyCollect = toList(IND_MONTHLY_COLLECT);
+    const cash = toList(IND_CASH);
+
+    return {
+      hDate: now, hCount: rows.length,
+      moneyRows, moneyTotals,
+      indTopOutstanding: indicatorList(rows, 'totalPct', 'top'),
+      indBotOutstanding: indicatorList(rows, 'totalPct', 'bot'),
+      indTopAchv: indicatorList(rows, 'sp', 'bot'),
+      indBotAchv: indicatorList(rows, 'sp', 'top'),
+      indTopPastCollect: pastCollect.top, indBotPastCollect: pastCollect.bot,
+      indTopMonthlyCollect: monthlyCollect.top, indBotMonthlyCollect: monthlyCollect.bot,
+      indTopCash: cash.top, indBotCash: cash.bot
+    };
+  }
+}
+</script>
+</x-dc>
 </body>
 </html>
