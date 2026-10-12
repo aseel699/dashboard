@@ -102,96 +102,6 @@ body{font-family:'Tajawal',sans-serif;background:var(--bg);color:var(--text);min
 .mbar .bf{height:100%;border-radius:3px;background:linear-gradient(90deg,var(--maroon),#A5384A)}
 .mbar .bl{font-size:9.5px;font-weight:800;min-width:30px}
 
-/* ── Legacy field-ops section (visits / opens / blended score) ── */
-.main-grid{display:grid;grid-template-columns:1fr 300px;gap:16px;margin-bottom:18px}
-@media(max-width:1100px){.main-grid{grid-template-columns:1fr}}
-.section{background:var(--bg2);border:1px solid var(--border);border-radius:16px;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,.06)}
-.box-header{padding:11px 18px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
-.box-title{font-size:11px;font-weight:800;color:var(--maroon-dark);letter-spacing:1px;text-transform:uppercase}
-.score-legend{display:flex;gap:10px;flex-wrap:wrap;padding:6px 16px 8px;font-size:8px;color:var(--text-faint);border-bottom:1px solid var(--border2);background:#F8FAFC}
-.sl{display:flex;align-items:center;gap:3px}
-.sl-dot{width:5px;height:5px;border-radius:50%;flex-shrink:0}
-
-.tw{overflow-x:auto}
-table{width:100%;border-collapse:collapse;font-size:11px}
-thead tr{background:var(--maroon-dim)}
-thead th{padding:8px 10px;text-align:right;font-size:9px;font-weight:800;color:var(--maroon-dark);letter-spacing:.5px;white-space:nowrap;border-bottom:1px solid var(--maroon-border)}
-tbody tr{border-bottom:1px solid var(--border2);transition:background .12s}
-tbody tr:hover{background:rgba(122,31,43,.03)}
-tbody td{padding:8px 10px;color:var(--text-dim);white-space:nowrap;vertical-align:middle}
-td.nm{color:var(--text);font-weight:700;font-size:12px}
-td.rg{color:var(--text-faint);font-size:10px}
-.rb{display:inline-flex;align-items:center;justify-content:center;width:23px;height:23px;border-radius:6px;font-size:11px;font-weight:900}
-.r1{background:rgba(122,31,43,.18);color:var(--maroon)}.r2{background:rgba(192,192,192,.15);color:#C0C0C0}
-.r3{background:rgba(205,127,50,.15);color:#CD7F32}.rl{background:rgba(200,16,46,.15);color:#DC2626}
-.rm{background:rgba(0,0,0,.04);color:var(--text-dim)}
-.tb{display:inline-flex;align-items:center;gap:2px;font-size:8px;font-weight:800;padding:2px 7px;border-radius:9px;white-space:nowrap}
-.tn{background:var(--green-dim);color:var(--green);border:1px solid rgba(34,197,94,.2)}
-.to{background:var(--gold-dim);color:var(--gold);border:1px solid var(--gold-border)}
-.tb2{background:var(--blue-dim);color:var(--blue);border:1px solid rgba(59,130,246,.2)}
-.tel{background:rgba(168,85,247,.12);color:var(--purple);border:1px solid rgba(168,85,247,.25)}
-.bw{display:flex;align-items:center;gap:5px;min-width:85px}
-.bb{flex:1;height:5px;background:rgba(0,0,0,.06);border-radius:3px;overflow:hidden}
-.bf{height:100%;border-radius:3px}
-.bs .bf{background:linear-gradient(90deg,var(--maroon),#A5384A)}
-.bv .bf{background:linear-gradient(90deg,var(--blue),#60A5FA)}
-.bo .bf{background:linear-gradient(90deg,var(--teal),#2DD4BF)}
-.bsc .bf{background:linear-gradient(90deg,var(--green),#4ADE80)}
-.bl{font-size:10px;font-weight:700;min-width:30px;text-align:left}
-.sb{display:inline-flex;align-items:center;gap:2px;font-size:8px;font-weight:700;padding:2px 7px;border-radius:9px;white-space:nowrap}
-.sg{background:var(--green-dim);color:var(--green);border:1px solid rgba(34,197,94,.2)}
-.sgd{background:rgba(20,184,166,.12);color:var(--teal);border:1px solid rgba(20,184,166,.2)}
-.so{background:var(--orange-dim);color:var(--orange);border:1px solid rgba(249,115,22,.2)}
-.sd{background:var(--red-dim);color:#DC2626;border:1px solid rgba(200,16,46,.2)}
-.dc{color:var(--text-faint);font-size:10px;text-align:center}
-.tot-bar{background:var(--maroon-dim);border-top:1px solid var(--maroon-border);padding:8px 15px;display:flex;gap:16px;flex-wrap:wrap}
-.ti2 .til{font-size:8px;color:var(--text-faint);letter-spacing:1px;text-transform:uppercase;margin-bottom:2px}
-.ti2 .tiv{font-size:13px;font-weight:900}
-
-.side{display:flex;flex-direction:column;gap:11px}
-.card-box{background:var(--bg2);border:1px solid var(--border);border-radius:15px;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,.06)}
-.cl{padding:7px 11px}
-.ci{display:flex;align-items:center;gap:8px;padding:7px 9px;border-radius:9px;margin-bottom:5px;border:1px solid transparent}
-.ci:last-child{margin-bottom:0}
-.cg{background:var(--maroon-dim);border-color:var(--maroon-border)}
-.cs2{background:rgba(192,192,192,.05);border-color:rgba(192,192,192,.12)}
-.cb{background:rgba(205,127,50,.07);border-color:rgba(205,127,50,.12)}
-.cbad{background:var(--red-dim);border-color:rgba(200,16,46,.2)}
-.cn1{background:rgba(34,197,94,.1);border-color:rgba(34,197,94,.25)}
-.cn2{background:rgba(34,197,94,.06);border-color:rgba(34,197,94,.15)}
-.cn3{background:rgba(34,197,94,.04);border-color:rgba(34,197,94,.1)}
-.ci-medal{font-size:17px;flex-shrink:0}
-.ci-info{flex:1;min-width:0}
-.ci-name{font-size:11px;font-weight:800;color:var(--text);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;margin-bottom:1px}
-.ci-sub{font-size:9px;color:var(--text-dim);line-height:1.3}
-.ci-score{font-size:12px;font-weight:900;flex-shrink:0}
-.ci-empty{padding:10px;color:var(--text-faint);font-size:11px;text-align:center}
-
-.company-box{background:var(--bg2);border:1px solid var(--border);border-radius:16px;overflow:hidden;margin-bottom:18px;box-shadow:0 1px 4px rgba(0,0,0,.06)}
-.comp-bars{padding:10px 18px 6px;display:grid;grid-template-columns:repeat(12,1fr);gap:5px}
-@media(max-width:800px){.comp-bars{grid-template-columns:repeat(6,1fr)}}
-.mb-wrap{display:flex;flex-direction:column;align-items:center;gap:2px}
-.mb-outer{width:100%;height:44px;background:rgba(0,0,0,.03);border-radius:6px;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center}
-.mb-inner{position:absolute;inset:0;border-radius:6px}
-.mb-hit .mb-inner{background:linear-gradient(135deg,rgba(34,197,94,.25),rgba(74,222,128,.15))}
-.mb-partial .mb-inner{background:linear-gradient(135deg,rgba(59,130,246,.25),rgba(96,165,250,.15))}
-.mb-miss .mb-inner{background:linear-gradient(135deg,rgba(249,115,22,.25),rgba(252,160,122,.15))}
-.mb-future .mb-inner{background:rgba(0,0,0,.02)}
-.mb-hit{border:1px solid rgba(34,197,94,.3);border-radius:6px}
-.mb-partial{border:1px solid rgba(59,130,246,.3);border-radius:6px}
-.mb-miss{border:1px solid rgba(249,115,22,.3);border-radius:6px}
-.mb-future{border:1px solid rgba(0,0,0,.05);border-radius:6px}
-.mb-pct-in{position:relative;z-index:1;font-size:10px;font-weight:900;text-align:center}
-.mb-label{font-size:8px;color:var(--text-faint);text-align:center;line-height:1.2}
-.mb-amt{font-size:7px;text-align:center}
-.comp-summary{display:flex;gap:18px;padding:8px 18px 12px;flex-wrap:wrap;background:#F8FAFC;border-top:1px solid var(--border)}
-.cs-item .cs-lbl{font-size:8px;color:var(--text-faint);letter-spacing:1px;text-transform:uppercase;margin-bottom:2px}
-.cs-item .cs-val{font-size:14px;font-weight:900}
-
-.scatter-box{background:var(--bg2);border:1px solid var(--border);border-radius:16px;overflow:hidden;margin-bottom:16px;box-shadow:0 1px 4px rgba(0,0,0,.06)}
-.sw{padding:0 16px 12px}
-svg.sc{width:100%;height:220px;display:block}
-
 .footer{text-align:center;padding:11px;font-size:9px;color:var(--text-faint);border-top:1px solid var(--border);background:#fff}
 .footer strong{color:var(--maroon)}
   </style>
@@ -337,155 +247,8 @@ svg.sc{width:100%;height:220px;display:block}
         </div>
       </div>
 
-      <div class="main-grid">
-        <div class="section">
-          <div class="box-header">
-            <div class="box-title">📋 الأداء الميداني — الزيارات والفتح والتقييم النهائي</div>
-            <div style="font-size:9px;color:var(--text-faint)">{{ empCountText }}</div>
-          </div>
-          <div class="score-legend">
-            <div class="sl"><div class="sl-dot" style="background:var(--green)"></div>★ممتاز≥85%</div>
-            <div class="sl"><div class="sl-dot" style="background:var(--teal)"></div>✓جيد≥65%</div>
-            <div class="sl"><div class="sl-dot" style="background:var(--orange)"></div>⚠مقبول≥45%</div>
-            <div class="sl"><div class="sl-dot" style="background:#DC2626"></div>✗دعم</div>
-            <div class="sl" style="margin-right:6px"><span class="tb tn">🆕جديد</span></div>
-            <div class="sl"><span class="tb to">⭐قديم</span></div>
-            <div class="sl"><span class="tb tb2">🏪فرع</span></div>
-            <div class="sl"><span class="tb tel">🛒إلكتروني</span></div>
-          </div>
-          <div class="tw">
-            <table>
-              <thead><tr>
-                <th>#</th><th>الموظف</th><th>المنطقة</th><th>النوع</th>
-                <th>هدف المبيعات</th><th>المبيعات</th><th>نسبة المبيعات</th>
-                <th>هدف الزيارات</th><th>الزيارات</th><th>نسبة الزيارات</th>
-                <th>عملاء جدد</th><th>نسبة الفتح</th>
-                <th>التقييم</th><th>الحالة</th>
-              </tr></thead>
-              <tbody>
-                <sc-for list="{{ teamRows }}" as="e" hint-placeholder-count="10">
-                  <tr>
-                    <td><span class="{{ e.rankCls }}">{{ e.rankText }}</span></td>
-                    <td class="nm">{{ e.name }}</td>
-                    <td class="rg">{{ e.region }}</td>
-                    <td><span class="{{ e.typeBadgeCls }}">{{ e.typeBadgeText }}</span></td>
-                    <td style="color:var(--text-faint);font-size:10px">{{ e.targetText }}</td>
-                    <td style="font-weight:600;color:var(--maroon)">{{ e.salesText }}</td>
-                    <td><div class="bw bs"><div class="bb"><div class="bf" style="width:{{ e.salesBarPct }}%"></div></div><div class="bl">{{ e.salesPctText }}</div></div></td>
-                    <td style="{{ e.visitTargetStyle }}">{{ e.visitTargetText }}</td>
-                    <td style="{{ e.visitActualStyle }}">{{ e.visitActualText }}</td>
-                    <td><div class="bw bv" style="{{ e.visitBarWrapStyle }}"><div class="bb"><div class="bf" style="width:{{ e.visitBarPct }}%"></div></div><div class="bl">{{ e.visitPctText }}</div></div></td>
-                    <td style="{{ e.newCustStyle }}">{{ e.newCustText }}</td>
-                    <td><div class="bw bo" style="{{ e.openBarWrapStyle }}"><div class="bb"><div class="bf" style="width:{{ e.openBarPct }}%"></div></div><div class="bl">{{ e.openPctText }}</div></div></td>
-                    <td>
-                      <div class="bw bsc"><div class="bb"><div class="bf" style="width:{{ e.scoreBarPct }}%"></div></div></div>
-                      <span style="font-size:10px;font-weight:900;color:var(--green);margin-right:2px">{{ e.scorePctText }}</span>
-                    </td>
-                    <td><span class="{{ e.statusBadgeCls }}">{{ e.statusBadgeText }}</span></td>
-                  </tr>
-                </sc-for>
-              </tbody>
-            </table>
-          </div>
-          <div class="tot-bar">
-            <div class="ti2"><div class="til">إجمالي الهدف</div><div class="tiv" style="color:var(--maroon)">{{ totBar.target }} ر.س</div></div>
-            <div class="ti2"><div class="til">إجمالي المبيعات</div><div class="tiv" style="color:var(--green)">{{ totBar.sales }} ر.س</div></div>
-            <div class="ti2"><div class="til">نسبة تحقيق الفريق</div><div class="tiv" style="color:var(--blue)">{{ totBar.pct }}</div></div>
-            <div class="ti2"><div class="til">إجمالي الزيارات</div><div class="tiv" style="color:var(--blue)">{{ totBar.visits }}</div></div>
-          </div>
-        </div>
-
-        <div class="side">
-          <div class="card-box">
-            <div class="box-header"><div class="box-title">🏆 أعلى 3 إجمالاً</div></div>
-            <div class="cl">
-              <sc-for list="{{ top3 }}" as="c" hint-placeholder-count="3">
-                <div class="ci {{ c.cls }}"><div class="ci-medal">{{ c.medal }}</div>
-                  <div class="ci-info"><div class="ci-name">{{ c.name }}</div><div class="ci-sub">{{ c.sub }}</div></div>
-                  <div class="ci-score">{{ c.scoreText }}</div></div>
-              </sc-for>
-            </div>
-          </div>
-          <div class="card-box">
-            <div class="box-header"><div class="box-title" style="color:var(--green)">🆕 أفضل 3 جدد</div></div>
-            <div class="cl">
-              <sc-if value="{{ topNewEmpty }}" hint-placeholder-val="{{ false }}"><div class="ci-empty">لا يوجد</div></sc-if>
-              <sc-for list="{{ topNew }}" as="c" hint-placeholder-count="3">
-                <div class="ci {{ c.cls }}"><div class="ci-medal">{{ c.medal }}</div>
-                  <div class="ci-info"><div class="ci-name">{{ c.name }}</div><div class="ci-sub">{{ c.sub }}</div></div>
-                  <div class="ci-score" style="color:var(--green)">{{ c.scoreText }}</div></div>
-              </sc-for>
-            </div>
-          </div>
-          <div class="card-box">
-            <div class="box-header"><div class="box-title" style="color:var(--gold)">⭐ أفضل 3 قدامى</div></div>
-            <div class="cl">
-              <sc-if value="{{ topOldEmpty }}" hint-placeholder-val="{{ false }}"><div class="ci-empty">لا يوجد</div></sc-if>
-              <sc-for list="{{ topOld }}" as="c" hint-placeholder-count="3">
-                <div class="ci {{ c.cls }}"><div class="ci-medal">{{ c.medal }}</div>
-                  <div class="ci-info"><div class="ci-name">{{ c.name }}</div><div class="ci-sub">{{ c.sub }}</div></div>
-                  <div class="ci-score">{{ c.scoreText }}</div></div>
-              </sc-for>
-            </div>
-          </div>
-          <div class="card-box">
-            <div class="box-header"><div class="box-title">⚠️ يحتاجون دعماً</div></div>
-            <div class="cl">
-              <sc-for list="{{ bot3 }}" as="c" hint-placeholder-count="3">
-                <div class="ci cbad"><div class="ci-medal">⚠️</div>
-                  <div class="ci-info"><div class="ci-name">{{ c.name }}</div><div class="ci-sub">{{ c.sub }}</div></div>
-                  <div class="ci-score">{{ c.scoreText }}</div></div>
-              </sc-for>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="company-box">
-        <div class="box-header">
-          <div class="box-title">🏢 تحقيق الشركة الشهري 2026</div>
-          <div style="display:flex;gap:12px;font-size:9px;color:var(--text-faint)">
-            <span style="color:var(--green)">■ فوق الهدف</span>
-            <span style="color:var(--blue)">■ جزئي</span>
-            <span style="color:var(--orange)">■ دون الهدف</span>
-            <span style="color:rgba(0,0,0,.12)">■ قادم</span>
-          </div>
-        </div>
-        <div class="comp-bars">
-          <sc-for list="{{ compBars }}" as="m" hint-placeholder-count="12">
-            <div class="mb-wrap">
-              <div class="{{ m.outerCls }}">
-                <div class="mb-inner"></div>
-                <div class="mb-pct-in" style="color:{{ m.color }}">{{ m.pctText }}</div>
-              </div>
-              <div class="mb-label">{{ m.label }}</div>
-              <div class="mb-amt" style="color:{{ m.amtColor }}">{{ m.amtText }}</div>
-            </div>
-          </sc-for>
-        </div>
-        <div class="comp-summary">
-          <div class="cs-item"><div class="cs-lbl">الهدف السنوي</div><div class="cs-val" style="color:var(--maroon)">{{ compSummary.target }} ر.س</div></div>
-          <div class="cs-item"><div class="cs-lbl">المبيعات YTD</div><div class="cs-val" style="color:var(--green)">{{ compSummary.actual }} ر.س</div></div>
-          <div class="cs-item"><div class="cs-lbl">نسبة التحقيق السنوي</div><div class="cs-val" style="color:{{ compSummary.pctColor }}">{{ compSummary.pctText }}</div></div>
-          <div class="cs-item"><div class="cs-lbl">أشهر حققت الهدف</div><div class="cs-val" style="color:var(--teal)">{{ compSummary.hitText }}</div></div>
-        </div>
-      </div>
-
-      <div class="scatter-box">
-        <div class="box-header">
-          <div class="box-title">📊 نسبة المبيعات مقابل نسبة الزيارات</div>
-          <div style="display:flex;gap:10px;font-size:9px;color:var(--text-faint)">
-            <span style="color:var(--green)">●★ممتاز</span><span style="color:var(--teal)">●✓جيد</span>
-            <span style="color:var(--orange)">●⚠مقبول</span><span style="color:#DC2626">●✗دعم</span>
-          </div>
-        </div>
-        <div class="sw"><svg class="sc" id="scatter" viewBox="0 0 820 220" preserveAspectRatio="xMidYMid meet"></svg></div>
-      </div>
-
       <div class="footer">
-        آخر تحديث: <strong>{{ hDate }}</strong> · <strong>LINES IDEAS</strong> ·
-        ميدان = مبيعات 50% + زيارات 25% + فتح 25% | فروع = مبيعات 100% ·
-        تحقيق الشركة السنوي: <strong>{{ kCompPct }}</strong>
+        آخر تحديث: <strong>{{ hDate }}</strong> · <strong>LINES IDEAS</strong> · تحقيق الشركة السنوي: <strong>{{ kCompPct }}</strong>
       </div>
     </div>
   </sc-if>
@@ -495,8 +258,6 @@ svg.sc{width:100%;height:220px;display:block}
 <script type="text/x-dc" data-dc-script>
 // ─── إعداد Google Sheets ───────────────────────────
 const SHEET_ID = '1i-ja8mXQxVrEPcOyvJZ4M-0hJ1wIkjzI6bdUm3oOoqg';
-const VISITS_SHEET_ID = '1g7XbqhojGzYLsxL1yVojKwJkyc6B3VFZ3OM0YraIpX0';
-const VISITS_SHEET_GID = '1470230930';
 const SHEETS = {
   company: '07.مستهدف_الشركة',
 };
@@ -516,46 +277,17 @@ function fetchSheet(sheetName) {
   return fetch(url).then(r => r.text()).then(parseGvizText);
 }
 
-function fetchVisitsSheet() {
-  const url = `https://docs.google.com/spreadsheets/d/${VISITS_SHEET_ID}/gviz/tq?tqx=out:json&gid=${VISITS_SHEET_GID}`;
-  return fetch(url).then(r => r.text()).then(parseGvizText);
-}
-
 const nv  = v => { const x = parseFloat(String(v).replace(/,/g,'')); return isNaN(x)?0:x; };
 const fmt  = v => Math.round(v).toLocaleString('ar-SA');
 const fmtM = v => v>=1e6?(v/1e6).toFixed(2)+'M':v>=1e3?(v/1e3).toFixed(0)+'K':fmt(v);
 const pct  = v => (v*100).toFixed(1)+'%';
-
-function norm(s){ return String(s||'').trim().replace(/\s+/g,' ').replace(/[أإآ]/g,'ا').replace(/ة/g,'ه').replace(/ى/g,'ي'); }
-function fuzzy(a,b){ const na=norm(a),nb=norm(b); if(na===nb)return true; if(na.includes(nb)||nb.includes(na))return true;
-  const wa=na.split(' ').filter(x=>x.length>2), wb2=nb.split(' ').filter(x=>x.length>2);
-  return wb2.filter(w=>wa.includes(w)).length>=Math.min(2,Math.min(wa.length,wb2.length)); }
-function lookup(map,name){ if(map[name]!==undefined)return map[name];
-  for(const k of Object.keys(map))if(fuzzy(k,name))return map[k]; return null; }
 
 function colIdx(cols, names){
   for(const n of names){ const i=cols.findIndex(h=>String(h).trim().includes(n)); if(i>=0)return i; }
   return -1; }
 
 function processData(sheets) {
-  const {monthlySales, visitsRaw, company, companySummary, month} = sheets;
-
-  const visitMap = {}, ncMap = {};
-  if(visitsRaw.rows.length){
-    const ci = n => colIdx(visitsRaw.cols, n);
-    const iTs=ci(['طابع زمني']), iN=ci(['اسم البائع','Delegate name']), iR=ci(['وضع العميل','Visit Result']);
-    visitsRaw.rows.forEach(r => {
-      const ts = String(r[iTs]||'');
-      const dm = /^Date\((\d+),(\d+),(\d+)/.exec(ts);
-      if(!dm) return;
-      const code = `${dm[1]}-${String(+dm[2]+1).padStart(2,'0')}`;
-      if(code !== month) return;
-      const nm = String(r[iN]||'').trim();
-      if(!nm) return;
-      visitMap[nm] = (visitMap[nm]||0) + 1;
-      if(String(r[iR]||'').includes('Start dealing')) ncMap[nm] = (ncMap[nm]||0) + 1;
-    });
-  }
+  const {monthlySales, company, companySummary} = sheets;
 
   const mNames = ['يناير','فبراير','مارس','أبريل','مايو','يونيو','يوليو','أغسطس','سبتمبر','أكتوبر','نوفمبر','ديسمبر'];
   const compM = [];
@@ -588,28 +320,17 @@ function processData(sheets) {
   compM.sort((a,b) => (a.code||'').localeCompare(b.code||''));
 
   const team = monthlySales.map(m => {
-    const va  = lookup(visitMap, m.name) || 0;
-    const nc  = lookup(ncMap,    m.name) || 0;
-    const ib  = !!m.isBranch;
-    const sp  = m.salesTarget>0 ? m.salesAmount/m.salesTarget : 0;
-    const vp  = m.visitTarget>0 ? va/m.visitTarget : 0;
-    const np  = m.newCustomerTarget>0 ? nc/m.newCustomerTarget : 0;
-    const score = ib ? sp : (sp*0.5 + vp*0.25 + np*0.25);
-    const status = score>=0.85?'great':score>=0.65?'good':score>=0.45?'ok':'bad';
-    return { name:m.name, region:m.region || '—', type:m.employeeType || 'قديم', ib, st:m.salesTarget, sales:m.salesAmount, sp, vt:m.visitTarget, va, vp, ct:m.newCustomerTarget, nc, np, score, status };
+    const sp = m.salesTarget>0 ? m.salesAmount/m.salesTarget : 0;
+    return { name:m.name, region:m.region || '—', st:m.salesTarget, sales:m.salesAmount, sp };
   });
-  team.sort((a,b)=>b.score-a.score);
-  team.forEach((e,i)=>e.rank=i+1);
 
   const totSales = team.reduce((s,e)=>s+e.sales,0);
   const totTarg  = team.reduce((s,e)=>s+e.st,0);
-  const totVis   = team.reduce((s,e)=>s+e.va,0);
-  const totVT    = team.reduce((s,e)=>s+e.vt,0);
   const cYTDt    = compM.reduce((s,m)=>s+m.target,0);
   const cYTDa    = compM.reduce((s,m)=>s+(m.actual>0?m.actual:0),0);
   const compYTD  = cYTDt>0 ? cYTDa/cYTDt : 0;
 
-  return { team, totSales, totTarg, totVis, totVT, compM, cYTDt, cYTDa, compYTD };
+  return { team, totSales, totTarg, compYTD };
 }
 
 function bar(v,mx){ return Math.min(100,(mx>0?v/mx:0)*100).toFixed(1); }
@@ -631,42 +352,12 @@ class Component extends DCLogic {
     Promise.all([
       fetch(API_BASE + '/monthly_sales.php?month=' + month).then(r => r.json()),
       fetch(API_BASE + '/monthly_sales.php?summary=1').then(r => r.json()),
-      fetchVisitsSheet(),
       fetchSheet(SHEETS.company),
-    ]).then(([monthlySales, companySummary, visitsRaw, company]) => {
-      const data = processData({ monthlySales, visitsRaw, company, companySummary, month });
-      this.setState({ sheetData: data, loading: false }, () => this.renderScatter());
+    ]).then(([monthlySales, companySummary, company]) => {
+      const data = processData({ monthlySales, company, companySummary, month });
+      this.setState({ sheetData: data, loading: false });
     }).catch(err => {
       this.setState({ loading: false, loadError: (err && err.message) || String(err) });
-    });
-  };
-
-  renderScatter = () => {
-    const d = this.state.sheetData;
-    const svg = document.getElementById('scatter');
-    if (!svg || !d) return;
-    svg.innerHTML = '';
-    const W=820,H=220,p={t:16,r:18,b:34,l:44},cW=W-p.l-p.r,cH=H-p.t-p.b;
-    const mxS=Math.max(1.2,...d.team.map(e=>e.sp))*1.05;
-    const mxV=Math.max(1.1,...d.team.filter(e=>!e.ib&&e.vp>0).map(e=>e.vp))*1.05||1.2;
-    const mk=(tag,at,tx)=>{const el=document.createElementNS('http://www.w3.org/2000/svg',tag);
-      Object.entries(at).forEach(([k,v])=>el.setAttribute(k,v));if(tx!==undefined)el.textContent=tx;return el};
-    for(let i=0;i<=4;i++){
-      const x=p.l+(i/4)*cW,y=p.t+(i/4)*cH;
-      svg.appendChild(mk('line',{x1:x,y1:p.t,x2:x,y2:p.t+cH,stroke:'rgba(0,0,0,.06)','stroke-width':'1'}));
-      svg.appendChild(mk('text',{x,y:p.t+cH+13,'text-anchor':'middle','font-size':'8',fill:'rgba(30,41,59,.35)','font-family':'Tajawal'},Math.round(i/4*mxS*100)+'%'));
-      svg.appendChild(mk('line',{x1:p.l,y1:y,x2:p.l+cW,y2:y,stroke:'rgba(0,0,0,.06)','stroke-width':'1'}));
-      svg.appendChild(mk('text',{x:p.l-4,y:y+4,'text-anchor':'end','font-size':'8',fill:'rgba(30,41,59,.35)','font-family':'Tajawal'},Math.round((4-i)/4*mxV*100)+'%'));
-    }
-    svg.appendChild(mk('line',{x1:p.l+(1/mxS)*cW,y1:p.t,x2:p.l+(1/mxS)*cW,y2:p.t+cH,stroke:'rgba(122,31,43,.3)','stroke-width':'1.5','stroke-dasharray':'4 3'}));
-    svg.appendChild(mk('text',{x:p.l+cW/2,y:H-1,'text-anchor':'middle','font-size':'9',fill:'rgba(122,31,43,.7)','font-family':'Tajawal'},'نسبة المبيعات →'));
-    const cm={great:'#22C55E',good:'#14B8A6',ok:'#F97316',bad:'#DC2626'};
-    d.team.forEach(e=>{
-      const cx=p.l+Math.min(1,e.sp/mxS)*cW,yv=e.ib?mxV*0.5:e.vp,cy=p.t+(1-Math.min(1,yv/mxV))*cH,col=cm[e.status];
-      svg.appendChild(mk('circle',{cx,cy,r:'7',fill:col,opacity:'.11'}));
-      svg.appendChild(mk('circle',{cx,cy,r:'4',fill:col,stroke:'rgba(0,0,0,.35)','stroke-width':'1.5'}));
-      const lbl=mk('text',{x:cx+5.5,y:cy+3.5,'font-size':'8',fill:col,'font-family':'Tajawal',opacity:'.85'});
-      lbl.textContent=e.name.split(' ')[0];svg.appendChild(lbl);
     });
   };
 
@@ -683,80 +374,10 @@ class Component extends DCLogic {
         isLoadingNoError: s.loading && !s.loadError,
         loadError: s.loadError,
         retry: this.loadAll,
-        hDate: now, hCount: 0,
-        kSales: '—', kSalesSub: '—', kSalesPct: '—', kVisits: '—', kVisitsSub: '—', kVisitPct: '—', kCompPct: '—', kCompSub: '—',
-        compBars: [], compSummary: { target: '—', actual: '—', pctText: '—', pctColor: 'var(--text-dim)', hitText: '—' },
-        empCountText: '—', teamRows: [], totBar: { target: '—', sales: '—', pct: '—', visits: '—' },
-        top3: [], topNew: [], topOld: [], bot3: [], topNewEmpty: true, topOldEmpty: true,
+        hDate: now, hCount: 0, kCompPct: '—',
         indTopAchv: [], indBotAchv: [], moneyRows: [], moneyTotals: { target: '—', achieved: '—', pct: '—', remaining: '—' }
       };
     }
-
-    const isHit = p => Math.round(p * 1000) >= 1000;
-    const compBars = d.compM.map(m => {
-      const isFut = m.actual === 0;
-      const p2 = m.pct;
-      const outerCls = 'mb-outer ' + (isFut ? 'mb-future' : isHit(p2) ? 'mb-hit' : p2 >= 0.7 ? 'mb-partial' : 'mb-miss');
-      const color = isFut ? 'var(--text-faint)' : isHit(p2) ? 'var(--green)' : p2 >= 0.7 ? 'var(--blue)' : 'var(--orange)';
-      return {
-        outerCls, color,
-        pctText: isFut ? '—' : pct(p2),
-        amtText: isFut ? '—' : fmtM(m.actual),
-        amtColor: isFut ? 'var(--text-faint)' : color,
-        label: m.label.replace(' 2026', '')
-      };
-    });
-    const hitM = d.compM.filter(m => m.actual > 0 && isHit(m.pct)).length;
-    const doneM = d.compM.filter(m => m.actual > 0).length;
-    const compSummary = {
-      target: fmtM(d.cYTDt), actual: fmtM(d.cYTDa),
-      pctText: pct(d.compYTD), pctColor: d.compYTD >= 1 ? 'var(--green)' : d.compYTD >= 0.7 ? 'var(--blue)' : 'var(--orange)',
-      hitText: hitM + ' / ' + doneM
-    };
-
-    const rankBadge = (e) => e.rank === 1 ? { cls: 'rb r1', text: '1' } : e.rank === 2 ? { cls: 'rb r2', text: '2' } :
-      e.rank === 3 ? { cls: 'rb r3', text: '3' } : e.status === 'bad' ? { cls: 'rb rl', text: String(e.rank) } : { cls: 'rb rm', text: String(e.rank) };
-    const typeBadge = (e) => (e.name === 'المتجر' || e.name.includes('متجر')) ? { cls: 'tb tel', text: '🛒إلكتروني' } :
-      e.ib ? { cls: 'tb tb2', text: '🏪فرع' } : e.type === 'جديد' ? { cls: 'tb tn', text: '🆕جديد' } : { cls: 'tb to', text: '⭐قديم' };
-    const statusBadge = (st) => st === 'great' ? { cls: 'sb sg', text: '★ممتاز' } : st === 'good' ? { cls: 'sb sgd', text: '✓جيد' } :
-      st === 'ok' ? { cls: 'sb so', text: '⚠مقبول' } : { cls: 'sb sd', text: '✗دعم' };
-
-    const teamRows = d.team.map(e => {
-      const rb = rankBadge(e), tb = typeBadge(e), sb = statusBadge(e.status);
-      const dashStyle = 'color:var(--text-faint);font-size:10px;text-align:center';
-      return {
-        rankCls: rb.cls, rankText: rb.text,
-        name: e.name, region: e.region,
-        typeBadgeCls: tb.cls, typeBadgeText: tb.text,
-        targetText: fmt(e.st), salesText: fmt(e.sales),
-        salesBarPct: bar(e.sp, 1.2), salesPctText: pct(e.sp),
-        visitTargetText: e.ib ? '—' : (e.vt > 0 ? e.vt : '—'), visitTargetStyle: e.ib ? dashStyle : '',
-        visitActualText: e.ib ? '—' : String(e.va), visitActualStyle: e.ib ? dashStyle : 'color:var(--blue);font-weight:600;text-align:center',
-        visitBarPct: bar(e.vp, 1.2), visitPctText: pct(e.vp), visitBarWrapStyle: e.ib ? 'display:none' : '',
-        newCustText: e.ib ? '—' : (e.nc + '/' + (e.ct > 0 ? Math.round(e.ct) : 0)), newCustStyle: e.ib ? dashStyle : 'text-align:center;color:var(--purple);font-weight:600',
-        openBarPct: bar(e.np, 1.2), openPctText: pct(e.np), openBarWrapStyle: e.ib ? 'display:none' : '',
-        scoreBarPct: bar(e.score, 1), scorePctText: pct(e.score),
-        statusBadgeCls: sb.cls, statusBadgeText: sb.text
-      };
-    });
-
-    const totBar = {
-      target: fmt(d.totTarg), sales: fmt(d.totSales),
-      pct: d.totTarg > 0 ? pct(d.totSales / d.totTarg) : '—',
-      visits: fmt(d.totVis) + ' / ' + fmt(d.totVT)
-    };
-
-    const sortedByScore = [...d.team].sort((a, b) => b.score - a.score);
-    const medalsTop = [['cg', '🥇'], ['cs2', '🥈'], ['cb', '🥉']];
-    const medalsNew = [['cn1', '🥇'], ['cn2', '🥈'], ['cn3', '🥉']];
-    const subText = (e) => e.ib ? ('مبيعات ' + pct(e.sp)) : ('مبيعات ' + pct(e.sp) + ' · زيارات ' + pct(e.vp) + ' · فتح ' + pct(e.np));
-
-    const top3 = sortedByScore.slice(0, 3).map((e, i) => ({ cls: medalsTop[i][0], medal: medalsTop[i][1], name: e.name, sub: subText(e), scoreText: pct(e.score) }));
-    const byNew = sortedByScore.filter(e => e.type === 'جديد' && !e.ib);
-    const topNew = byNew.slice(0, 3).map((e, i) => ({ cls: medalsNew[i][0], medal: medalsNew[i][1], name: e.name, sub: subText(e), scoreText: pct(e.score) }));
-    const byOld = sortedByScore.filter(e => e.type === 'قديم' && !e.ib);
-    const topOld = byOld.slice(0, 3).map((e, i) => ({ cls: medalsTop[i][0], medal: medalsTop[i][1], name: e.name, sub: subText(e), scoreText: pct(e.score) }));
-    const bot3 = [...d.team].sort((a, b) => a.score - b.score).slice(0, 3).map(e => ({ name: e.name, sub: subText(e), scoreText: pct(e.score) }));
 
     // مؤشر "نسبة تحقيق مبيعات" (البيانات الحقيقية الوحيدة المتاحة حاليًا لشبكة المؤشرات الجديدة)
     const bySalesPctDesc = [...d.team].sort((a, b) => b.sp - a.sp);
@@ -780,16 +401,7 @@ class Component extends DCLogic {
       showLoading: s.loading, showContent: !s.loading, hasError: false, isLoadingNoError: true, loadError: '',
       retry: this.loadAll,
       hDate: now, hCount: d.team.length,
-      kSales: fmtM(d.totSales), kSalesSub: 'هدف الفريق ' + fmtM(d.totTarg),
-      kSalesPct: d.totTarg > 0 ? pct(d.totSales / d.totTarg) : '—',
-      kVisits: fmt(d.totVis), kVisitsSub: 'من هدف ' + fmt(d.totVT),
-      kVisitPct: d.totVT > 0 ? pct(d.totVis / d.totVT) : '—',
-      kCompPct: pct(d.compYTD), kCompSub: `هدف سنوي ${fmtM(d.cYTDt)} · فعلي ${fmtM(d.cYTDa)}`,
-      compBars, compSummary,
-      empCountText: d.team.length + ' موظف',
-      teamRows, totBar,
-      top3, topNew, topOld, bot3,
-      topNewEmpty: byNew.length === 0, topOldEmpty: byOld.length === 0,
+      kCompPct: pct(d.compYTD),
       indTopAchv, indBotAchv, moneyRows, moneyTotals
     };
   }
