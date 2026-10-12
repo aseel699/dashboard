@@ -38,6 +38,14 @@ body{font-family:'Tajawal',sans-serif;background:var(--bg);color:var(--text);min
 .error-box p{font-size:12px;color:var(--text-dim)}
 .retry-btn{margin-top:12px;background:var(--maroon);border:1px solid var(--maroon);color:#fff;font-size:12px;font-weight:700;padding:8px 16px;border-radius:10px;cursor:pointer;font-family:'Tajawal',sans-serif}
 
+/* ── Temporary maintenance overlay ─────────────────────── */
+.maint-blur{filter:blur(6px);pointer-events:none;user-select:none}
+.maint-overlay{position:fixed;inset:0;z-index:9999;display:flex;align-items:center;justify-content:center;background:rgba(248,250,252,.45);padding:20px}
+.maint-card{background:#fff;border:1px solid var(--border);border-radius:18px;padding:32px 40px;text-align:center;box-shadow:0 8px 30px rgba(74,20,32,.2);max-width:360px}
+.maint-card .ic{font-size:38px;margin-bottom:10px}
+.maint-card h2{color:var(--maroon-dark);font-size:21px;font-weight:900;margin-bottom:6px}
+.maint-card p{color:var(--text-faint);font-size:13px}
+
 /* ── Header (maroon bar, matches brand) ───────────────── */
 .top-header{background:linear-gradient(135deg,var(--maroon),var(--maroon-dark));border-radius:18px;padding:16px 22px;display:grid;grid-template-columns:auto 1fr auto;grid-template-areas:"meta title logo";align-items:center;margin-bottom:18px;column-gap:16px;box-shadow:0 4px 16px rgba(74,20,32,.28)}
 .th-left{grid-area:meta;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
@@ -141,7 +149,14 @@ body{font-family:'Tajawal',sans-serif;background:var(--bg);color:var(--text);min
   </sc-if>
 
   <sc-if value="{{ showContent }}" hint-placeholder-val="{{ false }}">
-    <div class="container">
+    <div class="maint-overlay">
+      <div class="maint-card">
+        <div class="ic">🚧</div>
+        <h2>جاري العمل على التحديثات</h2>
+        <p>سنعود قريبًا بتحديثات جديدة</p>
+      </div>
+    </div>
+    <div class="container maint-blur">
 
       <div class="top-header">
         <div class="th-left">
