@@ -26,6 +26,20 @@
 body{font-family:'Tajawal',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;padding:20px}
 .container{max-width:2200px;margin:0 auto}
 
+.loading-screen{position:fixed;inset:0;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:999;gap:16px}
+.loading-logo{font-size:40px}
+.loading-text{font-size:16px;font-weight:700;color:var(--maroon)}
+.loading-sub{font-size:12px;color:var(--text-faint)}
+.loading-bar-wrap{width:200px;height:3px;background:rgba(0,0,0,.07);border-radius:3px;overflow:hidden}
+.loading-bar-fill{height:100%;background:linear-gradient(90deg,var(--maroon),var(--gold));border-radius:3px;animation:loadprog 2s ease-in-out infinite}
+@keyframes loadprog{0%{width:0%}100%{width:100%}}
+.error-box{background:var(--red-dim);border:1px solid rgba(200,16,46,.3);border-radius:12px;padding:16px 20px;text-align:center;margin:20px auto;max-width:460px}
+.error-box h3{color:#DC2626;margin-bottom:8px}
+.error-box p{font-size:12px;color:var(--text-dim)}
+.retry-btn{margin-top:12px;background:var(--maroon);border:1px solid var(--maroon);color:#fff;font-size:12px;font-weight:700;padding:8px 16px;border-radius:10px;cursor:pointer;font-family:'Tajawal',sans-serif}
+.refresh-btn{background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.3);color:#fff;font-size:12px;font-weight:700;padding:6px 13px;border-radius:10px;cursor:pointer;font-family:'Tajawal',sans-serif}
+.refresh-btn:hover{background:rgba(255,255,255,.22)}
+
 /* ── Header (maroon bar, matches brand) ───────────────── */
 .top-header{background:linear-gradient(135deg,var(--maroon),var(--maroon-dark));border-radius:18px;padding:16px 22px;display:grid;grid-template-columns:auto 1fr auto;grid-template-areas:"meta title logo";align-items:center;margin-bottom:18px;column-gap:16px;box-shadow:0 4px 16px rgba(74,20,32,.28)}
 .th-left{grid-area:meta;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
@@ -104,11 +118,32 @@ body{font-family:'Tajawal',sans-serif;background:var(--bg);color:var(--text);min
 </helmet>
 
 <div style="direction: rtl;">
+
+  <sc-if value="{{ showLoading }}" hint-placeholder-val="{{ true }}">
+    <div class="loading-screen">
+      <div class="loading-logo">📊</div>
+      <sc-if value="{{ hasError }}" hint-placeholder-val="{{ false }}">
+        <div class="error-box">
+          <h3>⚠️ تعذّر تحميل البيانات</h3>
+          <p>{{ loadError }}</p>
+          <button class="retry-btn" onClick="{{ retry }}">🔄 إعادة المحاولة</button>
+        </div>
+      </sc-if>
+      <sc-if value="{{ isLoadingNoError }}" hint-placeholder-val="{{ true }}">
+        <div class="loading-text">جاري تحميل البيانات...</div>
+        <div class="loading-sub">يتم القراءة مباشرة من نظام Lines Center</div>
+        <div class="loading-bar-wrap"><div class="loading-bar-fill"></div></div>
+      </sc-if>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ showContent }}" hint-placeholder-val="{{ false }}">
     <div class="container">
 
       <div class="top-header">
         <div class="th-left">
           <div class="th-date"><span class="th-live"></span> {{ hDate }}</div>
+          <button class="refresh-btn" onClick="{{ retry }}">🔄 تحديث</button>
         </div>
         <div class="th-right">
           <div class="th-title">لوحة متابعة قسم المبيعات</div>
@@ -254,38 +289,19 @@ body{font-family:'Tajawal',sans-serif;background:var(--bg);color:var(--text);min
         آخر تحديث: <strong>{{ hDate }}</strong> · Developed by <strong>ASEEL BIN MOHSEN</strong>
       </div>
     </div>
+  </sc-if>
+
 </div>
 
 <script type="text/x-dc" data-dc-script>
+const API_BASE = 'https://company-linesideas.com/api';
+
 const fmt = v => Math.round(v).toLocaleString('en-US');
 const pct = v => (v * 100).toFixed(1) + '%';
 const bar = (v, mx) => Math.min(100, (mx > 0 ? v / mx : 0) * 100).toFixed(1);
 
-// بيانات يدوية مؤقتة (من تقرير المحاسب) بانتظار ربط حساب خاص فيه يقدر يحدّثها مباشرة.
-// مستهدفات المبيعات هنا معروف إنها تحتاج تصحيح لاحقًا — خليناها كما هي بالتقرير الأصلي مؤقتًا.
-const MONEY_DATA = [
-  { name: 'محمد دوشي', region: 'جدة', target: 848630, achieved: 385629, instTarget: 65500, instCollected: 23100, pastOutstanding: 44500, pastCollected: 17800 },
-  { name: 'صالح باصليب', region: 'الرياض', target: 357926, achieved: 141782, instTarget: 39900, instCollected: 22700, pastOutstanding: 48600, pastCollected: 20600 },
-  { name: 'عمر حيدر', region: 'الجنوب', target: 320000, achieved: 124725, instTarget: 43100, instCollected: 18100, pastOutstanding: 29700, pastCollected: 21200 },
-  { name: 'منير ناصر', region: 'القصيم', target: 140800, achieved: 142344, instTarget: 12600, instCollected: 10900, pastOutstanding: 12900, pastCollected: 14300 },
-  { name: 'محمد أحمد الدعم', region: 'المدينة المنورة', target: 358400, achieved: 151915, instTarget: 9400, instCollected: 12400, pastOutstanding: 13100, pastCollected: 8800 },
-  { name: 'صالح الشمراني', region: 'الرياض', target: 153612, achieved: 138365, instTarget: 41500, instCollected: 16200, pastOutstanding: 39100, pastCollected: 12500 },
-  { name: 'سالم الوعل', region: 'الرياض', target: 394250, achieved: 111791, instTarget: 37700, instCollected: 14000, pastOutstanding: 32600, pastCollected: 18700 },
-  { name: 'مازن', region: 'الرياض', target: 384000, achieved: 94472, instTarget: 31700, instCollected: 11900, pastOutstanding: 20800, pastCollected: 13800 },
-  { name: 'محمود عبد الرزقي', region: 'جدة', target: 570829, achieved: 105606, instTarget: 32000, instCollected: 15900, pastOutstanding: 18700, pastCollected: 12100 },
-  { name: 'عبدالرحمن باسهل', region: 'الشرقية', target: 358400, achieved: 111357, instTarget: 42000, instCollected: 24800, pastOutstanding: 33500, pastCollected: 16300 },
-  { name: 'محمد الطيب', region: 'جدة', target: 384000, achieved: 75073, instTarget: 33000, instCollected: 17400, pastOutstanding: 9900, pastCollected: 12100 },
-  { name: 'خلدون', region: 'الرياض', target: 546833, achieved: 70439, instTarget: 35300, instCollected: 17700, pastOutstanding: 21500, pastCollected: 13900 },
-  { name: 'أحمد يسري', region: 'الرياض', target: 128400, achieved: 64441, instTarget: 27000, instCollected: 26400, pastOutstanding: 21900, pastCollected: 16400 },
-  { name: 'سالم المرشدي', region: 'الشرقية', target: 140800, achieved: 65830, instTarget: 44000, instCollected: 19800, pastOutstanding: 17500, pastCollected: 23900 },
-  { name: 'عبدالله أحمد', region: 'الرياض', target: 140800, achieved: 43598, instTarget: 31100, instCollected: 13800, pastOutstanding: 15800, pastCollected: 8600 },
-  { name: 'Head Office Sales', region: '—', target: 0, achieved: 19798, instTarget: 0, instCollected: 0, pastOutstanding: 7800, pastCollected: 0 },
-  { name: 'المتجر', region: 'تجارة إلكترونية', target: 121440, achieved: 759, instTarget: 33000, instCollected: 38100, pastOutstanding: 48200, pastCollected: 27800 },
-  { name: 'مبيعات التصدير', region: '—', target: 0, achieved: 0, instTarget: 0, instCollected: 0, pastOutstanding: 6400, pastCollected: 0 },
-];
-
-// مؤشرات "تحصيل مبيعات سابقة" / "تحصيل شهري" / "مبيعات نقدية" — أساسها مختلف عن أعمدة جدول الآجلة/المتعلقات أعلاه،
-// فخليناها كما وردت بالتقرير الأصلي.
+// مؤشرات "تحصيل مبيعات سابقة" / "تحصيل شهري" / "مبيعات نقدية" — ما فيه لها مصدر بيانات حي بالنظام بعد
+// (ولا تحصيل شهري منفصل ولا نسبة مبيعات نقدية/آجلة مسجّلة)، فخليناها كما وردت بالتقرير الأصلي مؤقتًا.
 const IND_PAST_COLLECT = {
   top: [{ name: 'المتجر', val: 0.107 }, { name: 'سالم المرشدي', val: 0.092 }, { name: 'عمر حيدر', val: 0.082 }],
   bot: [{ name: 'Head Office Sales', val: 0 }, { name: 'مبيعات التصدير', val: 0 }, { name: 'عبدالله أحمد', val: 0.033 }]
@@ -299,8 +315,8 @@ const IND_CASH = {
   bot: [{ name: 'سالم الوعل', val: 0.397 }, { name: 'مازن', val: 0.438 }, { name: 'محمد دوشي', val: 0.452 }]
 };
 
-function buildRows() {
-  const rows = MONEY_DATA.map(e => {
+function buildRows(team) {
+  const rows = team.map(e => {
     const instRemaining = Math.max(0, e.instTarget - e.instCollected);
     const pastRemaining = Math.max(0, e.pastOutstanding - e.pastCollected);
     const totalOutstanding = instRemaining + pastRemaining;
@@ -321,9 +337,49 @@ function indicatorList(rows, key, dir) {
 }
 
 class Component extends DCLogic {
+  state = { loading: true, error: '', team: [] };
+
+  componentDidMount() {
+    this.loadAll();
+  }
+
+  loadAll = () => {
+    this.setState({ loading: true, error: '' });
+    const month = new Date().toISOString().slice(0, 7);
+    Promise.all([
+      fetch(API_BASE + '/monthly_sales.php?month=' + encodeURIComponent(month)).then(r => r.ok ? r.json() : Promise.reject(new Error('monthly_sales'))),
+      fetch(API_BASE + '/collections.php?month=' + encodeURIComponent(month)).then(r => r.ok ? r.json() : Promise.reject(new Error('collections')))
+    ]).then(([sales, collections]) => {
+      const collMap = {};
+      (collections || []).forEach(c => { collMap[c.employeeId] = c; });
+      const team = (sales || []).map(s => {
+        const c = collMap[s.employeeId] || {};
+        return {
+          name: s.name, region: s.region || '—',
+          target: s.salesTarget || 0, achieved: s.salesAmount || 0,
+          instTarget: c.instTarget || 0, instCollected: c.instCollected || 0,
+          pastOutstanding: c.pastOutstanding || 0, pastCollected: c.pastCollected || 0
+        };
+      });
+      this.setState({ team, loading: false });
+    }).catch(() => {
+      this.setState({ loading: false, error: 'تعذّر تحميل البيانات من نظام Lines Center. تأكد من الاتصال وحاول مرة أخرى.' });
+    });
+  };
+
   renderVals() {
+    const s = this.state;
     const now = new Date().toLocaleDateString('ar-SA-u-nu-latn-ca-gregory', { year: 'numeric', month: 'long', day: 'numeric' });
-    const rows = buildRows();
+
+    if (s.loading || s.error) {
+      return {
+        showLoading: true, showContent: false,
+        hasError: !!s.error, isLoadingNoError: s.loading && !s.error, loadError: s.error,
+        retry: this.loadAll, hDate: now
+      };
+    }
+
+    const rows = buildRows(s.team);
 
     const moneyRows = rows.map(e => ({
       rank: e.rank, name: e.name, region: e.region,
@@ -338,15 +394,15 @@ class Component extends DCLogic {
       totalOutstanding: fmt(e.totalOutstanding), totalPct: pct(e.totalPct)
     }));
 
-    const sumTarget = rows.reduce((s, e) => s + e.target, 0);
-    const sumAchieved = rows.reduce((s, e) => s + e.achieved, 0);
-    const sumInstTarget = rows.reduce((s, e) => s + e.instTarget, 0);
-    const sumInstCollected = rows.reduce((s, e) => s + e.instCollected, 0);
-    const sumInstRemaining = rows.reduce((s, e) => s + e.instRemaining, 0);
-    const sumPastOutstanding = rows.reduce((s, e) => s + e.pastOutstanding, 0);
-    const sumPastCollected = rows.reduce((s, e) => s + e.pastCollected, 0);
-    const sumPastRemaining = rows.reduce((s, e) => s + e.pastRemaining, 0);
-    const sumTotalOutstanding = rows.reduce((s, e) => s + e.totalOutstanding, 0);
+    const sumTarget = rows.reduce((s2, e) => s2 + e.target, 0);
+    const sumAchieved = rows.reduce((s2, e) => s2 + e.achieved, 0);
+    const sumInstTarget = rows.reduce((s2, e) => s2 + e.instTarget, 0);
+    const sumInstCollected = rows.reduce((s2, e) => s2 + e.instCollected, 0);
+    const sumInstRemaining = rows.reduce((s2, e) => s2 + e.instRemaining, 0);
+    const sumPastOutstanding = rows.reduce((s2, e) => s2 + e.pastOutstanding, 0);
+    const sumPastCollected = rows.reduce((s2, e) => s2 + e.pastCollected, 0);
+    const sumPastRemaining = rows.reduce((s2, e) => s2 + e.pastRemaining, 0);
+    const sumTotalOutstanding = rows.reduce((s2, e) => s2 + e.totalOutstanding, 0);
     const moneyTotals = {
       target: fmt(sumTarget), achieved: fmt(sumAchieved),
       pct: sumTarget > 0 ? pct(sumAchieved / sumTarget) : '—',
@@ -366,6 +422,7 @@ class Component extends DCLogic {
     const cash = toList(IND_CASH);
 
     return {
+      showLoading: false, showContent: true, hasError: false, isLoadingNoError: true, loadError: '', retry: this.loadAll,
       hDate: now,
       moneyRows, moneyTotals,
       indTopOutstanding: indicatorList(rows, 'totalPct', 'top'),
