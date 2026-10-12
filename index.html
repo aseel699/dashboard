@@ -105,6 +105,37 @@ body{font-family:'Tajawal',sans-serif;background:var(--bg);color:var(--text);min
 
       <div class="ind-wrap">
         <div class="ind-col">
+          <div class="ind-title">مؤشرات المبيعات</div>
+          <div class="ind-metrics n2">
+            <div>
+              <div class="ind-metric-lbl">نسبة مبيعات نقدية</div>
+              <div class="ind-card top">
+                <sc-for list="{{ indTopCash }}" as="c" hint-placeholder-count="3">
+                  <div class="ind-row top"><span class="n">{{ c.name }}</span><span class="v">{{ c.valText }}</span></div>
+                </sc-for>
+              </div>
+              <div class="ind-card bot">
+                <sc-for list="{{ indBotCash }}" as="c" hint-placeholder-count="3">
+                  <div class="ind-row bot"><span class="n">{{ c.name }}</span><span class="v">{{ c.valText }}</span></div>
+                </sc-for>
+              </div>
+            </div>
+            <div>
+              <div class="ind-metric-lbl">نسبة تحقيق مبيعات</div>
+              <div class="ind-card top">
+                <sc-for list="{{ indTopAchv }}" as="c" hint-placeholder-count="3">
+                  <div class="ind-row top"><span class="n">{{ c.name }}</span><span class="v">{{ c.valText }}</span></div>
+                </sc-for>
+              </div>
+              <div class="ind-card bot">
+                <sc-for list="{{ indBotAchv }}" as="c" hint-placeholder-count="3">
+                  <div class="ind-row bot"><span class="n">{{ c.name }}</span><span class="v">{{ c.valText }}</span></div>
+                </sc-for>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="ind-col right">
           <div class="ind-title">مؤشرات التحصيل والمتعلقات</div>
           <div class="ind-metrics n3">
             <div>
@@ -142,37 +173,6 @@ body{font-family:'Tajawal',sans-serif;background:var(--bg);color:var(--text);min
               </div>
               <div class="ind-card bot">
                 <sc-for list="{{ indBotMonthlyCollect }}" as="c" hint-placeholder-count="3">
-                  <div class="ind-row bot"><span class="n">{{ c.name }}</span><span class="v">{{ c.valText }}</span></div>
-                </sc-for>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="ind-col right">
-          <div class="ind-title">مؤشرات المبيعات</div>
-          <div class="ind-metrics n2">
-            <div>
-              <div class="ind-metric-lbl">نسبة مبيعات نقدية</div>
-              <div class="ind-card top">
-                <sc-for list="{{ indTopCash }}" as="c" hint-placeholder-count="3">
-                  <div class="ind-row top"><span class="n">{{ c.name }}</span><span class="v">{{ c.valText }}</span></div>
-                </sc-for>
-              </div>
-              <div class="ind-card bot">
-                <sc-for list="{{ indBotCash }}" as="c" hint-placeholder-count="3">
-                  <div class="ind-row bot"><span class="n">{{ c.name }}</span><span class="v">{{ c.valText }}</span></div>
-                </sc-for>
-              </div>
-            </div>
-            <div>
-              <div class="ind-metric-lbl">نسبة تحقيق مبيعات</div>
-              <div class="ind-card top">
-                <sc-for list="{{ indTopAchv }}" as="c" hint-placeholder-count="3">
-                  <div class="ind-row top"><span class="n">{{ c.name }}</span><span class="v">{{ c.valText }}</span></div>
-                </sc-for>
-              </div>
-              <div class="ind-card bot">
-                <sc-for list="{{ indBotAchv }}" as="c" hint-placeholder-count="3">
                   <div class="ind-row bot"><span class="n">{{ c.name }}</span><span class="v">{{ c.valText }}</span></div>
                 </sc-for>
               </div>
