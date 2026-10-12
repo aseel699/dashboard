@@ -12,6 +12,7 @@
   <style>
 *{margin:0;padding:0;box-sizing:border-box}
 :root{
+  --maroon:#7A1F2B;--maroon-dark:#4A1420;--maroon-dim:rgba(122,31,43,.07);--maroon-border:rgba(122,31,43,.22);
   --gold:#B8860B;--gold-dim:rgba(184,134,11,.08);--gold-border:rgba(184,134,11,.2);
   --red:#DC2626;--red-dim:rgba(220,38,38,.08);
   --green:#16A34A;--green-dim:rgba(22,163,74,.08);
@@ -23,104 +24,116 @@
   --text:#1E293B;--text-dim:#475569;--text-faint:#94A3B8;
 }
 body{font-family:'Tajawal',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;padding:20px}
-.container{max-width:1600px;margin:0 auto}
+.container{max-width:1700px;margin:0 auto}
 
 .loading-screen{position:fixed;inset:0;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:999;gap:16px;box-shadow:inset 0 0 0 1px var(--border)}
 .loading-logo{font-size:40px}
-.loading-text{font-size:16px;font-weight:700;color:var(--gold);font-family:'Tajawal',sans-serif}
+.loading-text{font-size:16px;font-weight:700;color:var(--maroon);font-family:'Tajawal',sans-serif}
 .loading-sub{font-size:12px;color:var(--text-faint);font-family:'Tajawal',sans-serif}
-.loading-bar-wrap{width:200px;height:3px;background:rgba(255,255,255,.07);border-radius:3px;overflow:hidden}
-.loading-bar-fill{height:100%;background:linear-gradient(90deg,var(--gold),var(--blue));border-radius:3px;animation:loadprog 2s ease-in-out infinite}
+.loading-bar-wrap{width:200px;height:3px;background:rgba(0,0,0,.07);border-radius:3px;overflow:hidden}
+.loading-bar-fill{height:100%;background:linear-gradient(90deg,var(--maroon),var(--gold));border-radius:3px;animation:loadprog 2s ease-in-out infinite}
 @keyframes loadprog{0%{width:0%}100%{width:100%}}
 .error-box{background:var(--red-dim);border:1px solid rgba(200,16,46,.3);border-radius:12px;padding:16px 20px;text-align:center;margin:20px auto;max-width:500px}
-.error-box h3{color:#FF6B6B;margin-bottom:8px}
+.error-box h3{color:#DC2626;margin-bottom:8px}
 .error-box p{font-size:12px;color:var(--text-dim)}
 
-.header{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:20px;padding-bottom:16px;border-bottom:2px solid var(--gold-border);gap:16px;flex-wrap:wrap}
-.brand-pill{display:inline-flex;align-items:center;gap:5px;background:linear-gradient(135deg,var(--gold),#B8922E);color:#1A0A0F;font-size:9px;font-weight:900;padding:3px 11px;border-radius:20px;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:7px}
-.header h1{font-size:23px;font-weight:900;color:var(--text);line-height:1.2}
-.header h1 span{color:var(--gold)}
-.header-meta{display:flex;gap:10px;flex-wrap:wrap;margin-top:7px}
-.meta-item{font-size:10px;color:var(--text-dim);display:flex;align-items:center;gap:4px}
-.meta-item strong{color:var(--gold)}
-.fp{display:inline-flex;align-items:center;gap:4px;border-radius:9px;padding:3px 9px;font-size:9px;font-weight:700}
-.fp-blue{background:rgba(59,130,246,.1);border:1px solid rgba(59,130,246,.2);color:var(--blue)}
-.fp-gold{background:rgba(212,168,67,.1);border:1px solid var(--gold-border);color:var(--gold)}
-.fp-purple{background:rgba(168,85,247,.1);border:1px solid rgba(168,85,247,.2);color:var(--purple)}
-.live-dot{width:7px;height:7px;border-radius:50%;background:var(--green);animation:pulse 2s infinite;display:inline-block;box-shadow:0 0 0 3px rgba(22,163,74,.15)}
+/* ── Header (maroon bar, matches brand) ───────────────── */
+.top-header{background:linear-gradient(135deg,var(--maroon),var(--maroon-dark));border-radius:18px;padding:16px 22px;display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;gap:16px;flex-wrap:wrap;box-shadow:0 4px 16px rgba(74,20,32,.28)}
+.th-left{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.th-date{display:flex;align-items:center;gap:6px;color:#fff;font-size:13px;font-weight:700}
+.th-live{width:7px;height:7px;border-radius:50%;background:#4ADE80;animation:pulse 2s infinite;display:inline-block;box-shadow:0 0 0 3px rgba(74,222,128,.2)}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
-.refresh-btn{background:var(--gold);border:1px solid var(--gold);color:#fff;font-size:10px;font-weight:700;padding:5px 12px;border-radius:10px;cursor:pointer;font-family:'Tajawal',sans-serif}
-.refresh-btn:hover{background:#A0760A;border-color:#A0760A}
+.th-emp{color:rgba(255,255,255,.75);font-size:11px;margin-right:8px}
+.th-right{display:flex;align-items:center;gap:12px}
+.th-title{color:#fff;font-size:21px;font-weight:900;line-height:1.25;text-align:left}
+.th-sub{color:rgba(255,255,255,.65);font-size:10px;margin-top:2px}
+.brand-badge{width:52px;height:52px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;font-size:21px;border:2px solid rgba(255,255,255,.35);flex-shrink:0}
+.refresh-btn{background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.3);color:#fff;font-size:10px;font-weight:700;padding:6px 13px;border-radius:10px;cursor:pointer;font-family:'Tajawal',sans-serif}
+.refresh-btn:hover{background:rgba(255,255,255,.22)}
 
-.kpi-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:11px;margin-bottom:18px}
-@media(max-width:1100px){.kpi-grid{grid-template-columns:repeat(3,1fr)}}
-@media(max-width:650px){.kpi-grid{grid-template-columns:repeat(2,1fr)}}
-.kpi{background:var(--bg2);border:1px solid var(--border);border-radius:15px;padding:14px 16px;position:relative;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,.06)}
-.kpi::before{content:'';position:absolute;top:0;right:0;width:48px;height:48px;border-radius:50%;transform:translate(15px,-15px);opacity:.14}
-.kpi.gold{border-color:var(--gold-border)}.kpi.gold::before{background:var(--gold)}
-.kpi.green{border-color:rgba(34,197,94,.2)}.kpi.green::before{background:var(--green)}
-.kpi.blue{border-color:rgba(59,130,246,.2)}.kpi.blue::before{background:var(--blue)}
-.kpi.teal{border-color:rgba(20,184,166,.2)}.kpi.teal::before{background:var(--teal)}
-.kpi.purple{border-color:rgba(168,85,247,.2)}.kpi.purple::before{background:var(--purple)}
-.kpi-icon{font-size:17px;margin-bottom:7px}
-.kpi-label{font-size:9px;color:var(--text-dim);margin-bottom:4px}
-.kpi-val{font-size:21px;font-weight:900;line-height:1}
-.kpi.gold .kpi-val{color:var(--gold)}.kpi.green .kpi-val{color:var(--green)}
-.kpi.blue .kpi-val{color:var(--blue)}.kpi.teal .kpi-val{color:var(--teal)}.kpi.purple .kpi-val{color:var(--purple)}
-.kpi-sub{font-size:9px;color:var(--text-faint);margin-top:3px;line-height:1.3}
+/* ── Indicator grid (top3 / bottom3 per metric) ───────── */
+.ind-wrap{display:grid;grid-template-columns:1fr 1fr;gap:0;background:var(--bg2);border:1px solid var(--border);border-radius:16px;overflow:hidden;margin-bottom:18px;box-shadow:0 1px 4px rgba(0,0,0,.06)}
+@media(max-width:900px){.ind-wrap{grid-template-columns:1fr}}
+.ind-col{padding:14px 16px}
+.ind-col.right{border-left:1px solid var(--border)}
+@media(max-width:900px){.ind-col.right{border-left:none;border-top:1px solid var(--border)}}
+.ind-title{font-size:12.5px;font-weight:900;color:var(--maroon-dark);margin-bottom:12px;text-align:center;letter-spacing:.3px}
+.ind-metrics{display:grid;gap:10px}
+.ind-metrics.n3{grid-template-columns:repeat(3,1fr)}
+.ind-metrics.n2{grid-template-columns:repeat(2,1fr)}
+@media(max-width:620px){.ind-metrics.n3,.ind-metrics.n2{grid-template-columns:1fr}}
+.ind-metric-lbl{font-size:9.5px;font-weight:800;color:var(--text-dim);text-align:center;margin-bottom:6px;min-height:24px;display:flex;align-items:center;justify-content:center}
+.ind-card{border-radius:10px;padding:7px 9px;margin-bottom:6px}
+.ind-card:last-child{margin-bottom:0}
+.ind-card.top{background:var(--green-dim);border:1px solid rgba(34,197,94,.18)}
+.ind-card.bot{background:var(--red-dim);border:1px solid rgba(220,38,38,.16)}
+.ind-row{display:flex;justify-content:space-between;align-items:center;gap:6px;padding:2.5px 0;font-size:10px}
+.ind-row .n{color:var(--text-dim);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ind-row .v{font-weight:900;flex-shrink:0}
+.ind-row.top .v{color:var(--green)}
+.ind-row.bot .v{color:#DC2626}
+.ind-soon{opacity:.5;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:14px 6px;text-align:center;gap:4px;height:100%}
+.ind-soon-icon{font-size:16px}
+.ind-soon-text{font-size:8.5px;color:var(--text-faint);line-height:1.4}
 
-.company-box{background:var(--bg2);border:1px solid var(--border);border-radius:16px;overflow:hidden;margin-bottom:18px;box-shadow:0 1px 4px rgba(0,0,0,.06)}
-.box-header{padding:11px 18px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
-.box-title{font-size:11px;font-weight:800;color:var(--gold);letter-spacing:1px;text-transform:uppercase}
-.comp-bars{padding:10px 18px 6px;display:grid;grid-template-columns:repeat(12,1fr);gap:5px}
-@media(max-width:800px){.comp-bars{grid-template-columns:repeat(6,1fr)}}
-.mb-wrap{display:flex;flex-direction:column;align-items:center;gap:2px}
-.mb-outer{width:100%;height:44px;background:rgba(255,255,255,.04);border-radius:6px;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center}
-.mb-inner{position:absolute;inset:0;border-radius:6px}
-.mb-hit .mb-inner{background:linear-gradient(135deg,rgba(34,197,94,.25),rgba(74,222,128,.15))}
-.mb-partial .mb-inner{background:linear-gradient(135deg,rgba(59,130,246,.25),rgba(96,165,250,.15))}
-.mb-miss .mb-inner{background:linear-gradient(135deg,rgba(249,115,22,.25),rgba(252,160,122,.15))}
-.mb-future .mb-inner{background:rgba(255,255,255,.03)}
-.mb-hit{border:1px solid rgba(34,197,94,.3);border-radius:6px}
-.mb-partial{border:1px solid rgba(59,130,246,.3);border-radius:6px}
-.mb-miss{border:1px solid rgba(249,115,22,.3);border-radius:6px}
-.mb-future{border:1px solid rgba(255,255,255,.06);border-radius:6px}
-.mb-pct-in{position:relative;z-index:1;font-size:10px;font-weight:900;text-align:center}
-.mb-label{font-size:8px;color:var(--text-faint);text-align:center;line-height:1.2}
-.mb-amt{font-size:7px;text-align:center}
-.comp-summary{display:flex;gap:18px;padding:8px 18px 12px;flex-wrap:wrap;background:#F8FAFC;border-top:1px solid var(--border)}
-.cs-item .cs-lbl{font-size:8px;color:var(--text-faint);letter-spacing:1px;text-transform:uppercase;margin-bottom:2px}
-.cs-item .cs-val{font-size:14px;font-weight:900}
+/* ── Money table (sales + collections) ────────────────── */
+.money-box{background:var(--bg2);border:1px solid var(--border);border-radius:16px;overflow:hidden;margin-bottom:18px;box-shadow:0 1px 4px rgba(0,0,0,.06)}
+.money-box-header{padding:12px 18px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.money-box-title{font-size:13px;font-weight:900;color:var(--maroon-dark)}
+.money-box-sub{font-size:9.5px;color:var(--text-faint);margin-top:2px}
+.soon-pill{font-size:9px;background:var(--gold-dim);border:1px solid var(--gold-border);color:var(--gold);padding:3px 10px;border-radius:9px;font-weight:700}
+.mtw{overflow-x:auto}
+.mt{width:100%;border-collapse:collapse;font-size:10.5px;min-width:1150px}
+.mt thead tr.grp th{background:var(--maroon-dark);color:#fff;padding:7px 8px;font-size:9.5px;font-weight:800;text-align:center;border-left:1px solid rgba(255,255,255,.12)}
+.mt thead tr.sub th{background:var(--maroon-dim);color:var(--maroon-dark);padding:7px 8px;font-size:9px;font-weight:800;text-align:center;white-space:nowrap;border-bottom:1px solid var(--maroon-border)}
+.mt tbody tr{border-bottom:1px solid var(--border2)}
+.mt tbody tr:hover{background:rgba(122,31,43,.03)}
+.mt tbody td{padding:7px 8px;color:var(--text-dim);text-align:center;white-space:nowrap}
+.mt td.nm{color:var(--text);font-weight:700;font-size:11.5px;text-align:right}
+.mt td.rg{color:var(--text-faint);font-size:9.5px}
+.mt td.rk{font-weight:800;color:var(--text-dim)}
+.mt td.ach{color:var(--maroon);font-weight:800}
+.mt td.ph{color:var(--text-faint);opacity:.45}
+.mt tfoot tr{background:var(--maroon-dim);font-weight:900}
+.mt tfoot td{padding:9px 8px;text-align:center;color:var(--maroon-dark)}
+.mt tfoot td.nm{text-align:right}
+.mbar{display:flex;align-items:center;gap:5px;min-width:70px;margin:0 auto}
+.mbar .bb{flex:1;height:5px;background:rgba(0,0,0,.06);border-radius:3px;overflow:hidden}
+.mbar .bf{height:100%;border-radius:3px;background:linear-gradient(90deg,var(--maroon),#A5384A)}
+.mbar .bl{font-size:9.5px;font-weight:800;min-width:30px}
 
+/* ── Legacy field-ops section (visits / opens / blended score) ── */
 .main-grid{display:grid;grid-template-columns:1fr 300px;gap:16px;margin-bottom:18px}
 @media(max-width:1100px){.main-grid{grid-template-columns:1fr}}
 .section{background:var(--bg2);border:1px solid var(--border);border-radius:16px;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,.06)}
+.box-header{padding:11px 18px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.box-title{font-size:11px;font-weight:800;color:var(--maroon-dark);letter-spacing:1px;text-transform:uppercase}
 .score-legend{display:flex;gap:10px;flex-wrap:wrap;padding:6px 16px 8px;font-size:8px;color:var(--text-faint);border-bottom:1px solid var(--border2);background:#F8FAFC}
 .sl{display:flex;align-items:center;gap:3px}
 .sl-dot{width:5px;height:5px;border-radius:50%;flex-shrink:0}
 
 .tw{overflow-x:auto}
 table{width:100%;border-collapse:collapse;font-size:11px}
-thead tr{background:rgba(184,134,11,.07)}
-thead th{padding:8px 10px;text-align:right;font-size:9px;font-weight:800;color:var(--gold);letter-spacing:.5px;white-space:nowrap;border-bottom:1px solid var(--gold-border)}
+thead tr{background:var(--maroon-dim)}
+thead th{padding:8px 10px;text-align:right;font-size:9px;font-weight:800;color:var(--maroon-dark);letter-spacing:.5px;white-space:nowrap;border-bottom:1px solid var(--maroon-border)}
 tbody tr{border-bottom:1px solid var(--border2);transition:background .12s}
-tbody tr:hover{background:rgba(37,99,235,.04)}
+tbody tr:hover{background:rgba(122,31,43,.03)}
 tbody td{padding:8px 10px;color:var(--text-dim);white-space:nowrap;vertical-align:middle}
 td.nm{color:var(--text);font-weight:700;font-size:12px}
 td.rg{color:var(--text-faint);font-size:10px}
 .rb{display:inline-flex;align-items:center;justify-content:center;width:23px;height:23px;border-radius:6px;font-size:11px;font-weight:900}
-.r1{background:rgba(212,168,67,.25);color:var(--gold)}.r2{background:rgba(192,192,192,.15);color:#C0C0C0}
-.r3{background:rgba(205,127,50,.15);color:#CD7F32}.rl{background:rgba(200,16,46,.15);color:#FF6B6B}
-.rm{background:rgba(255,255,255,.06);color:var(--text-dim)}
+.r1{background:rgba(122,31,43,.18);color:var(--maroon)}.r2{background:rgba(192,192,192,.15);color:#C0C0C0}
+.r3{background:rgba(205,127,50,.15);color:#CD7F32}.rl{background:rgba(200,16,46,.15);color:#DC2626}
+.rm{background:rgba(0,0,0,.04);color:var(--text-dim)}
 .tb{display:inline-flex;align-items:center;gap:2px;font-size:8px;font-weight:800;padding:2px 7px;border-radius:9px;white-space:nowrap}
 .tn{background:var(--green-dim);color:var(--green);border:1px solid rgba(34,197,94,.2)}
 .to{background:var(--gold-dim);color:var(--gold);border:1px solid var(--gold-border)}
 .tb2{background:var(--blue-dim);color:var(--blue);border:1px solid rgba(59,130,246,.2)}
 .tel{background:rgba(168,85,247,.12);color:var(--purple);border:1px solid rgba(168,85,247,.25)}
 .bw{display:flex;align-items:center;gap:5px;min-width:85px}
-.bb{flex:1;height:5px;background:rgba(255,255,255,.07);border-radius:3px;overflow:hidden}
+.bb{flex:1;height:5px;background:rgba(0,0,0,.06);border-radius:3px;overflow:hidden}
 .bf{height:100%;border-radius:3px}
-.bs .bf{background:linear-gradient(90deg,var(--gold),#E8B84B)}
+.bs .bf{background:linear-gradient(90deg,var(--maroon),#A5384A)}
 .bv .bf{background:linear-gradient(90deg,var(--blue),#60A5FA)}
 .bo .bf{background:linear-gradient(90deg,var(--teal),#2DD4BF)}
 .bsc .bf{background:linear-gradient(90deg,var(--green),#4ADE80)}
@@ -129,10 +142,9 @@ td.rg{color:var(--text-faint);font-size:10px}
 .sg{background:var(--green-dim);color:var(--green);border:1px solid rgba(34,197,94,.2)}
 .sgd{background:rgba(20,184,166,.12);color:var(--teal);border:1px solid rgba(20,184,166,.2)}
 .so{background:var(--orange-dim);color:var(--orange);border:1px solid rgba(249,115,22,.2)}
-.sd{background:var(--red-dim);color:#FF6B6B;border:1px solid rgba(200,16,46,.2)}
+.sd{background:var(--red-dim);color:#DC2626;border:1px solid rgba(200,16,46,.2)}
 .dc{color:var(--text-faint);font-size:10px;text-align:center}
-.vtn{font-size:12px;font-weight:800;color:var(--blue)}
-.tot-bar{background:rgba(184,134,11,.05);border-top:1px solid var(--gold-border);padding:8px 15px;display:flex;gap:16px;flex-wrap:wrap}
+.tot-bar{background:var(--maroon-dim);border-top:1px solid var(--maroon-border);padding:8px 15px;display:flex;gap:16px;flex-wrap:wrap}
 .ti2 .til{font-size:8px;color:var(--text-faint);letter-spacing:1px;text-transform:uppercase;margin-bottom:2px}
 .ti2 .tiv{font-size:13px;font-weight:900}
 
@@ -141,7 +153,7 @@ td.rg{color:var(--text-faint);font-size:10px}
 .cl{padding:7px 11px}
 .ci{display:flex;align-items:center;gap:8px;padding:7px 9px;border-radius:9px;margin-bottom:5px;border:1px solid transparent}
 .ci:last-child{margin-bottom:0}
-.cg{background:rgba(184,134,11,.07);border-color:var(--gold-border)}
+.cg{background:var(--maroon-dim);border-color:var(--maroon-border)}
 .cs2{background:rgba(192,192,192,.05);border-color:rgba(192,192,192,.12)}
 .cb{background:rgba(205,127,50,.07);border-color:rgba(205,127,50,.12)}
 .cbad{background:var(--red-dim);border-color:rgba(200,16,46,.2)}
@@ -155,12 +167,33 @@ td.rg{color:var(--text-faint);font-size:10px}
 .ci-score{font-size:12px;font-weight:900;flex-shrink:0}
 .ci-empty{padding:10px;color:var(--text-faint);font-size:11px;text-align:center}
 
+.company-box{background:var(--bg2);border:1px solid var(--border);border-radius:16px;overflow:hidden;margin-bottom:18px;box-shadow:0 1px 4px rgba(0,0,0,.06)}
+.comp-bars{padding:10px 18px 6px;display:grid;grid-template-columns:repeat(12,1fr);gap:5px}
+@media(max-width:800px){.comp-bars{grid-template-columns:repeat(6,1fr)}}
+.mb-wrap{display:flex;flex-direction:column;align-items:center;gap:2px}
+.mb-outer{width:100%;height:44px;background:rgba(0,0,0,.03);border-radius:6px;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.mb-inner{position:absolute;inset:0;border-radius:6px}
+.mb-hit .mb-inner{background:linear-gradient(135deg,rgba(34,197,94,.25),rgba(74,222,128,.15))}
+.mb-partial .mb-inner{background:linear-gradient(135deg,rgba(59,130,246,.25),rgba(96,165,250,.15))}
+.mb-miss .mb-inner{background:linear-gradient(135deg,rgba(249,115,22,.25),rgba(252,160,122,.15))}
+.mb-future .mb-inner{background:rgba(0,0,0,.02)}
+.mb-hit{border:1px solid rgba(34,197,94,.3);border-radius:6px}
+.mb-partial{border:1px solid rgba(59,130,246,.3);border-radius:6px}
+.mb-miss{border:1px solid rgba(249,115,22,.3);border-radius:6px}
+.mb-future{border:1px solid rgba(0,0,0,.05);border-radius:6px}
+.mb-pct-in{position:relative;z-index:1;font-size:10px;font-weight:900;text-align:center}
+.mb-label{font-size:8px;color:var(--text-faint);text-align:center;line-height:1.2}
+.mb-amt{font-size:7px;text-align:center}
+.comp-summary{display:flex;gap:18px;padding:8px 18px 12px;flex-wrap:wrap;background:#F8FAFC;border-top:1px solid var(--border)}
+.cs-item .cs-lbl{font-size:8px;color:var(--text-faint);letter-spacing:1px;text-transform:uppercase;margin-bottom:2px}
+.cs-item .cs-val{font-size:14px;font-weight:900}
+
 .scatter-box{background:var(--bg2);border:1px solid var(--border);border-radius:16px;overflow:hidden;margin-bottom:16px;box-shadow:0 1px 4px rgba(0,0,0,.06)}
 .sw{padding:0 16px 12px}
 svg.sc{width:100%;height:220px;display:block}
 
 .footer{text-align:center;padding:11px;font-size:9px;color:var(--text-faint);border-top:1px solid var(--border);background:#fff}
-.footer strong{color:var(--gold)}
+.footer strong{color:var(--maroon)}
   </style>
 </helmet>
 
@@ -188,70 +221,133 @@ svg.sc{width:100%;height:220px;display:block}
   <sc-if value="{{ showContent }}" hint-placeholder-val="{{ false }}">
     <div class="container">
 
-      <div class="header">
-        <div>
-          <div class="brand-pill">📊 LINES IDEAS · V5</div>
-          <h1>لوحة أداء فريق <span>المبيعات</span></h1>
-          <div class="header-meta">
-            <div class="meta-item"><span class="live-dot"></span> &nbsp;<strong style="color:var(--green)">مباشر من Google Sheets</strong></div>
-            <div class="meta-item">📅 <strong>{{ hDate }}</strong></div>
-            <div class="meta-item">👥 <strong>{{ hCount }}</strong> موظف</div>
-            <div class="meta-item"><div class="fp fp-blue">⚖️ ميدان: مبيعات 50% + زيارات 25% + فتح 25%</div></div>
-            <div class="meta-item"><div class="fp fp-gold">🏪 فروع: مبيعات 100%</div></div>
-          </div>
+      <div class="top-header">
+        <div class="th-left">
+          <div class="th-date"><span class="th-live"></span> {{ hDate }}</div>
+          <div class="th-emp">👥 {{ hCount }} موظف</div>
+          <button class="refresh-btn" onClick="{{ retry }}">🔄 تحديث البيانات</button>
         </div>
-        <button class="refresh-btn" onClick="{{ retry }}">🔄 تحديث البيانات</button>
+        <div class="th-right">
+          <div>
+            <div class="th-title">لوحة متابعة قسم المبيعات</div>
+            <div class="th-sub">LINES IDEAS · مباشر من Google Sheets</div>
+          </div>
+          <div class="brand-badge">☕</div>
+        </div>
       </div>
 
-      <div class="kpi-grid">
-        <div class="kpi gold"><div class="kpi-icon">💰</div><div class="kpi-label">مبيعات الشهر</div><div class="kpi-val">{{ kSales }}</div><div class="kpi-sub">{{ kSalesSub }}</div></div>
-        <div class="kpi green"><div class="kpi-icon">📈</div><div class="kpi-label">نسبة تحقيق الفريق</div><div class="kpi-val">{{ kSalesPct }}</div><div class="kpi-sub">من إجمالي هدف الفريق</div></div>
-        <div class="kpi blue"><div class="kpi-icon">🚗</div><div class="kpi-label">إجمالي الزيارات</div><div class="kpi-val">{{ kVisits }}</div><div class="kpi-sub">{{ kVisitsSub }}</div></div>
-        <div class="kpi teal"><div class="kpi-icon">📊</div><div class="kpi-label">نسبة تحقيق الزيارات</div><div class="kpi-val">{{ kVisitPct }}</div><div class="kpi-sub">من هدف الزيارات</div></div>
-        <div class="kpi purple"><div class="kpi-icon">🎯</div><div class="kpi-label">نسبة تحقيق الشركة السنوي</div><div class="kpi-val">{{ kCompPct }}</div><div class="kpi-sub">{{ kCompSub }}</div></div>
-      </div>
-
-      <div class="company-box">
-        <div class="box-header">
-          <div class="box-title">🏢 تحقيق الشركة الشهري 2026</div>
-          <div style="display:flex;gap:12px;font-size:9px;color:var(--text-faint)">
-            <span style="color:var(--green)">■ فوق الهدف</span>
-            <span style="color:var(--blue)">■ جزئي</span>
-            <span style="color:var(--orange)">■ دون الهدف</span>
-            <span style="color:rgba(255,255,255,.12)">■ قادم</span>
-          </div>
-        </div>
-        <div class="comp-bars">
-          <sc-for list="{{ compBars }}" as="m" hint-placeholder-count="12">
-            <div class="mb-wrap">
-              <div class="{{ m.outerCls }}">
-                <div class="mb-inner"></div>
-                <div class="mb-pct-in" style="color:{{ m.color }}">{{ m.pctText }}</div>
-              </div>
-              <div class="mb-label">{{ m.label }}</div>
-              <div class="mb-amt" style="color:{{ m.amtColor }}">{{ m.amtText }}</div>
+      <div class="ind-wrap">
+        <div class="ind-col">
+          <div class="ind-title">مؤشرات التحصيل والمتعلقات</div>
+          <div class="ind-metrics n3">
+            <div>
+              <div class="ind-metric-lbl">نسبة متعلقات</div>
+              <div class="ind-card ind-soon"><div class="ind-soon-icon">🧾</div><div class="ind-soon-text">قريبًا من القسم المالي</div></div>
             </div>
-          </sc-for>
+            <div>
+              <div class="ind-metric-lbl">نسبة تحصيل مبيعات سابقة</div>
+              <div class="ind-card ind-soon"><div class="ind-soon-icon">🧾</div><div class="ind-soon-text">قريبًا من القسم المالي</div></div>
+            </div>
+            <div>
+              <div class="ind-metric-lbl">نسبة تحصيل شهري</div>
+              <div class="ind-card ind-soon"><div class="ind-soon-icon">🧾</div><div class="ind-soon-text">قريبًا من القسم المالي</div></div>
+            </div>
+          </div>
         </div>
-        <div class="comp-summary">
-          <div class="cs-item"><div class="cs-lbl">الهدف السنوي</div><div class="cs-val" style="color:var(--gold)">{{ compSummary.target }} ر.س</div></div>
-          <div class="cs-item"><div class="cs-lbl">المبيعات YTD</div><div class="cs-val" style="color:var(--green)">{{ compSummary.actual }} ر.س</div></div>
-          <div class="cs-item"><div class="cs-lbl">نسبة التحقيق السنوي</div><div class="cs-val" style="color:{{ compSummary.pctColor }}">{{ compSummary.pctText }}</div></div>
-          <div class="cs-item"><div class="cs-lbl">أشهر حققت الهدف</div><div class="cs-val" style="color:var(--teal)">{{ compSummary.hitText }}</div></div>
+        <div class="ind-col right">
+          <div class="ind-title">مؤشرات المبيعات</div>
+          <div class="ind-metrics n2">
+            <div>
+              <div class="ind-metric-lbl">نسبة مبيعات نقدية</div>
+              <div class="ind-card ind-soon"><div class="ind-soon-icon">💳</div><div class="ind-soon-text">قريبًا من القسم المالي</div></div>
+            </div>
+            <div>
+              <div class="ind-metric-lbl">نسبة تحقيق مبيعات</div>
+              <div class="ind-card top">
+                <sc-for list="{{ indTopAchv }}" as="c" hint-placeholder-count="3">
+                  <div class="ind-row top"><span class="n">{{ c.name }}</span><span class="v">{{ c.valText }}</span></div>
+                </sc-for>
+              </div>
+              <div class="ind-card bot">
+                <sc-for list="{{ indBotAchv }}" as="c" hint-placeholder-count="3">
+                  <div class="ind-row bot"><span class="n">{{ c.name }}</span><span class="v">{{ c.valText }}</span></div>
+                </sc-for>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="money-box">
+        <div class="money-box-header">
+          <div>
+            <div class="money-box-title">💰 المبيعات والتحصيل والمتعلقات</div>
+            <div class="money-box-sub">مرتب تلقائيًا حسب مبلغ البيع المحقق من الأعلى إلى الأقل</div>
+          </div>
+          <div class="soon-pill">أعمدة الآجلة والمتعلقات ستُفعَّل لاحقًا من القسم المالي</div>
+        </div>
+        <div class="mtw">
+          <table class="mt">
+            <thead>
+              <tr class="grp">
+                <th colspan="3"></th>
+                <th colspan="4">مؤشرات المبيعات الشهرية</th>
+                <th colspan="3">مؤشرات المبيعات الآجلة الشهرية</th>
+                <th colspan="3">مؤشرات المتعلقات السابقة</th>
+                <th colspan="2">إجمالي المتعلقات</th>
+              </tr>
+              <tr class="sub">
+                <th>#</th><th>اسم الموظف</th><th>الموقع</th>
+                <th>المستهدف</th><th>المحقق</th><th>نسبة المحقق</th><th>المتبقي</th>
+                <th>المبيعات الآجلة</th><th>التحصيل</th><th>المتبقي</th>
+                <th>المتعلقات</th><th>التحصيل</th><th>المتبقي</th>
+                <th>الإجمالي</th><th>النسبة</th>
+              </tr>
+            </thead>
+            <tbody>
+              <sc-for list="{{ moneyRows }}" as="e" hint-placeholder-count="10">
+                <tr>
+                  <td class="rk">{{ e.rank }}</td>
+                  <td class="nm">{{ e.name }}</td>
+                  <td class="rg">{{ e.region }}</td>
+                  <td>{{ e.target }}</td>
+                  <td class="ach">{{ e.achieved }}</td>
+                  <td><div class="mbar"><div class="bb"><div class="bf" style="width:{{ e.achievedBarPct }}%"></div></div><div class="bl">{{ e.achievedPct }}</div></div></td>
+                  <td>{{ e.remaining }}</td>
+                  <td class="ph">—</td><td class="ph">—</td><td class="ph">—</td>
+                  <td class="ph">—</td><td class="ph">—</td><td class="ph">—</td>
+                  <td class="ph">—</td><td class="ph">—</td>
+                </tr>
+              </sc-for>
+            </tbody>
+            <tfoot>
+              <tr>
+                <td colspan="2" class="nm">إجمالي الفريق</td>
+                <td></td>
+                <td>{{ moneyTotals.target }}</td>
+                <td>{{ moneyTotals.achieved }}</td>
+                <td>{{ moneyTotals.pct }}</td>
+                <td>{{ moneyTotals.remaining }}</td>
+                <td class="ph">—</td><td class="ph">—</td><td class="ph">—</td>
+                <td class="ph">—</td><td class="ph">—</td><td class="ph">—</td>
+                <td class="ph">—</td><td class="ph">—</td>
+              </tr>
+            </tfoot>
+          </table>
         </div>
       </div>
 
       <div class="main-grid">
         <div class="section">
           <div class="box-header">
-            <div class="box-title">🏆 ترتيب الفريق — التقييم النهائي</div>
+            <div class="box-title">📋 الأداء الميداني — الزيارات والفتح والتقييم النهائي</div>
             <div style="font-size:9px;color:var(--text-faint)">{{ empCountText }}</div>
           </div>
           <div class="score-legend">
             <div class="sl"><div class="sl-dot" style="background:var(--green)"></div>★ممتاز≥85%</div>
             <div class="sl"><div class="sl-dot" style="background:var(--teal)"></div>✓جيد≥65%</div>
             <div class="sl"><div class="sl-dot" style="background:var(--orange)"></div>⚠مقبول≥45%</div>
-            <div class="sl"><div class="sl-dot" style="background:#FF6B6B"></div>✗دعم</div>
+            <div class="sl"><div class="sl-dot" style="background:#DC2626"></div>✗دعم</div>
             <div class="sl" style="margin-right:6px"><span class="tb tn">🆕جديد</span></div>
             <div class="sl"><span class="tb to">⭐قديم</span></div>
             <div class="sl"><span class="tb tb2">🏪فرع</span></div>
@@ -274,7 +370,7 @@ svg.sc{width:100%;height:220px;display:block}
                     <td class="rg">{{ e.region }}</td>
                     <td><span class="{{ e.typeBadgeCls }}">{{ e.typeBadgeText }}</span></td>
                     <td style="color:var(--text-faint);font-size:10px">{{ e.targetText }}</td>
-                    <td style="font-weight:600;color:var(--gold)">{{ e.salesText }}</td>
+                    <td style="font-weight:600;color:var(--maroon)">{{ e.salesText }}</td>
                     <td><div class="bw bs"><div class="bb"><div class="bf" style="width:{{ e.salesBarPct }}%"></div></div><div class="bl">{{ e.salesPctText }}</div></div></td>
                     <td style="{{ e.visitTargetStyle }}">{{ e.visitTargetText }}</td>
                     <td style="{{ e.visitActualStyle }}">{{ e.visitActualText }}</td>
@@ -292,7 +388,7 @@ svg.sc{width:100%;height:220px;display:block}
             </table>
           </div>
           <div class="tot-bar">
-            <div class="ti2"><div class="til">إجمالي الهدف</div><div class="tiv" style="color:var(--gold)">{{ totBar.target }} ر.س</div></div>
+            <div class="ti2"><div class="til">إجمالي الهدف</div><div class="tiv" style="color:var(--maroon)">{{ totBar.target }} ر.س</div></div>
             <div class="ti2"><div class="til">إجمالي المبيعات</div><div class="tiv" style="color:var(--green)">{{ totBar.sales }} ر.س</div></div>
             <div class="ti2"><div class="til">نسبة تحقيق الفريق</div><div class="tiv" style="color:var(--blue)">{{ totBar.pct }}</div></div>
             <div class="ti2"><div class="til">إجمالي الزيارات</div><div class="tiv" style="color:var(--blue)">{{ totBar.visits }}</div></div>
@@ -345,19 +441,49 @@ svg.sc{width:100%;height:220px;display:block}
         </div>
       </div>
 
+      <div class="company-box">
+        <div class="box-header">
+          <div class="box-title">🏢 تحقيق الشركة الشهري 2026</div>
+          <div style="display:flex;gap:12px;font-size:9px;color:var(--text-faint)">
+            <span style="color:var(--green)">■ فوق الهدف</span>
+            <span style="color:var(--blue)">■ جزئي</span>
+            <span style="color:var(--orange)">■ دون الهدف</span>
+            <span style="color:rgba(0,0,0,.12)">■ قادم</span>
+          </div>
+        </div>
+        <div class="comp-bars">
+          <sc-for list="{{ compBars }}" as="m" hint-placeholder-count="12">
+            <div class="mb-wrap">
+              <div class="{{ m.outerCls }}">
+                <div class="mb-inner"></div>
+                <div class="mb-pct-in" style="color:{{ m.color }}">{{ m.pctText }}</div>
+              </div>
+              <div class="mb-label">{{ m.label }}</div>
+              <div class="mb-amt" style="color:{{ m.amtColor }}">{{ m.amtText }}</div>
+            </div>
+          </sc-for>
+        </div>
+        <div class="comp-summary">
+          <div class="cs-item"><div class="cs-lbl">الهدف السنوي</div><div class="cs-val" style="color:var(--maroon)">{{ compSummary.target }} ر.س</div></div>
+          <div class="cs-item"><div class="cs-lbl">المبيعات YTD</div><div class="cs-val" style="color:var(--green)">{{ compSummary.actual }} ر.س</div></div>
+          <div class="cs-item"><div class="cs-lbl">نسبة التحقيق السنوي</div><div class="cs-val" style="color:{{ compSummary.pctColor }}">{{ compSummary.pctText }}</div></div>
+          <div class="cs-item"><div class="cs-lbl">أشهر حققت الهدف</div><div class="cs-val" style="color:var(--teal)">{{ compSummary.hitText }}</div></div>
+        </div>
+      </div>
+
       <div class="scatter-box">
         <div class="box-header">
           <div class="box-title">📊 نسبة المبيعات مقابل نسبة الزيارات</div>
           <div style="display:flex;gap:10px;font-size:9px;color:var(--text-faint)">
             <span style="color:var(--green)">●★ممتاز</span><span style="color:var(--teal)">●✓جيد</span>
-            <span style="color:var(--orange)">●⚠مقبول</span><span style="color:#FF6B6B">●✗دعم</span>
+            <span style="color:var(--orange)">●⚠مقبول</span><span style="color:#DC2626">●✗دعم</span>
           </div>
         </div>
         <div class="sw"><svg class="sc" id="scatter" viewBox="0 0 820 220" preserveAspectRatio="xMidYMid meet"></svg></div>
       </div>
 
       <div class="footer">
-        آخر تحديث: <strong>{{ hDate }}</strong> · <strong>LINES IDEAS V5</strong> ·
+        آخر تحديث: <strong>{{ hDate }}</strong> · <strong>LINES IDEAS</strong> ·
         ميدان = مبيعات 50% + زيارات 25% + فتح 25% | فروع = مبيعات 100% ·
         تحقيق الشركة السنوي: <strong>{{ kCompPct }}</strong>
       </div>
@@ -532,9 +658,9 @@ class Component extends DCLogic {
       svg.appendChild(mk('line',{x1:p.l,y1:y,x2:p.l+cW,y2:y,stroke:'rgba(0,0,0,.06)','stroke-width':'1'}));
       svg.appendChild(mk('text',{x:p.l-4,y:y+4,'text-anchor':'end','font-size':'8',fill:'rgba(30,41,59,.35)','font-family':'Tajawal'},Math.round((4-i)/4*mxV*100)+'%'));
     }
-    svg.appendChild(mk('line',{x1:p.l+(1/mxS)*cW,y1:p.t,x2:p.l+(1/mxS)*cW,y2:p.t+cH,stroke:'rgba(184,134,11,.3)','stroke-width':'1.5','stroke-dasharray':'4 3'}));
-    svg.appendChild(mk('text',{x:p.l+cW/2,y:H-1,'text-anchor':'middle','font-size':'9',fill:'rgba(184,134,11,.7)','font-family':'Tajawal'},'نسبة المبيعات →'));
-    const cm={great:'#22C55E',good:'#14B8A6',ok:'#F97316',bad:'#FF6B6B'};
+    svg.appendChild(mk('line',{x1:p.l+(1/mxS)*cW,y1:p.t,x2:p.l+(1/mxS)*cW,y2:p.t+cH,stroke:'rgba(122,31,43,.3)','stroke-width':'1.5','stroke-dasharray':'4 3'}));
+    svg.appendChild(mk('text',{x:p.l+cW/2,y:H-1,'text-anchor':'middle','font-size':'9',fill:'rgba(122,31,43,.7)','font-family':'Tajawal'},'نسبة المبيعات →'));
+    const cm={great:'#22C55E',good:'#14B8A6',ok:'#F97316',bad:'#DC2626'};
     d.team.forEach(e=>{
       const cx=p.l+Math.min(1,e.sp/mxS)*cW,yv=e.ib?mxV*0.5:e.vp,cy=p.t+(1-Math.min(1,yv/mxV))*cH,col=cm[e.status];
       svg.appendChild(mk('circle',{cx,cy,r:'7',fill:col,opacity:'.11'}));
@@ -561,7 +687,8 @@ class Component extends DCLogic {
         kSales: '—', kSalesSub: '—', kSalesPct: '—', kVisits: '—', kVisitsSub: '—', kVisitPct: '—', kCompPct: '—', kCompSub: '—',
         compBars: [], compSummary: { target: '—', actual: '—', pctText: '—', pctColor: 'var(--text-dim)', hitText: '—' },
         empCountText: '—', teamRows: [], totBar: { target: '—', sales: '—', pct: '—', visits: '—' },
-        top3: [], topNew: [], topOld: [], bot3: [], topNewEmpty: true, topOldEmpty: true
+        top3: [], topNew: [], topOld: [], bot3: [], topNewEmpty: true, topOldEmpty: true,
+        indTopAchv: [], indBotAchv: [], moneyRows: [], moneyTotals: { target: '—', achieved: '—', pct: '—', remaining: '—' }
       };
     }
 
@@ -631,6 +758,24 @@ class Component extends DCLogic {
     const topOld = byOld.slice(0, 3).map((e, i) => ({ cls: medalsTop[i][0], medal: medalsTop[i][1], name: e.name, sub: subText(e), scoreText: pct(e.score) }));
     const bot3 = [...d.team].sort((a, b) => a.score - b.score).slice(0, 3).map(e => ({ name: e.name, sub: subText(e), scoreText: pct(e.score) }));
 
+    // مؤشر "نسبة تحقيق مبيعات" (البيانات الحقيقية الوحيدة المتاحة حاليًا لشبكة المؤشرات الجديدة)
+    const bySalesPctDesc = [...d.team].sort((a, b) => b.sp - a.sp);
+    const indTopAchv = bySalesPctDesc.slice(0, 3).map(e => ({ name: e.name, valText: pct(e.sp) }));
+    const indBotAchv = [...bySalesPctDesc].reverse().slice(0, 3).map(e => ({ name: e.name, valText: pct(e.sp) }));
+
+    // جدول "المبيعات والتحصيل والمتعلقات" — مرتب حسب المبلغ المحقق تنازليًا
+    const moneyRows = [...d.team].sort((a, b) => b.sales - a.sales).map((e, i) => ({
+      rank: i + 1, name: e.name, region: e.region,
+      target: fmt(e.st), achieved: fmt(e.sales),
+      achievedPct: pct(e.sp), achievedBarPct: bar(e.sp, 1.2),
+      remaining: fmt(Math.max(0, e.st - e.sales))
+    }));
+    const moneyTotals = {
+      target: fmt(d.totTarg), achieved: fmt(d.totSales),
+      pct: d.totTarg > 0 ? pct(d.totSales / d.totTarg) : '—',
+      remaining: fmt(Math.max(0, d.totTarg - d.totSales))
+    };
+
     return {
       showLoading: s.loading, showContent: !s.loading, hasError: false, isLoadingNoError: true, loadError: '',
       retry: this.loadAll,
@@ -644,7 +789,8 @@ class Component extends DCLogic {
       empCountText: d.team.length + ' موظف',
       teamRows, totBar,
       top3, topNew, topOld, bot3,
-      topNewEmpty: byNew.length === 0, topOldEmpty: byOld.length === 0
+      topNewEmpty: byNew.length === 0, topOldEmpty: byOld.length === 0,
+      indTopAchv, indBotAchv, moneyRows, moneyTotals
     };
   }
 }
