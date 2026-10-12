@@ -48,7 +48,9 @@ body{font-family:'Tajawal',sans-serif;background:var(--bg);color:var(--text);min
 .th-title{grid-area:title;color:#fff;font-size:25px;font-weight:900;line-height:1.25;text-align:center}
 .brand-wordmark{grid-area:logo;display:flex;align-items:center;flex-shrink:0;background:#fff;border-radius:14px;padding:8px 16px}
 .brand-wordmark img{height:30px;width:auto;object-fit:contain;display:block}
+.th-break{display:none}
 @media(max-width:700px){
+  .th-break{display:inline}
   .top-header{display:grid;grid-template-columns:1fr auto;grid-template-areas:"meta logo" "title logo";align-items:center;row-gap:6px;column-gap:14px}
   .th-right{display:contents}
   .th-left{grid-area:meta;flex-direction:column;align-items:flex-start;justify-content:flex-end}
@@ -146,7 +148,7 @@ body{font-family:'Tajawal',sans-serif;background:var(--bg);color:var(--text);min
           <div class="th-date"><span class="th-live"></span> {{ hDate }}</div>
         </div>
         <div class="th-right">
-          <div class="th-title">لوحة متابعة قسم المبيعات</div>
+          <div class="th-title">لوحة متابعة<br class="th-break">قسم المبيعات</div>
           <div class="brand-wordmark"><img src="./lines-logo.png" alt="خطوط الأفكار - Lines Ideas"></div>
         </div>
       </div>
