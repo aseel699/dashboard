@@ -32,7 +32,6 @@ body{font-family:'Tajawal',sans-serif;background:var(--bg);color:var(--text);min
 .th-date{display:flex;align-items:center;gap:6px;color:#fff;font-size:13px;font-weight:700}
 .th-live{width:7px;height:7px;border-radius:50%;background:#4ADE80;animation:pulse 2s infinite;display:inline-block;box-shadow:0 0 0 3px rgba(74,222,128,.2)}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
-.th-emp{color:rgba(255,255,255,.75);font-size:11px;margin-right:8px}
 .th-right{display:contents}
 .th-title{grid-area:title;color:#fff;font-size:21px;font-weight:900;line-height:1.25;text-align:center}
 .brand-wordmark{grid-area:logo;display:flex;align-items:center;flex-shrink:0;background:#fff;border-radius:999px;padding:8px 16px}
@@ -109,7 +108,6 @@ body{font-family:'Tajawal',sans-serif;background:var(--bg);color:var(--text);min
       <div class="top-header">
         <div class="th-left">
           <div class="th-date"><span class="th-live"></span> {{ hDate }}</div>
-          <div class="th-emp">👥 {{ hCount }} موظف</div>
         </div>
         <div class="th-right">
           <div class="th-title">لوحة متابعة قسم المبيعات</div>
@@ -368,7 +366,7 @@ class Component extends DCLogic {
     const cash = toList(IND_CASH);
 
     return {
-      hDate: now, hCount: rows.length,
+      hDate: now,
       moneyRows, moneyTotals,
       indTopOutstanding: indicatorList(rows, 'totalPct', 'top'),
       indBotOutstanding: indicatorList(rows, 'totalPct', 'bot'),
