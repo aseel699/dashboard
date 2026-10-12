@@ -37,6 +37,14 @@ body{font-family:'Tajawal',sans-serif;background:var(--bg);color:var(--text);min
 .th-title{color:#fff;font-size:21px;font-weight:900;line-height:1.25;text-align:left}
 .brand-badge{display:flex;align-items:center;justify-content:center;flex-shrink:0}
 .brand-badge img{height:44px;width:auto;object-fit:contain}
+@media(max-width:700px){
+  .top-header{display:grid;grid-template-columns:1fr auto;grid-template-areas:"meta logo" "title logo";align-items:center;row-gap:6px;column-gap:14px}
+  .th-right{display:contents}
+  .th-left{grid-area:meta;justify-content:flex-end}
+  .th-title{grid-area:title;text-align:right;font-size:17px}
+  .brand-badge{grid-area:logo}
+  .brand-badge img{height:72px}
+}
 
 /* ── Indicator grid (top3 / bottom3 per metric) ───────── */
 .ind-wrap{display:grid;grid-template-columns:1fr 1fr;gap:0;background:var(--bg2);border:1px solid var(--border);border-radius:16px;overflow:hidden;margin-bottom:18px;box-shadow:0 1px 4px rgba(0,0,0,.06)}
