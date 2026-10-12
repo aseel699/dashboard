@@ -52,10 +52,11 @@ body{font-family:'Tajawal',sans-serif;background:var(--bg);color:var(--text);min
 .ind-col.right{border-right:2px solid var(--maroon-border)}
 @media(max-width:900px){.ind-col.right{border-right:none;border-top:2px solid var(--maroon-border)}}
 .ind-title{font-size:20px;font-weight:900;color:var(--maroon-dark);margin-bottom:14px;text-align:center;letter-spacing:.3px}
-.ind-metrics{display:grid;gap:10px}
+.ind-metrics{display:grid;gap:16px}
+.ind-metrics>div:not(:first-child){border-right:1px solid var(--border);padding-right:16px}
 .ind-metrics.n3{grid-template-columns:repeat(3,1fr)}
 .ind-metrics.n2{grid-template-columns:repeat(2,1fr)}
-@media(max-width:620px){.ind-metrics.n3,.ind-metrics.n2{grid-template-columns:1fr}}
+@media(max-width:620px){.ind-metrics.n3,.ind-metrics.n2{grid-template-columns:1fr}.ind-metrics>div:not(:first-child){border-right:none;padding-right:0;border-top:1px solid var(--border);padding-top:12px}}
 .ind-metric-lbl{font-size:15px;font-weight:800;color:var(--text-dim);text-align:center;margin-bottom:8px;min-height:28px;display:flex;align-items:center;justify-content:center}
 .ind-card{border-radius:10px;padding:9px 12px;margin-bottom:7px}
 .ind-card:last-child{margin-bottom:0}
