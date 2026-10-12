@@ -251,7 +251,7 @@ body{font-family:'Tajawal',sans-serif;background:var(--bg);color:var(--text);min
 </div>
 
 <script type="text/x-dc" data-dc-script>
-const fmt = v => Math.round(v).toLocaleString('ar-SA');
+const fmt = v => Math.round(v).toLocaleString('en-US');
 const pct = v => (v * 100).toFixed(1) + '%';
 const bar = (v, mx) => Math.min(100, (mx > 0 ? v / mx : 0) * 100).toFixed(1);
 
@@ -317,7 +317,7 @@ function indicatorList(rows, key, dir) {
 
 class Component extends DCLogic {
   renderVals() {
-    const now = new Date().toLocaleDateString('ar-SA');
+    const now = new Date().toLocaleDateString('ar-SA-u-nu-latn-ca-gregory', { year: 'numeric', month: 'long', day: 'numeric' });
     const rows = buildRows();
 
     const moneyRows = rows.map(e => ({
