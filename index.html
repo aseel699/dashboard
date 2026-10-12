@@ -214,7 +214,7 @@ body{font-family:'Tajawal',sans-serif;background:var(--bg);color:var(--text);min
                 <th>#</th><th>اسم الموظف</th><th>الموقع</th>
                 <th>المستهدف</th><th>المحقق</th><th>نسبة المحقق</th>
                 <th>المبيعات الآجلة</th><th>التحصيل</th><th>نسبة المتبقي</th>
-                <th>المتعلقات</th><th>التحصيل</th><th>المتبقي</th>
+                <th>المتعلقات</th><th>التحصيل</th><th>نسبة المتبقي</th>
                 <th>الإجمالي</th><th>النسبة</th>
               </tr>
             </thead>
@@ -228,7 +228,7 @@ body{font-family:'Tajawal',sans-serif;background:var(--bg);color:var(--text);min
                   <td class="ach">{{ e.achieved }}</td>
                   <td><div class="mbar"><div class="bb"><div class="bf" style="width:{{ e.achievedBarPct }}%"></div></div><div class="bl">{{ e.achievedPct }}</div></div></td>
                   <td>{{ e.instTarget }}</td><td>{{ e.instCollected }}</td><td>{{ e.instRemainingPct }}</td>
-                  <td>{{ e.pastOutstanding }}</td><td>{{ e.pastCollected }}</td><td>{{ e.pastRemaining }}</td>
+                  <td>{{ e.pastOutstanding }}</td><td>{{ e.pastCollected }}</td><td>{{ e.pastRemainingPct }}</td>
                   <td class="ach">{{ e.totalOutstanding }}</td><td>{{ e.totalPct }}</td>
                 </tr>
               </sc-for>
@@ -241,7 +241,7 @@ body{font-family:'Tajawal',sans-serif;background:var(--bg);color:var(--text);min
                 <td>{{ moneyTotals.achieved }}</td>
                 <td>{{ moneyTotals.pct }}</td>
                 <td>{{ moneyTotals.instTarget }}</td><td>{{ moneyTotals.instCollected }}</td><td>{{ moneyTotals.instRemainingPct }}</td>
-                <td>{{ moneyTotals.pastOutstanding }}</td><td>{{ moneyTotals.pastCollected }}</td><td>{{ moneyTotals.pastRemaining }}</td>
+                <td>{{ moneyTotals.pastOutstanding }}</td><td>{{ moneyTotals.pastCollected }}</td><td>{{ moneyTotals.pastRemainingPct }}</td>
                 <td>{{ moneyTotals.totalOutstanding }}</td><td>{{ moneyTotals.totalPct }}</td>
               </tr>
             </tfoot>
@@ -332,7 +332,8 @@ class Component extends DCLogic {
       achievedBarPct: e.sp !== null ? bar(e.sp, 1.2) : 0,
       instTarget: fmt(e.instTarget), instCollected: fmt(e.instCollected),
       instRemainingPct: e.instTarget > 0 ? pct(e.instRemaining / e.instTarget) : '—',
-      pastOutstanding: fmt(e.pastOutstanding), pastCollected: fmt(e.pastCollected), pastRemaining: fmt(e.pastRemaining),
+      pastOutstanding: fmt(e.pastOutstanding), pastCollected: fmt(e.pastCollected),
+      pastRemainingPct: e.pastOutstanding > 0 ? pct(e.pastRemaining / e.pastOutstanding) : '—',
       totalOutstanding: fmt(e.totalOutstanding), totalPct: pct(e.totalPct)
     }));
 
@@ -350,7 +351,8 @@ class Component extends DCLogic {
       pct: sumTarget > 0 ? pct(sumAchieved / sumTarget) : '—',
       instTarget: fmt(sumInstTarget), instCollected: fmt(sumInstCollected),
       instRemainingPct: sumInstTarget > 0 ? pct(sumInstRemaining / sumInstTarget) : '—',
-      pastOutstanding: fmt(sumPastOutstanding), pastCollected: fmt(sumPastCollected), pastRemaining: fmt(sumPastRemaining),
+      pastOutstanding: fmt(sumPastOutstanding), pastCollected: fmt(sumPastCollected),
+      pastRemainingPct: sumPastOutstanding > 0 ? pct(sumPastRemaining / sumPastOutstanding) : '—',
       totalOutstanding: fmt(sumTotalOutstanding), totalPct: '100%'
     };
 
