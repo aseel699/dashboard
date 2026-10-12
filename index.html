@@ -104,25 +104,11 @@ body{font-family:'Tajawal',sans-serif;background:var(--bg);color:var(--text);min
 .mt tfoot tr{background:var(--maroon-dim);font-weight:900}
 .mt tfoot td{padding:12px 10px;text-align:center;color:var(--maroon-dark)}
 .mt tfoot td.nm{text-align:right}
-.mt-cards{display:none}
-.mtc{border:1px solid var(--border);border-radius:12px;padding:12px 14px;margin-bottom:10px}
-.mtc:last-child{margin-bottom:0}
-.mtc-head{display:flex;align-items:baseline;justify-content:space-between;gap:8px;margin-bottom:9px;padding-bottom:9px;border-bottom:1px solid var(--border)}
-.mtc-head-main{display:flex;align-items:baseline;gap:7px}
-.mtc-rank{font-size:12px;font-weight:800;color:var(--text-faint)}
-.mtc-name{font-size:15.5px;font-weight:800;color:var(--text)}
-.mtc-region{font-size:11.5px;color:var(--text-faint)}
-.mtc-group{margin-bottom:9px}
-.mtc-group:last-child{margin-bottom:0}
-.mtc-glabel{font-size:10.5px;font-weight:800;color:var(--maroon);background:var(--maroon-dim);padding:3px 9px;border-radius:6px;display:inline-block;margin-bottom:6px}
-.mtc-row{display:flex;justify-content:space-between;font-size:13px;padding:3px 0;color:var(--text-dim)}
-.mtc-row b{color:var(--text);font-weight:800}
-.mtc-row b.ach{color:var(--maroon)}
-.mtc-total{background:var(--maroon-dim);border-color:var(--maroon-border)}
-.mtc-total .mtc-name{color:var(--maroon-dark);font-size:16px}
 @media(max-width:700px){
-  .mtw{display:none}
-  .mt-cards{display:block}
+  .mt th:first-child, .mt td.rk{display:none}
+  .mt td.nm, .mt tfoot td.nm{position:sticky;right:0;z-index:3;background:#fff}
+  .mt tfoot td.nm{background:var(--maroon-dim)}
+  .mt thead tr.sub th:nth-child(2){position:sticky;right:0;z-index:3;background:var(--maroon-dim)}
 }
 .mbar{display:flex;align-items:center;gap:5px;min-width:70px;margin:0 auto}
 .mbar .bb{flex:1;height:5px;background:rgba(0,0,0,.06);border-radius:3px;overflow:hidden}
@@ -299,62 +285,6 @@ body{font-family:'Tajawal',sans-serif;background:var(--bg);color:var(--text);min
               </tr>
             </tfoot>
           </table>
-        </div>
-
-        <div class="mt-cards">
-          <sc-for list="{{ moneyRows }}" as="e" hint-placeholder-count="10">
-            <div class="mtc">
-              <div class="mtc-head">
-                <div class="mtc-head-main"><span class="mtc-rank">#{{ e.rank }}</span><div class="mtc-name">{{ e.name }}</div></div>
-                <div class="mtc-region">{{ e.region }}</div>
-              </div>
-              <div class="mtc-group">
-                <div class="mtc-glabel">مؤشرات المبيعات الشهرية</div>
-                <div class="mtc-row"><span>المستهدف</span><b>{{ e.target }}</b></div>
-                <div class="mtc-row"><span>المحقق</span><b class="ach">{{ e.achieved }}</b></div>
-                <div class="mtc-row"><span>نسبة المحقق</span><b>{{ e.achievedPct }}</b></div>
-              </div>
-              <div class="mtc-group">
-                <div class="mtc-glabel">مؤشرات المبيعات الآجلة الشهرية</div>
-                <div class="mtc-row"><span>المبيعات الآجلة</span><b>{{ e.instTarget }}</b></div>
-                <div class="mtc-row"><span>التحصيل</span><b>{{ e.instCollected }}</b></div>
-                <div class="mtc-row"><span>نسبة المتبقي</span><b>{{ e.instRemainingPct }}</b></div>
-              </div>
-              <div class="mtc-group">
-                <div class="mtc-glabel">مؤشرات المتعلقات السابقة</div>
-                <div class="mtc-row"><span>المتعلقات</span><b>{{ e.pastOutstanding }}</b></div>
-                <div class="mtc-row"><span>التحصيل</span><b>{{ e.pastCollected }}</b></div>
-                <div class="mtc-row"><span>نسبة المتبقي</span><b>{{ e.pastRemainingPct }}</b></div>
-              </div>
-              <div class="mtc-group">
-                <div class="mtc-glabel">إجمالي المتعلقات</div>
-                <div class="mtc-row"><span>الإجمالي</span><b class="ach">{{ e.totalOutstanding }}</b></div>
-                <div class="mtc-row"><span>النسبة</span><b>{{ e.totalPct }}</b></div>
-              </div>
-            </div>
-          </sc-for>
-          <div class="mtc mtc-total">
-            <div class="mtc-head"><div class="mtc-name">إجمالي الفريق</div></div>
-            <div class="mtc-group">
-              <div class="mtc-row"><span>المستهدف</span><b>{{ moneyTotals.target }}</b></div>
-              <div class="mtc-row"><span>المحقق</span><b class="ach">{{ moneyTotals.achieved }}</b></div>
-              <div class="mtc-row"><span>نسبة المحقق</span><b>{{ moneyTotals.pct }}</b></div>
-            </div>
-            <div class="mtc-group">
-              <div class="mtc-row"><span>المبيعات الآجلة</span><b>{{ moneyTotals.instTarget }}</b></div>
-              <div class="mtc-row"><span>التحصيل</span><b>{{ moneyTotals.instCollected }}</b></div>
-              <div class="mtc-row"><span>نسبة المتبقي</span><b>{{ moneyTotals.instRemainingPct }}</b></div>
-            </div>
-            <div class="mtc-group">
-              <div class="mtc-row"><span>المتعلقات</span><b>{{ moneyTotals.pastOutstanding }}</b></div>
-              <div class="mtc-row"><span>التحصيل</span><b>{{ moneyTotals.pastCollected }}</b></div>
-              <div class="mtc-row"><span>نسبة المتبقي</span><b>{{ moneyTotals.pastRemainingPct }}</b></div>
-            </div>
-            <div class="mtc-group">
-              <div class="mtc-row"><span>الإجمالي</span><b class="ach">{{ moneyTotals.totalOutstanding }}</b></div>
-              <div class="mtc-row"><span>النسبة</span><b>{{ moneyTotals.totalPct }}</b></div>
-            </div>
-          </div>
         </div>
       </div>
 
