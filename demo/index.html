@@ -35,8 +35,8 @@ body{font-family:'Tajawal',sans-serif;background:var(--bg);color:var(--text);min
 .th-emp{color:rgba(255,255,255,.75);font-size:11px;margin-right:8px}
 .th-right{display:flex;align-items:center;gap:12px}
 .th-title{color:#fff;font-size:21px;font-weight:900;line-height:1.25;text-align:left}
-.th-sub{color:rgba(255,255,255,.65);font-size:10px;margin-top:2px}
-.brand-badge{width:52px;height:52px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;font-size:21px;border:2px solid rgba(255,255,255,.35);flex-shrink:0}
+.brand-badge{width:52px;height:52px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;border:2px solid rgba(255,255,255,.35);flex-shrink:0;overflow:hidden}
+.brand-badge img{width:72%;height:72%;object-fit:contain}
 
 /* ── Indicator grid (top3 / bottom3 per metric) ───────── */
 .ind-wrap{display:grid;grid-template-columns:1fr 1fr;gap:0;background:var(--bg2);border:1px solid var(--border);border-radius:16px;overflow:hidden;margin-bottom:18px;box-shadow:0 1px 4px rgba(0,0,0,.06)}
@@ -99,11 +99,8 @@ body{font-family:'Tajawal',sans-serif;background:var(--bg);color:var(--text);min
           <div class="th-emp">👥 {{ hCount }} موظف</div>
         </div>
         <div class="th-right">
-          <div>
-            <div class="th-title">لوحة متابعة قسم المبيعات</div>
-            <div class="th-sub">LINES IDEAS</div>
-          </div>
-          <div class="brand-badge">☕</div>
+          <div class="th-title">لوحة متابعة قسم المبيعات</div>
+          <div class="brand-badge"><img src="./lines-cup-mark.png" alt="خطوط الأفكار"></div>
         </div>
       </div>
 
