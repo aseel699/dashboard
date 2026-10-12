@@ -35,15 +35,20 @@ body{font-family:'Tajawal',sans-serif;background:var(--bg);color:var(--text);min
 .th-emp{color:rgba(255,255,255,.75);font-size:11px;margin-right:8px}
 .th-right{display:flex;align-items:center;gap:12px}
 .th-title{color:#fff;font-size:21px;font-weight:900;line-height:1.25;text-align:left}
-.brand-badge{display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.brand-badge img{height:40px;width:auto;object-fit:contain}
+.brand-wordmark{display:flex;align-items:center;gap:10px;flex-shrink:0}
+.brand-wordmark-icon{font-size:26px;line-height:1}
+.brand-wordmark-text{display:flex;flex-direction:column;align-items:flex-end;line-height:1.2}
+.bw-en{color:#fff;font-weight:900;font-size:17px;letter-spacing:3px;font-family:Arial,Helvetica,sans-serif}
+.bw-ar{color:#fff;font-weight:900;font-size:16px;font-family:'Tajawal',sans-serif}
 @media(max-width:700px){
   .top-header{display:grid;grid-template-columns:1fr auto;grid-template-areas:"meta logo" "title logo";align-items:center;row-gap:6px;column-gap:14px}
   .th-right{display:contents}
   .th-left{grid-area:meta;justify-content:flex-end}
   .th-title{grid-area:title;text-align:right;font-size:17px}
-  .brand-badge{grid-area:logo}
-  .brand-badge img{height:50px}
+  .brand-wordmark{grid-area:logo}
+  .brand-wordmark-icon{font-size:36px}
+  .bw-en{font-size:22px;letter-spacing:4px}
+  .bw-ar{font-size:20px}
 }
 
 /* ── Indicator grid (top3 / bottom3 per metric) ───────── */
@@ -113,7 +118,13 @@ body{font-family:'Tajawal',sans-serif;background:var(--bg);color:var(--text);min
         </div>
         <div class="th-right">
           <div class="th-title">لوحة متابعة قسم المبيعات</div>
-          <div class="brand-badge"><img src="./lines-full-logo-white.png" alt="خطوط الأفكار - Lines Ideas"></div>
+          <div class="brand-wordmark">
+            <span class="brand-wordmark-icon">☕</span>
+            <span class="brand-wordmark-text">
+              <span class="bw-en">LINES IDEAS</span>
+              <span class="bw-ar">خطوط الأفكار</span>
+            </span>
+          </div>
         </div>
       </div>
 
