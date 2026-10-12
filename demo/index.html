@@ -79,6 +79,12 @@ body{font-family:'Tajawal',sans-serif;background:var(--bg);color:var(--text);min
 .mt tfoot tr{background:var(--maroon-dim);font-weight:900}
 .mt tfoot td{padding:9px 8px;text-align:center;color:var(--maroon-dark)}
 .mt tfoot td.nm{text-align:right}
+@media(max-width:700px){
+  .mt th:first-child, .mt td.rk{display:none}
+  .mt td.nm, .mt tfoot td.nm{position:sticky;right:0;z-index:3;background:#fff}
+  .mt tfoot td.nm{background:var(--maroon-dim)}
+  .mt thead tr.sub th:nth-child(2){position:sticky;right:0;z-index:3;background:var(--maroon-dim)}
+}
 .mbar{display:flex;align-items:center;gap:5px;min-width:70px;margin:0 auto}
 .mbar .bb{flex:1;height:5px;background:rgba(0,0,0,.06);border-radius:3px;overflow:hidden}
 .mbar .bf{height:100%;border-radius:3px;background:linear-gradient(90deg,var(--maroon),#A5384A)}
