@@ -318,13 +318,6 @@ const fmt = v => Math.round(v).toLocaleString('en-US');
 const pct = v => (v * 100).toFixed(1) + '%';
 const bar = (v, mx) => Math.min(100, (mx > 0 ? v / mx : 0) * 100).toFixed(1);
 
-// مؤشر "مبيعات نقدية" — ما فيه له مصدر بيانات حي بالنظام (لا يوجد تقسيم نقدي/آجل مسجّل للمبيعات)،
-// فخليناه كما ورد بالتقرير الأصلي مؤقتًا. "تحصيل مبيعات سابقة" و"تحصيل شهري" صارت تُحسب حيًا الآن.
-const IND_CASH = {
-  top: [{ name: 'محمد أحمد الدعم', val: 0.816 }, { name: 'المتجر', val: 0.769 }, { name: 'أحمد يسري', val: 0.751 }],
-  bot: [{ name: 'سالم الوعل', val: 0.397 }, { name: 'مازن', val: 0.438 }, { name: 'محمد دوشي', val: 0.452 }]
-};
-
 function buildRows(team) {
   const rows = team.map(e => {
     const instRemaining = Math.max(0, e.instTarget - e.instCollected);
@@ -333,7 +326,9 @@ function buildRows(team) {
     const sp = e.target > 0 ? e.achieved / e.target : null;
     const instCollectPct = e.instTarget > 0 ? e.instCollected / e.instTarget : null;
     const pastCollectPct = e.pastOutstanding > 0 ? e.pastCollected / e.pastOutstanding : null;
-    return { ...e, instRemaining, pastRemaining, totalOutstanding, sp, instCollectPct, pastCollectPct };
+    const cashAmount = Math.max(0, e.achieved - e.instTarget);
+    const cashPct = e.achieved > 0 ? cashAmount / e.achieved : null;
+    return { ...e, instRemaining, pastRemaining, totalOutstanding, sp, instCollectPct, pastCollectPct, cashPct };
   });
   const grandOutstanding = rows.reduce((s, e) => s + e.totalOutstanding, 0);
   rows.forEach(e => { e.totalPct = grandOutstanding > 0 ? e.totalOutstanding / grandOutstanding : 0; });
@@ -425,12 +420,6 @@ class Component extends DCLogic {
       totalOutstanding: fmt(sumTotalOutstanding), totalPct: '100%'
     };
 
-    const HIDDEN_NAMES = ['Head Office', 'Head Office Sales', 'المتجر', 'مبيعات التصدير'];
-    const cash = {
-      top: IND_CASH.top.filter(c => !HIDDEN_NAMES.includes(c.name)).map(c => ({ name: c.name, valText: pct(c.val) })),
-      bot: IND_CASH.bot.filter(c => !HIDDEN_NAMES.includes(c.name)).map(c => ({ name: c.name, valText: pct(c.val) }))
-    };
-
     return {
       showLoading: false, showContent: true, hasError: false, isLoadingNoError: true, loadError: '', retry: this.loadAll,
       hDate: now,
@@ -443,7 +432,8 @@ class Component extends DCLogic {
       indBotPastCollect: indicatorList(rows, 'pastCollectPct', 'top'),
       indTopMonthlyCollect: indicatorList(rows, 'instCollectPct', 'bot'),
       indBotMonthlyCollect: indicatorList(rows, 'instCollectPct', 'top'),
-      indTopCash: cash.top, indBotCash: cash.bot
+      indTopCash: indicatorList(rows, 'cashPct', 'bot'),
+      indBotCash: indicatorList(rows, 'cashPct', 'top')
     };
   }
 }
