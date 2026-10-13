@@ -312,6 +312,7 @@ body{font-family:'Tajawal',sans-serif;background:var(--bg);color:var(--text);min
 
 <script type="text/x-dc" data-dc-script>
 const API_BASE = 'https://company-linesideas.com/api';
+const HIDDEN_EMPLOYEE_IDS = [21, 23, 24];
 
 const fmt = v => Math.round(v).toLocaleString('en-US');
 const pct = v => (v * 100).toFixed(1) + '%';
@@ -369,7 +370,7 @@ class Component extends DCLogic {
     ]).then(([sales, collections]) => {
       const collMap = {};
       (collections || []).forEach(c => { collMap[c.employeeId] = c; });
-      const team = (sales || []).map(s => {
+      const team = (sales || []).filter(s => !HIDDEN_EMPLOYEE_IDS.includes(s.employeeId)).map(s => {
         const c = collMap[s.employeeId] || {};
         return {
           name: s.name, region: s.region || '—',
