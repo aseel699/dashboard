@@ -431,9 +431,10 @@ class Component extends DCLogic {
       totalOutstanding: fmt(sumTotalOutstanding), totalPct: '100%'
     };
 
+    const HIDDEN_NAMES = ['Head Office', 'Head Office Sales', 'المتجر', 'مبيعات التصدير'];
     const toList = o => ({
-      top: o.top.map(c => ({ name: c.name, valText: pct(c.val) })),
-      bot: o.bot.map(c => ({ name: c.name, valText: pct(c.val) }))
+      top: o.top.filter(c => !HIDDEN_NAMES.includes(c.name)).map(c => ({ name: c.name, valText: pct(c.val) })),
+      bot: o.bot.filter(c => !HIDDEN_NAMES.includes(c.name)).map(c => ({ name: c.name, valText: pct(c.val) }))
     });
     const pastCollect = toList(IND_PAST_COLLECT);
     const monthlyCollect = toList(IND_MONTHLY_COLLECT);
