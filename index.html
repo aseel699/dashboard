@@ -318,16 +318,8 @@ const fmt = v => Math.round(v).toLocaleString('en-US');
 const pct = v => (v * 100).toFixed(1) + '%';
 const bar = (v, mx) => Math.min(100, (mx > 0 ? v / mx : 0) * 100).toFixed(1);
 
-// مؤشرات "تحصيل مبيعات سابقة" / "تحصيل شهري" / "مبيعات نقدية" — ما فيه لها مصدر بيانات حي بالنظام بعد
-// (ولا تحصيل شهري منفصل ولا نسبة مبيعات نقدية/آجلة مسجّلة)، فخليناها كما وردت بالتقرير الأصلي مؤقتًا.
-const IND_PAST_COLLECT = {
-  top: [{ name: 'المتجر', val: 0.107 }, { name: 'سالم المرشدي', val: 0.092 }, { name: 'عمر حيدر', val: 0.082 }],
-  bot: [{ name: 'Head Office Sales', val: 0 }, { name: 'مبيعات التصدير', val: 0 }, { name: 'عبدالله أحمد', val: 0.033 }]
-};
-const IND_MONTHLY_COLLECT = {
-  top: [{ name: 'المتجر', val: 0.126 }, { name: 'أحمد يسري', val: 0.087 }, { name: 'عبدالرحمن باسهل', val: 0.082 }],
-  bot: [{ name: 'Head Office Sales', val: 0 }, { name: 'مبيعات التصدير', val: 0 }, { name: 'منير ناصر', val: 0.036 }]
-};
+// مؤشر "مبيعات نقدية" — ما فيه له مصدر بيانات حي بالنظام (لا يوجد تقسيم نقدي/آجل مسجّل للمبيعات)،
+// فخليناه كما ورد بالتقرير الأصلي مؤقتًا. "تحصيل مبيعات سابقة" و"تحصيل شهري" صارت تُحسب حيًا الآن.
 const IND_CASH = {
   top: [{ name: 'محمد أحمد الدعم', val: 0.816 }, { name: 'المتجر', val: 0.769 }, { name: 'أحمد يسري', val: 0.751 }],
   bot: [{ name: 'سالم الوعل', val: 0.397 }, { name: 'مازن', val: 0.438 }, { name: 'محمد دوشي', val: 0.452 }]
@@ -339,7 +331,9 @@ function buildRows(team) {
     const pastRemaining = Math.max(0, e.pastOutstanding - e.pastCollected);
     const totalOutstanding = instRemaining + pastRemaining;
     const sp = e.target > 0 ? e.achieved / e.target : null;
-    return { ...e, instRemaining, pastRemaining, totalOutstanding, sp };
+    const instCollectPct = e.instTarget > 0 ? e.instCollected / e.instTarget : null;
+    const pastCollectPct = e.pastOutstanding > 0 ? e.pastCollected / e.pastOutstanding : null;
+    return { ...e, instRemaining, pastRemaining, totalOutstanding, sp, instCollectPct, pastCollectPct };
   });
   const grandOutstanding = rows.reduce((s, e) => s + e.totalOutstanding, 0);
   rows.forEach(e => { e.totalPct = grandOutstanding > 0 ? e.totalOutstanding / grandOutstanding : 0; });
@@ -432,13 +426,10 @@ class Component extends DCLogic {
     };
 
     const HIDDEN_NAMES = ['Head Office', 'Head Office Sales', 'المتجر', 'مبيعات التصدير'];
-    const toList = o => ({
-      top: o.top.filter(c => !HIDDEN_NAMES.includes(c.name)).map(c => ({ name: c.name, valText: pct(c.val) })),
-      bot: o.bot.filter(c => !HIDDEN_NAMES.includes(c.name)).map(c => ({ name: c.name, valText: pct(c.val) }))
-    });
-    const pastCollect = toList(IND_PAST_COLLECT);
-    const monthlyCollect = toList(IND_MONTHLY_COLLECT);
-    const cash = toList(IND_CASH);
+    const cash = {
+      top: IND_CASH.top.filter(c => !HIDDEN_NAMES.includes(c.name)).map(c => ({ name: c.name, valText: pct(c.val) })),
+      bot: IND_CASH.bot.filter(c => !HIDDEN_NAMES.includes(c.name)).map(c => ({ name: c.name, valText: pct(c.val) }))
+    };
 
     return {
       showLoading: false, showContent: true, hasError: false, isLoadingNoError: true, loadError: '', retry: this.loadAll,
@@ -448,8 +439,10 @@ class Component extends DCLogic {
       indBotOutstanding: indicatorList(rows, 'totalPct', 'bot'),
       indTopAchv: indicatorList(rows, 'sp', 'bot'),
       indBotAchv: indicatorList(rows, 'sp', 'top'),
-      indTopPastCollect: pastCollect.top, indBotPastCollect: pastCollect.bot,
-      indTopMonthlyCollect: monthlyCollect.top, indBotMonthlyCollect: monthlyCollect.bot,
+      indTopPastCollect: indicatorList(rows, 'pastCollectPct', 'bot'),
+      indBotPastCollect: indicatorList(rows, 'pastCollectPct', 'top'),
+      indTopMonthlyCollect: indicatorList(rows, 'instCollectPct', 'bot'),
+      indBotMonthlyCollect: indicatorList(rows, 'instCollectPct', 'top'),
       indTopCash: cash.top, indBotCash: cash.bot
     };
   }
