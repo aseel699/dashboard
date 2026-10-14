@@ -100,6 +100,9 @@ body{font-family:'Tajawal',sans-serif;background:var(--bg);color:var(--text);min
 .mt{width:100%;border-collapse:separate;border-spacing:0;font-size:15px;min-width:1150px}
 .mt thead tr.grp th{background:var(--maroon-dark);color:#fff;padding:11px 12px;font-size:13.5px;font-weight:800;text-align:center;border-left:2px solid rgba(255,255,255,.3)}
 .mt thead tr.sub th{background:var(--maroon-dim);color:var(--maroon-dark);padding:11px 12px;font-size:13px;font-weight:800;text-align:center;white-space:nowrap;border-bottom:1px solid var(--maroon-border)}
+.mt thead tr.sub th.sortable{cursor:pointer;user-select:none}
+.mt thead tr.sub th.sortable:hover{background:rgba(122,31,43,.14)}
+.mt thead tr.sub th .sort-ind{display:inline-block;margin-right:4px;font-size:10px;opacity:.55}
 .mt thead tr.sub th:nth-child(3), .mt thead tr.sub th:nth-child(6), .mt thead tr.sub th:nth-child(9), .mt thead tr.sub th:nth-child(12){border-left:2px solid var(--maroon-border)}
 .mt tbody td:nth-child(3), .mt tbody td:nth-child(6), .mt tbody td:nth-child(9), .mt tbody td:nth-child(12){border-left:2px solid var(--maroon-border)}
 .mt tfoot td:nth-child(2), .mt tfoot td:nth-child(5), .mt tfoot td:nth-child(8), .mt tfoot td:nth-child(11){border-left:2px solid var(--maroon-border)}
@@ -264,11 +267,20 @@ body{font-family:'Tajawal',sans-serif;background:var(--bg);color:var(--text);min
                 <th colspan="2">إجمالي المتعلقات</th>
               </tr>
               <tr class="sub">
-                <th>#</th><th>اسم الموظف</th><th>الموقع</th>
-                <th>المستهدف</th><th>المحقق</th><th>نسبة المحقق</th>
-                <th>المبيعات الآجلة</th><th>التحصيل</th><th>نسبة المتبقي</th>
-                <th>المتعلقات</th><th>التحصيل</th><th>نسبة المتبقي</th>
-                <th>الإجمالي</th><th>النسبة</th>
+                <th class="sortable" onClick="{{ sortByRank }}">#<span class="sort-ind">{{ arrowRank }}</span></th>
+                <th class="sortable" onClick="{{ sortByName }}">اسم الموظف<span class="sort-ind">{{ arrowName }}</span></th>
+                <th class="sortable" onClick="{{ sortByRegion }}">الموقع<span class="sort-ind">{{ arrowRegion }}</span></th>
+                <th class="sortable" onClick="{{ sortByTarget }}">المستهدف<span class="sort-ind">{{ arrowTarget }}</span></th>
+                <th class="sortable" onClick="{{ sortByAchieved }}">المحقق<span class="sort-ind">{{ arrowAchieved }}</span></th>
+                <th class="sortable" onClick="{{ sortBySp }}">نسبة المحقق<span class="sort-ind">{{ arrowSp }}</span></th>
+                <th class="sortable" onClick="{{ sortByInstTarget }}">المبيعات الآجلة<span class="sort-ind">{{ arrowInstTarget }}</span></th>
+                <th class="sortable" onClick="{{ sortByInstCollected }}">التحصيل<span class="sort-ind">{{ arrowInstCollected }}</span></th>
+                <th class="sortable" onClick="{{ sortByInstRemainingPct }}">نسبة المتبقي<span class="sort-ind">{{ arrowInstRemainingPct }}</span></th>
+                <th class="sortable" onClick="{{ sortByPastOutstanding }}">المتعلقات<span class="sort-ind">{{ arrowPastOutstanding }}</span></th>
+                <th class="sortable" onClick="{{ sortByPastCollected }}">التحصيل<span class="sort-ind">{{ arrowPastCollected }}</span></th>
+                <th class="sortable" onClick="{{ sortByPastRemainingPct }}">نسبة المتبقي<span class="sort-ind">{{ arrowPastRemainingPct }}</span></th>
+                <th class="sortable" onClick="{{ sortByTotalOutstanding }}">الإجمالي<span class="sort-ind">{{ arrowTotalOutstanding }}</span></th>
+                <th class="sortable" onClick="{{ sortByTotalPct }}">النسبة<span class="sort-ind">{{ arrowTotalPct }}</span></th>
               </tr>
             </thead>
             <tbody>
@@ -328,7 +340,9 @@ function buildRows(team) {
     const pastCollectPct = e.pastOutstanding > 0 ? e.pastCollected / e.pastOutstanding : null;
     const cashAmount = Math.max(0, e.achieved - e.instTarget);
     const cashPct = e.achieved > 0 ? cashAmount / e.achieved : null;
-    return { ...e, instRemaining, pastRemaining, totalOutstanding, sp, instCollectPct, pastCollectPct, cashPct };
+    const instRemainingPct = e.instTarget > 0 ? instRemaining / e.instTarget : null;
+    const pastRemainingPct = e.pastOutstanding > 0 ? pastRemaining / e.pastOutstanding : null;
+    return { ...e, instRemaining, pastRemaining, totalOutstanding, sp, instCollectPct, pastCollectPct, cashPct, instRemainingPct, pastRemainingPct };
   });
   const grandOutstanding = rows.reduce((s, e) => s + e.totalOutstanding, 0);
   rows.forEach(e => { e.totalPct = grandOutstanding > 0 ? e.totalOutstanding / grandOutstanding : 0; });
@@ -344,11 +358,17 @@ function indicatorList(rows, key, dir) {
 }
 
 class Component extends DCLogic {
-  state = { loading: true, error: '', team: [] };
+  state = { loading: true, error: '', team: [], sortKey: null, sortDir: 'desc' };
 
   componentDidMount() {
     this.loadAll();
   }
+
+  sortBy = (key) => {
+    const { sortKey, sortDir } = this.state;
+    const nextDir = sortKey === key ? (sortDir === 'desc' ? 'asc' : 'desc') : 'desc';
+    this.setState({ sortKey: key, sortDir: nextDir });
+  };
 
   loadAll = () => {
     this.setState({ loading: true, error: '' });
@@ -388,7 +408,25 @@ class Component extends DCLogic {
 
     const rows = buildRows(s.team);
 
-    const moneyRows = rows.map(e => ({
+    const SORT_TYPE = { name: 'str', region: 'str' };
+    let displayRows = rows;
+    if (s.sortKey) {
+      const key = s.sortKey;
+      const dir = s.sortDir;
+      displayRows = [...rows].sort((a, b) => {
+        const av = a[key], bv = b[key];
+        if (SORT_TYPE[key] === 'str') {
+          const cmp = String(av || '').localeCompare(String(bv || ''), 'ar');
+          return dir === 'asc' ? cmp : -cmp;
+        }
+        const an = av === null || av === undefined ? -Infinity : av;
+        const bn = bv === null || bv === undefined ? -Infinity : bv;
+        return dir === 'asc' ? an - bn : bn - an;
+      });
+    }
+    const arrow = key => s.sortKey === key ? (s.sortDir === 'desc' ? '▼' : '▲') : '⇅';
+
+    const moneyRows = displayRows.map(e => ({
       rank: e.rank, name: e.name, region: e.region,
       target: e.target > 0 ? fmt(e.target) : '—',
       achieved: fmt(e.achieved),
@@ -433,7 +471,21 @@ class Component extends DCLogic {
       indTopMonthlyCollect: indicatorList(rows, 'instCollectPct', 'bot'),
       indBotMonthlyCollect: indicatorList(rows, 'instCollectPct', 'top'),
       indTopCash: indicatorList(rows, 'cashPct', 'bot'),
-      indBotCash: indicatorList(rows, 'cashPct', 'top')
+      indBotCash: indicatorList(rows, 'cashPct', 'top'),
+      sortByRank: () => this.sortBy('rank'), arrowRank: arrow('rank'),
+      sortByName: () => this.sortBy('name'), arrowName: arrow('name'),
+      sortByRegion: () => this.sortBy('region'), arrowRegion: arrow('region'),
+      sortByTarget: () => this.sortBy('target'), arrowTarget: arrow('target'),
+      sortByAchieved: () => this.sortBy('achieved'), arrowAchieved: arrow('achieved'),
+      sortBySp: () => this.sortBy('sp'), arrowSp: arrow('sp'),
+      sortByInstTarget: () => this.sortBy('instTarget'), arrowInstTarget: arrow('instTarget'),
+      sortByInstCollected: () => this.sortBy('instCollected'), arrowInstCollected: arrow('instCollected'),
+      sortByInstRemainingPct: () => this.sortBy('instRemainingPct'), arrowInstRemainingPct: arrow('instRemainingPct'),
+      sortByPastOutstanding: () => this.sortBy('pastOutstanding'), arrowPastOutstanding: arrow('pastOutstanding'),
+      sortByPastCollected: () => this.sortBy('pastCollected'), arrowPastCollected: arrow('pastCollected'),
+      sortByPastRemainingPct: () => this.sortBy('pastRemainingPct'), arrowPastRemainingPct: arrow('pastRemainingPct'),
+      sortByTotalOutstanding: () => this.sortBy('totalOutstanding'), arrowTotalOutstanding: arrow('totalOutstanding'),
+      sortByTotalPct: () => this.sortBy('totalPct'), arrowTotalPct: arrow('totalPct')
     };
   }
 }
